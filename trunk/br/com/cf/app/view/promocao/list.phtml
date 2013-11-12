@@ -1,0 +1,30 @@
+<h2>Lista de Promoções</h2>
+<hr>
+<table class="table table-bordered table-striped tablesorter">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Desconto</th>
+            <th>Validade</th>
+            <th>Desativar</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->promocoes as $promocao) : ?>
+            <tr>
+                <td><?php print($promocao['nm_promocao']); ?></td>
+                <td><?php print($promocao['pc_promocao'] . '%'); ?></td>
+                <td><?php print(substr($promocao['dt_validade'], 8, 2) . '/' . substr($promocao['dt_validade'], 5, 2) . '/' . substr($promocao['dt_validade'], 0, 4)); ?></td>
+                <td><img title="Desativar Promoção" class="desativarPromocao" onClick="Promocao.excluirPromocao(<?php print($promocao['id_promocao']); ?>)" src="/img/delete.png" </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<script type="text/javascript">
+        !(function($){
+        'use strict'
+        $(document).ready(function(){
+            $(".table").tablesorter();
+        });
+    })(jQuery);
+</script>

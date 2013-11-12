@@ -1,0 +1,35 @@
+<h2>Lista de Usuários</h2>
+<hr>
+<table class="table table-bordered table-striped tablesorter">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Perfil</th>
+            <th>Email</th>
+            <th>Opções</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->usuarios as $usuario) : ?>
+            <tr>
+                <td><?php print($usuario['nm_usuario']); ?></td>
+                <td><?php print($usuario['nu_cpf']); ?></td>
+                <td><?php print($usuario['fg_perfil'] ? 'Administrador' : 'Cliente'); ?></td>
+                <td><?php print($usuario['tx_email']); ?></td>
+                <td>
+                    <img title="Editar" class="btn16" onClick="Usuario.editarUsuario(<?php print($usuario['id_usuario']); ?>)" src="/img/edit.png"> 
+                    <img title="Excluir" class="btn16" onClick="Usuario.excluirUsuario(<?php print($usuario['id_usuario']); ?>)" src="/img/delete.png"> 
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<script type="text/javascript">
+        !(function($){
+        'use strict'
+        $(document).ready(function(){
+            $(".table").tablesorter();
+        });
+    })(jQuery);
+</script>

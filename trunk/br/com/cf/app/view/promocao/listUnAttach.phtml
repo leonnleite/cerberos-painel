@@ -1,0 +1,36 @@
+<h2>Lista de Produtos Vinculados à Promoções</h2>
+<hr>
+<table class="table table-bordered table-striped tablesorter">
+    <thead>
+        <tr>
+            <th>Produto</th>
+            <th>Preço</th>
+            <th>Promoção</th>
+            <th>Validade</th>
+            <th>Desconto % </th>
+            <th>Preço c/ Desconto</th>
+            <th>Desvincular</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->produtos as $produto) : ?>
+            <tr>
+                <td><?php print($produto['nm_produto']); ?></td>
+                <td><?php print("R$ {$produto['vl_produto']}"); ?></td> 
+                <td><?php print($produto['nm_promocao']); ?></td>
+                <td><?php print(substr($produto['dt_validade'], 8, 2) . '/' . substr($produto['dt_validade'], 5, 2) . '/' . substr($produto['dt_validade'], 0, 4)); ?></td>
+                <td><?php print($produto['pc_promocao'] . '%'); ?></td>
+                <td><?php print("R$ {$produto['vl_desconto']}"); ?></td>
+                <td><img title="Desvincular" class="desativarPromocao" onClick="Promocao.desvincularProdutoPromocao(<?php print($produto['id_produto']); ?>,<?php print($produto['id_promocao']); ?>)" src="/img/delete.png" </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<script type="text/javascript">
+        !(function($){
+        'use strict'
+        $(document).ready(function(){
+            $(".table").tablesorter();
+        });
+    })(jQuery);
+</script>
