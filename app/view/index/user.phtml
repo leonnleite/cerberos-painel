@@ -1,0 +1,371 @@
+<?php
+$js1 = array(
+    array("library/jquery/jquery.min.js", false),
+    array("library/validate/jquery.validate.pt-Br.js", false),
+    array("js/util.js", false),
+    array("js/index.js", false)
+);
+
+use br\com\cf\library\core\cache\Cache;
+?>
+
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title><?php print(CF_APP_NAME); ?></title>
+        <meta charset="utf-8">
+        <!-- Always force latest IE rendering engine or request Chrome Frame -->
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+        <link href="library/plastique/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+
+        <!--[if lt IE 9]>
+        <script src="library/plastique/javascripts/html5shiv.js" type="text/javascript"></script>
+        <script src="library/plastique/javascripts/excanvas.js" type="text/javascript"></script>
+        <script src="library/plastique/javascripts/iefix.js" type="text/javascript"></script>
+        <link href="library/plastique/stylesheets/iefix.css" media="screen" rel="stylesheet" type="text/css" />
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0">
+
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <?php Cache::factory()->js($js1)->output()->clean(); ?>          
+
+        <style type="text/css">
+            nav#secondary {
+                float: left;
+                width: 300px;
+            }
+            .avatar{
+                cursor: pointer;
+            }
+        </style>
+
+    </head>
+    <body>
+
+        <div id="modal" class="black-box modal hide fade">
+            <div class="modal-header tab-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <span>Some modal title</span>
+            </div>
+            <div class="modal-body separator">
+                <h4>Text in a modal</h4>
+                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem.</p>
+            </div>
+            <div class="modal-footer">
+                <div class="inner-well">
+                    <a class="button mini rounded light-gray" data-dismiss="modal">Close</a>
+                    <a class="button mini rounded blue">Save changes</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-gallery" class="black-box modal modal-gallery hide fade">
+            <div class="modal-header tab-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <span class="modal-title"></span>
+            </div>
+            <div class="modal-body"><div class="modal-image"></div></div>
+            <div class="modal-footer">
+                <div class="pull-left">
+                    You can also change the images<br/> by scrolling the mouse wheel!
+                </div>
+                <div class="pull-right">
+                    <a class="button blue modal-next">Next <i class="icon-arrow-right icon-white"></i></a>
+                    <a class="button gray modal-prev"><i class="icon-arrow-left icon-white"></i> Previous</a>
+                    <a class="button green modal-play modal-slideshow" data-slideshow="5000"><i class="icon-play icon-white"></i> Slideshow</a>
+                    <a class="button black" target="_blank"><i class="icon-download"></i> Download</a>
+                </div>
+            </div>
+        </div>
+
+        <nav id="primary" class="main-nav">
+            <ul>
+                <!--Menu 1-->
+                <li id="container" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>Master Liga <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="linkcontent" value="/jogador/search" href="#">
+                                <i class="icon-search"></i> Jogos
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/jogador/list" href="#">
+                                <i class="icon-list"></i> Tabela
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/jogador/list" href="#">
+                                <i class="icon-list"></i> Artilharia
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--Menu 2-->
+                <li id="container" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-group"></i>Copas <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="linkcontent" value="/clube/search" href="#">
+                                <i class="icon-warning-sign"></i> Grupos
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/clube/list" href="#">
+                                <i class="icon-off"></i> Finais
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/clube/list" href="#">
+                                <i class="icon-off"></i> Jogos
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/clube/list" href="#">
+                                <i class="icon-off"></i> Artilharia
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--Menu 3-->
+                <li id="container" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class=" icon-trophy"></i>Minha Equipe <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="linkcontent" value="/selecao/search" href="#">
+                                <i class="icon-warning-sign"></i> Conta Corrente
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/selecao/list" href="#">
+                                <i class="icon-off"></i> Leilões
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/selecao/list" href="#">
+                                <i class="icon-off"></i> Minha Equipe
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--Menu 4-->
+                <li id="container" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class=" icon-trophy"></i>Calendário de Jogos <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="linkcontent" value="/selecao/search" href="#">
+                                <i class="icon-warning-sign"></i> Menu 1
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/selecao/list" href="#">
+                                <i class="icon-off"></i> Menu 2
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/selecao/list" href="#">
+                                <i class="icon-off"></i> Menu 3
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--Menu 5-->
+                <li id="container" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class=" icon-trophy"></i>Classificações e Artilharia <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="linkcontent" value="/selecao/search" href="#">
+                                <i class="icon-warning-sign"></i> Menu 1
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/selecao/list" href="#">
+                                <i class="icon-off"></i> Menu 2
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/selecao/list" href="#">
+                                <i class="icon-off"></i> Menu 3
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--Menu 6-->
+                <li id="container" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class=" icon-trophy"></i>Mercado <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="linkcontent" value="/selecao/search" href="#">
+                                <i class="icon-warning-sign"></i> Menu 1
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/selecao/list" href="#">
+                                <i class="icon-off"></i> Menu 2
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/selecao/list" href="#">
+                                <i class="icon-off"></i> Menu 3
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--Menu 7-->
+                <li id="container" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class=" icon-trophy"></i>Configurações <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="linkcontent" value="/selecao/search" href="#">
+                                <i class="icon-warning-sign"></i> Menu 1
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/selecao/list" href="#">
+                                <i class="icon-off"></i> Menu 2
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/selecao/list" href="#">
+                                <i class="icon-off"></i> Menu 3
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="/usuario/logoff">
+                        <i class="icon-off"></i> Sair
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+
+        <nav id="secondary" class="main-nav">
+            <div class="profile-menu">
+                <div class="pull-left">
+                    <div class="avatar">
+                        <img title="Você" src="/img/avatars/usuarios/250.png" />
+                    </div>
+                    <div class="avatar">
+                        <img title="Sua Equipe" src="/img/avatars/equipes/974.png" />
+                    </div>
+                    <table class="title">
+                        <tr><td><strong>SALDO</strong></td></tr>
+                        <tr><td>1.000.000,00</td></tr>
+                        <tr><td><strong>SALÁRIOS</strong></td></tr>
+                        <tr><td>1.000.000,00</td></tr>
+                        <tr><td><strong>LÍQUIDO</strong></td></tr>
+                        <tr><td>1.000.000,00</td></tr>
+                    </table>
+                    <?php // print($this->nm_usuario); ?>
+                    <!--                </div>
+                                    <div class="pull-left">-->
+                    <!--                    <div class="title">
+                    
+                                        </div>-->
+                </div>
+                <!--<strong>VALÊNCIA CF</strong> (FPIREZ - SÉRIE A)-->
+                <!--                    <div class="">
+                                        <strong>VALÊNCIA CF</strong> (FPIREZ - SÉRIE A)
+                                    </div>-->
+                <!--                <div class="pull-right profile-menu-nav-collapse">
+                                    <button class="button black"><i class="icon-reorder"></i></button>
+                                </div>-->
+            </div>
+
+            <div class="profile-menu">
+
+            </div>
+
+            <ul class="secondary-nav-menu">
+                <li class="active">
+                    <a href="stats.html">
+                        <i class="icon-dashboard"></i> Stats
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" id="modal-link">
+                        <i class="icon-random"></i> Open Modal
+                    </a>
+                </li>
+
+                <li id="notification-full-image">
+                    <a href="#">
+                        <i class="icon-list-alt"></i> Notification #1
+                    </a>
+                </li>
+
+                <li id="notification-small-image">
+                    <a href="#">
+                        <i class="icon-table"></i> Notification #2
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
+
+        <section  id="main" class="containercontent"></section>
+
+        <script type="text/html" id="template-notification">
+            <div class="notification animated fadeInLeftMiddle fast{{ item.itemClass }}">
+            <div class="left">
+            <div style="background-image: url({{ item.imagePath }})" class="{{ item.imageClass }}"></div>
+            </div>
+            <div class="right">
+            <div class="inner">{{ item.text }}</div>
+            <div class="time">{{ item.time }}</div>
+            </div>
+
+            <i class="icon-remove-sign hide"></i>
+            </div>
+        </script>
+        <script type="text/html" id="template-notifications">
+            <div class="container">
+            <div class="row" id="notifications-wrapper">
+            <div id="notifications" class="{{ bootstrapPositionClass }} notifications animated">
+            <div id="dismiss-all" class="dismiss-all button blue">Dismiss all</div>
+            <div id="content">
+            <div id="notes"></div>
+            </div>
+            </div>
+            </div>
+            </div>
+        </script>
+        <script src="library/plastique/javascripts/application.js" type="text/javascript"></script>
+        <script src="library/plastique/javascripts/docs.js" type="text/javascript"></script>
+        <script src="library/plastique/javascripts/docs_charts.js" type="text/javascript"></script>
+        <script src="library/plastique/javascripts/documentation.js" type="text/javascript"></script>
+        <script src="library/plastique/javascripts/prettify.js" type="text/javascript"></script>
+
+        <link href="library/plastique/stylesheets/prettify.css" media="screen" rel="stylesheet" type="text/css" />
+
+        <script type="text/javascript">
+            prettyPrint();
+        </script>
+
+    </body>
+
+</html>

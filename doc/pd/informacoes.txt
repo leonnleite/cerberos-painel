@@ -1,0 +1,4 @@
+funcionalidade leilao
+funcionalidade emprestimo
+funcionalidade premiacao
+funcionalidade punicao

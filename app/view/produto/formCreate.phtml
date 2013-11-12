@@ -1,0 +1,56 @@
+<h2>Novo Produto</h2>
+<hr>
+<fieldset>
+    <form id="formCreateProduto" method="post" action="/produto/create/ajax/true">
+        <div class="control-group">
+            <label class="control-label" for="nm_produto">Nome</label>
+            <div class="controls">
+                <input class="input-xlarge focused required" id="nm_produto" name="nm_produto" type="text" maxlength="50">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="vl_produto">Preço</label>
+            <div class="controls">
+                <input class="input-xlarge focused required money" id="vl_produto" name="vl_produto" type="text">
+            </div>
+        </div>
+        <div class="">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button class="btn" type="reset">Limpar</button>
+        </div>
+    </form>
+</fieldset>
+
+<script type="text/javascript">
+
+        !(function($){
+        'use strict'
+        $(document).ready(function(){
+                
+            // Validacao do Formulario : Novo Produto
+            var formNew = $('#formCreateProduto');
+            var actionNew = formNew.attr('action');
+       
+            $("#formCreateProduto").validate({
+                errorClass: "help-inline",
+                submitHandler: function() {
+                    if(confirm('Você tem certeza que deseja cadastrar este novo produto?')){
+                        $.post(actionNew, formNew.serialize(), function(response){
+                            if(response.status == 'success'){
+                                formNew.each(function(){
+                                    this.reset();
+                                });
+                            }
+                            Util.showMessageBox(response);
+                        }, 'json') ;  
+                    }
+                }
+            });
+        
+        });
+
+
+    })(jQuery);
+
+
+</script>

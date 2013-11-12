@@ -1,0 +1,32 @@
+<h2>Lista de Vendas</h2>
+<hr>
+<table class="table table-bordered table-striped tablesorter">
+    <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Data / Hora</th>
+            <th>Valor</th>
+            <th>Excluir</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->vendas as $venda) : ?>
+            <tr>
+                <td><?php print($venda['nm_usuario']); ?></td>
+                <td><?php print(substr($venda['dt_venda'], 8, 2) . '/' . substr($venda['dt_venda'], 5, 2) . '/' . substr($venda['dt_venda'], 0, 4) . ' ' . substr($venda['dt_venda'], 11, 8)); ?></td>
+                <td><?php print('R$ ' . $venda['vl_total']); ?></td>
+                <td>
+                    <img title="Excluir" class="excluirVenda" onClick="Venda.excluirVenda(<?php print($venda['id_venda']); ?>)" src="/img/delete.png"> 
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<script type="text/javascript">
+        !(function($){
+        'use strict'
+        $(document).ready(function(){
+            $(".table").tablesorter();
+        });
+    })(jQuery);
+</script>

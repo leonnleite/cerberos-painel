@@ -1,0 +1,69 @@
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        $('#postgres').dataTable( {
+            "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+            "bProcessing": true,
+            "bServerSide": true,
+            "sAjaxSource": "/index/gridPostgres/ajax/true/"
+        } );
+        $('#mysql').dataTable( {
+            "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+            "bProcessing": true,
+            "bServerSide": true,
+            "sAjaxSource": "/index/gridMysql/ajax/true/"
+        } );
+        $.extend( $.fn.dataTableExt.oStdClasses, {
+            "sWrapper": "dataTables_wrapper form-inline"
+        } );
+        //        $(".table").tablesorter();
+    } );
+</script>
+<div id="container">
+    <h1>Postgres</h1>
+    <div id="dynamic">
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered table-striped tablesorter" id="postgres">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Segmento</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="5" class="dataTables_empty">Loading data from server</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Segmento</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <h1>Mysql</h1>
+    <div id="dynamic">
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered table-striped tablesorter" id="mysql">
+            <thead>
+                <tr>
+                    <th width="20%">#</th>
+                    <th width="25%">Nome</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="5" class="dataTables_empty">Loading data from server</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
