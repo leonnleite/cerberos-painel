@@ -7,8 +7,7 @@ use br\com\cf\library\core\model\ModelAbstract;
 /**
  * @author Michael F. Rodrigues <cerberosnash@gmail.com>
  */
-class ModelJogador extends ModelAbstract
-{
+class ModelJogador extends ModelAbstract {
 
     /**
      * @var string
@@ -23,7 +22,7 @@ class ModelJogador extends ModelAbstract
     /**
      * @var string
      */
-    protected $_primary = 'sq_jogador';
+    protected $_primary = 'id_jogador';
 
     /**
      * @var string
@@ -34,7 +33,6 @@ class ModelJogador extends ModelAbstract
      * @var array
      */
     protected $_fields = array(
-        'sq_jogador' => 'integer',
         'nm_abreviado' => 'string',
         'nm_completo' => 'string',
         'dt_nascimento' => 'date',
