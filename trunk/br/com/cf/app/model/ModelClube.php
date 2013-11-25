@@ -7,8 +7,7 @@ use br\com\cf\library\core\model\ModelAbstract;
 /**
  * @author Michael F. Rodrigues <cerberosnash@gmail.com>
  */
-class ModelClube extends ModelAbstract
-{
+class ModelClube extends ModelAbstract {
 
     /**
      * @var string
@@ -34,8 +33,8 @@ class ModelClube extends ModelAbstract
      * @var array
      */
     protected $_fields = array(
-        'sq_clube' => 'integer',
-        'sq_pais' => 'integer',
+        'id_clube' => 'integer',
+        'id_pais' => 'integer',
         'nm_clube' => 'string'
     );
 

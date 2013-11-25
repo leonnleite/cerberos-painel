@@ -7,7 +7,7 @@ use br\com\cf\library\core\model\ModelAbstract;
 /**
  * @author Michael F. Rodrigues <cerberosnash@gmail.com>
  */
-class ModelSelecao extends ModelAbstract {
+class ModelTransacao extends ModelAbstract {
 
     /**
      * @var string
@@ -17,12 +17,12 @@ class ModelSelecao extends ModelAbstract {
     /**
      * @var string
      */
-    protected $_table = 'selecao';
+    protected $_table = 'transacao';
 
     /**
      * @var string
      */
-    protected $_primary = 'id_selecao';
+    protected $_primary = 'id_transacao';
 
     /**
      * @var string
@@ -33,8 +33,11 @@ class ModelSelecao extends ModelAbstract {
      * @var array
      */
     protected $_fields = array(
-        'id_pais' => 'integer',
-        'nm_selecao' => 'string'
+        'id_transacao_tipo' => 'integer',
+        'id_usuario' => 'integer',
+        'dt_transacao' => 'date',
+        'vl_transacao' => 'integer',
+        'ds_transacao' => 'string',
     );
 
 }
