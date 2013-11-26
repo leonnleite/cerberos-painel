@@ -39,12 +39,12 @@ class ControllerSelecao extends ControllerAbstract
      */
     public function loadGridSearchAction ()
     {
-        $query = 'selecao s inner join pais p on p.sq_pais = s.sq_pais';
+        $query = 'selecao s inner join pais p on p.id_pais = s.id_pais';
 
         $grid = \br\com\cf\library\core\grid\Grid::factory()
-                ->primary('sq_selecao')
+                ->primary('id_selecao')
                 ->columns(array(
-                    0 => array('s.sq_selecao' => 'sq_selecao'),
+                    0 => array('s.id_selecao' => 'id_selecao'),
                     1 => array('s.nm_selecao' => 'nm_selecao'),
                     2 => array('p.nm_pais' => 'nm_pais')
                 ))

@@ -13,14 +13,12 @@ use br\com\cf\library\core\controller\ControllerAbstract,
 /**
  * @author Michael F. Rodrigues <cerberosnash@gmail.com>
  */
-class ControllerUsuario extends ControllerAbstract
-{
+class ControllerUsuario extends ControllerAbstract {
 
     /**
      * @return void
      */
-    public function authAction ()
-    {
+    public function authAction() {
 
         Auth::factory()->autheticate(array(
             'tx_email' => $this->getParam('tx_email'),
@@ -40,8 +38,7 @@ class ControllerUsuario extends ControllerAbstract
     /**
      * return void
      */
-    public function logoffAction ()
-    {
+    public function logoffAction() {
         Auth::logoff();
         header('Location: ' . Bootstrap::factory()->getConfig()->getParam('config.url'));
     }
@@ -49,16 +46,14 @@ class ControllerUsuario extends ControllerAbstract
     /**
      * @return void
      */
-    public function formAuthAction ()
-    {
+    public function formAuthAction() {
         $this->setView('usuario', 'formAuth')->render();
     }
 
     /**
      * @return void
      */
-    public function formEditAction ()
-    {
+    public function formEditAction() {
         try {
 
             $usuario = BusinessUsuario::factory()->findUsuarioById($this->getParam('id_usuario'));
@@ -78,16 +73,14 @@ class ControllerUsuario extends ControllerAbstract
     /**
      * 
      */
-    public function formCreateAction ()
-    {
+    public function formCreateAction() {
         $this->setView('usuario', 'formCreate')->render();
     }
 
     /**
      * @return void
      */
-    public function editAction ()
-    {
+    public function editAction() {
         try {
             BusinessUsuario::factory()->edit($this->getParams());
             $response = array('status' => 'success', 'message' => 'Alteração concluída com sucesso!');
@@ -101,8 +94,7 @@ class ControllerUsuario extends ControllerAbstract
     /**
      * @return void
      */
-    public function createAction ()
-    {
+    public function createAction() {
         try {
             BusinessUsuario::factory()->save($this->getParams());
             $response = array('status' => 'success', 'message' => 'Novo usuário cadastrado com sucesso!');
@@ -116,8 +108,7 @@ class ControllerUsuario extends ControllerAbstract
     /**
      * @return void
      */
-    public function listAction ()
-    {
+    public function listAction() {
 
         $usuarios = BusinessUsuario::factory()->listActiveUsuario();
 
@@ -129,8 +120,7 @@ class ControllerUsuario extends ControllerAbstract
     /**
      * @return void
      */
-    public function listClienteAction ()
-    {
+    public function listClienteAction() {
 
         $usuarios = BusinessUsuario::factory()->listActiveCliente();
 
@@ -142,8 +132,7 @@ class ControllerUsuario extends ControllerAbstract
     /**
      * @return void
      */
-    public function listAdministradorAction ()
-    {
+    public function listAdministradorAction() {
 
         $usuarios = BusinessUsuario::factory()->listActiveAdministrador();
 
@@ -155,8 +144,7 @@ class ControllerUsuario extends ControllerAbstract
     /**
      * @return void
      */
-    public function deleteAction ()
-    {
+    public function deleteAction() {
         try {
             BusinessUsuario::factory()->delete($this->getParam('id'));
             $response = array('status' => 'success', 'message' => 'Usuário excluído com sucesso!');
@@ -170,8 +158,7 @@ class ControllerUsuario extends ControllerAbstract
     /**
      * @return void
      */
-    public function findClienteByCpfAction ()
-    {
+    public function findClienteByCpfAction() {
         try {
 
             $usuario = BusinessUsuario::factory()->findClienteByCpf(preg_replace("/[^0-9]/", "", $this->getParam('nu_cpf')));

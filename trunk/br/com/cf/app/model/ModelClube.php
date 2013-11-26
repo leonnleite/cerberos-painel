@@ -22,7 +22,7 @@ class ModelClube extends ModelAbstract {
     /**
      * @var string
      */
-    protected $_primary = 'sq_clube';
+    protected $_primary = 'id_clube';
 
     /**
      * @var string
