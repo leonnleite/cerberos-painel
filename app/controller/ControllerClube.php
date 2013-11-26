@@ -39,12 +39,12 @@ class ControllerClube extends ControllerAbstract
      */
     public function loadGridSearchAction ()
     {
-        $query = 'clube c inner join pais p on p.sq_pais = c.sq_pais';
+        $query = 'clube c inner join pais p on p.id_pais = c.id_pais';
 
         $grid = \br\com\cf\library\core\grid\Grid::factory()
-                ->primary('sq_clube')
+                ->primary('id_clube')
                 ->columns(array(
-                    0 => array('c.sq_clube' => 'sq_clube'),
+                    0 => array('c.id_clube' => 'id_clube'),
                     1 => array('c.nm_clube' => 'nm_clube'),
                     2 => array('p.nm_pais' => 'nm_pais')
                 ))

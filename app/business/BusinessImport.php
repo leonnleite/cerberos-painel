@@ -61,7 +61,7 @@ class BusinessImport extends BusinessAbstract
 
         $sql = '';
 
-        $query = "insert into pais (sq_pais,nm_pais,nm_confederacao,cd_pais) values (%d,'%s','%s','%s');\r\n";
+        $query = "insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (%d,'%s','%s','%s');\r\n";
 
         for ($active = $beginPageNumber; $active <= $endPageNumber; $active++) {
 
@@ -89,7 +89,7 @@ class BusinessImport extends BusinessAbstract
 
         $sql = '';
 
-        $query = "insert into clube (sq_clube,sq_pais,nm_clube) values (%d,%d,%s);\r\n";
+        $query = "insert into clube (id_clube,id_pais,nm_clube) values (%d,%d,%s);\r\n";
 
         for ($active = $beginPageNumber; $active <= $endPageNumber; $active++) {
 
@@ -115,7 +115,7 @@ class BusinessImport extends BusinessAbstract
 
         $sql = '';
 
-        $query = "insert into selecao (sq_selecao,sq_pais,nm_selecao) values (%d,%d,%s);\r\n";
+        $query = "insert into selecao (id_selecao,id_pais,nm_selecao) values (%d,%d,%s);\r\n";
 
         $html = file_get_html("http://sofifa.com/br/fifa13/team/national");
 
@@ -135,14 +135,14 @@ class BusinessImport extends BusinessAbstract
     public function generateInsertsPlayers ()
     {
         $query = $query = "insert into jogador (
-            sq_jogador,
+            id_jogador,
             nm_abreviado,
             nm_completo,
             dt_nascimento,
             nu_altura,
             nu_peso,
             tx_pe_preferido,
-            sq_pais,
+            id_pais,
             nu_overall,
             cd_po_preferida_1,
             cd_po_preferida_2,
@@ -186,8 +186,8 @@ class BusinessImport extends BusinessAbstract
             nu_dribles_habilidade,
             tx_ataque,
             tx_defesa,
-            sq_clube,
-            sq_selecao,
+            id_clube,
+            id_selecao,
             id_sofifa) values %s\r\n";
 
         $lists = glob('../doc/importacao/jogadores/links-perfis/lista-links-perfis-jogadores-*.txt');
@@ -217,7 +217,7 @@ class BusinessImport extends BusinessAbstract
 
         $html = file_get_html("{$link}?responsive=off#");
 
-        $sq_jogador = current(explode('-', str_replace('http://sofifa.com/br/fifa13/player/', '', $link)));
+        $id_jogador = current(explode('-', str_replace('http://sofifa.com/br/fifa13/player/', '', $link)));
 
         $nm_abreviado = trim($html->find('ul[class="grid-12 breadcrumbs"] li a', 3)->plaintext);
 
@@ -233,14 +233,14 @@ class BusinessImport extends BusinessAbstract
 
         $tx_pe_preferido = trim(str_replace(array('Pé preferido', ' '), array('', ''), $container[0]->find('div[class="grid-6"] ul[class="no-bullet"] li', 4)->plaintext));
 
-        $sq_pais = str_replace('/br/fifa13/player/nation/', '', $container[0]->find('div[class="grid-6"] ul[class="no-bullet"] li', 5)->find('a', 0)->href);
+        $id_pais = str_replace('/br/fifa13/player/nation/', '', $container[0]->find('div[class="grid-6"] ul[class="no-bullet"] li', 5)->find('a', 0)->href);
 
         if ($container[1]->find('div[class="grid-3-3 player-team"] h6 a', 0)->innertext) {
-            $sq_clube = current(explode('-', str_replace('/br/fifa13/team/', '', $container[1]->find('div[class="grid-3-3 player-team"] a', 0)->href)));
+            $id_clube = current(explode('-', str_replace('/br/fifa13/team/', '', $container[1]->find('div[class="grid-3-3 player-team"] a', 0)->href)));
         }
 
         if ($container[1]->find('div[class="grid-3-3 player-team"] h6 a', 1)->innertext) {
-            $sq_selecao = current(explode('-', str_replace('/br/fifa13/team/', '', $container[1]->find('div[class="grid-3-3 player-team"] h6 a', 1)->href)));
+            $id_selecao = current(explode('-', str_replace('/br/fifa13/team/', '', $container[1]->find('div[class="grid-3-3 player-team"] h6 a', 1)->href)));
         }
 
         $h6s = $container[2]->find('h6');
@@ -343,7 +343,7 @@ class BusinessImport extends BusinessAbstract
 //        var_dump($nu_potencial, $nu_reputacao_internacional, $nu_pe_ruim, $nu_dribles_habilidade, $tx_ataque, $tx_defesa, $id_sofifa);
 //        exit;
 
-        return sprintf($values, $id_sofifa, '"' . $nm_abreviado . '"', '"' . $nm_completo . '"', $dt_nascimento, $nu_altura, $nu_peso, $tx_pe_preferido, $sq_pais, $nu_overall, $cd_po_preferida_1, $cd_po_preferida_2, $cd_po_preferida_3, $nu_aceleracao, $nu_velocidade_final, $nu_agilidade, $nu_equilibrio, $nu_pulo, $nu_resistencia, $nu_forca, $nu_reacao, $nu_agressao, $nu_intercepcao, $nu_posicionamento, $nu_visao_jogo, $nu_controle_bola, $nu_cruzamento, $nu_drible, $nu_finalizacao, $nu_cobranca_falta, $nu_cabeceio, $nu_passe_longo, $nu_passe_curto, $nu_marcacao, $nu_forca_chute, $nu_chute_longe, $nu_roubada_bola, $nu_carrinho, $nu_voleios, $nu_curva, $nu_penaltis, $nu_salto, $nu_habilidade_mao, $nu_habilidade_pe, $nu_reflexo, $nu_posicionamento_goleiro, $nu_potencial, $nu_reputacao_internacional, $nu_pe_ruim, $nu_dribles_habilidade, $tx_ataque, $tx_defesa, $sq_clube, $sq_selecao, $sq_jogador);
+        return sprintf($values, $id_sofifa, '"' . $nm_abreviado . '"', '"' . $nm_completo . '"', $dt_nascimento, $nu_altura, $nu_peso, $tx_pe_preferido, $id_pais, $nu_overall, $cd_po_preferida_1, $cd_po_preferida_2, $cd_po_preferida_3, $nu_aceleracao, $nu_velocidade_final, $nu_agilidade, $nu_equilibrio, $nu_pulo, $nu_resistencia, $nu_forca, $nu_reacao, $nu_agressao, $nu_intercepcao, $nu_posicionamento, $nu_visao_jogo, $nu_controle_bola, $nu_cruzamento, $nu_drible, $nu_finalizacao, $nu_cobranca_falta, $nu_cabeceio, $nu_passe_longo, $nu_passe_curto, $nu_marcacao, $nu_forca_chute, $nu_chute_longe, $nu_roubada_bola, $nu_carrinho, $nu_voleios, $nu_curva, $nu_penaltis, $nu_salto, $nu_habilidade_mao, $nu_habilidade_pe, $nu_reflexo, $nu_posicionamento_goleiro, $nu_potencial, $nu_reputacao_internacional, $nu_pe_ruim, $nu_dribles_habilidade, $tx_ataque, $tx_defesa, $id_clube, $id_selecao, $id_jogador);
     }
 
     /**
@@ -375,7 +375,7 @@ class BusinessImport extends BusinessAbstract
         $jogadores = ModelJogador::factory()->findAll(0, 100000);
 
         foreach ($jogadores as $index => $jogador) {
-            file_put_contents("../doc/importacao/jogadores/fotos/{$jogador->sq_jogador}.png", file_get_contents("http://cdn.content.easports.com/fifa/fltOnlineAssets/2013/fut/items/images/players/web/{$jogador->sq_jogador}.png"));
+            file_put_contents("../doc/importacao/jogadores/fotos/{$jogador->id_jogador}.png", file_get_contents("http://cdn.content.easports.com/fifa/fltOnlineAssets/2013/fut/items/images/players/web/{$jogador->id_jogador}.png"));
         }
 
         return $this;
@@ -394,15 +394,15 @@ class BusinessImport extends BusinessAbstract
 
         foreach ($clubes as $index => $clube) {
 
-            $html = file_get_html("http://sofifa.com/br/fifa13/team/{$clube->sq_clube}?responsive=off#");
+            $html = file_get_html("http://sofifa.com/br/fifa13/team/{$clube->id_clube}?responsive=off#");
             $container = $html->find('div[class="container-row"]');
 
             $url = $container[0]->find('div[class="grid-1"] img', 0)->src;
 
             if ($url) {
-                file_put_contents("../doc/importacao/clubes/fotos/logos/{$clube->sq_clube}.png", file_get_contents($url));
-                file_put_contents("../doc/importacao/clubes/fotos/uniformes/{$clube->sq_clube}-1.png", file_get_contents("http://cdn.content.easports.com/fifa/fltOnlineAssets/2013/fut/items/images/kits/web/j0_{$clube->sq_clube}.png"));
-                file_put_contents("../doc/importacao/clubes/fotos/uniformes/{$clube->sq_clube}-2.png", file_get_contents("http://cdn.content.easports.com/fifa/fltOnlineAssets/2013/fut/items/images/kits/web/j1_{$clube->sq_clube}.png"));
+                file_put_contents("../doc/importacao/clubes/fotos/logos/{$clube->id_clube}.png", file_get_contents($url));
+                file_put_contents("../doc/importacao/clubes/fotos/uniformes/{$clube->id_clube}-1.png", file_get_contents("http://cdn.content.easports.com/fifa/fltOnlineAssets/2013/fut/items/images/kits/web/j0_{$clube->id_clube}.png"));
+                file_put_contents("../doc/importacao/clubes/fotos/uniformes/{$clube->id_clube}-2.png", file_get_contents("http://cdn.content.easports.com/fifa/fltOnlineAssets/2013/fut/items/images/kits/web/j1_{$clube->id_clube}.png"));
             }
         }
 
@@ -422,15 +422,15 @@ class BusinessImport extends BusinessAbstract
 
         foreach ($selecoes as $index => $selecao) {
 
-            $html = file_get_html("http://sofifa.com/br/fifa13/team/{$selecao->sq_selecao}?responsive=off#");
+            $html = file_get_html("http://sofifa.com/br/fifa13/team/{$selecao->id_selecao}?responsive=off#");
             $container = $html->find('div[class="container-row"]');
 
             $url = $container[0]->find('div[class="grid-1"] img', 0)->src;
 
             if ($url) {
-                file_put_contents("../doc/importacao/selecoes/fotos/logos/{$selecao->sq_selecao}.png", file_get_contents($url));
-                file_put_contents("../doc/importacao/selecoes/fotos/uniformes/{$selecao->sq_selecao}-1.png", file_get_contents("http://cdn.content.easports.com/fifa/fltOnlineAssets/2013/fut/items/images/kits/web/j0_{$selecao->sq_selecao}.png"));
-                file_put_contents("../doc/importacao/selecoes/fotos/uniformes/{$selecao->sq_selecao}-2.png", file_get_contents("http://cdn.content.easports.com/fifa/fltOnlineAssets/2013/fut/items/images/kits/web/j1_{$selecao->sq_selecao}.png"));
+                file_put_contents("../doc/importacao/selecoes/fotos/logos/{$selecao->id_selecao}.png", file_get_contents($url));
+                file_put_contents("../doc/importacao/selecoes/fotos/uniformes/{$selecao->id_selecao}-1.png", file_get_contents("http://cdn.content.easports.com/fifa/fltOnlineAssets/2013/fut/items/images/kits/web/j0_{$selecao->id_selecao}.png"));
+                file_put_contents("../doc/importacao/selecoes/fotos/uniformes/{$selecao->id_selecao}-2.png", file_get_contents("http://cdn.content.easports.com/fifa/fltOnlineAssets/2013/fut/items/images/kits/web/j1_{$selecao->id_selecao}.png"));
             }
         }
 

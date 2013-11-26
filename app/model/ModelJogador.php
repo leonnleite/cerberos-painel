@@ -39,7 +39,7 @@ class ModelJogador extends ModelAbstract {
         'nu_altura' => 'integer',
         'nu_peso' => 'integer',
         'tx_pe_preferido' => 'string',
-        'sq_pais' => 'integer',
+        'id_pais' => 'integer',
         'nu_overall' => 'integer',
         'cd_po_preferida_1' => 'string',
         'cd_po_preferida_2' => 'string',
@@ -83,8 +83,8 @@ class ModelJogador extends ModelAbstract {
         'nu_dribles_habilidade' => 'integer',
         'tx_ataque' => 'string',
         'tx_defesa' => 'integer',
-        'sq_clube' => 'integer',
-        'sq_selecao' => 'integer',
+        'id_clube' => 'integer',
+        'id_selecao' => 'integer',
         'id_sofifa' => 'integer'
     );
 

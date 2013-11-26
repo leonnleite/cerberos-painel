@@ -42,9 +42,9 @@ class ControllerJogador extends ControllerAbstract
         $query = 'jogador j';
 
         $grid = \br\com\cf\library\core\grid\Grid::factory()
-                ->primary('sq_jogador')
+                ->primary('id_jogador')
                 ->columns(array(
-                    0 => array('j.sq_jogador' => 'sq_jogador'),
+                    0 => array('j.id_jogador' => 'id_jogador'),
                     1 => array('j.nm_abreviado' => 'nm_abreviado'),
                     2 => array('j.nm_completo' => 'nm_completo'),
                     3 => array('j.dt_nascimento' => 'dt_nascimento'),
