@@ -6,6 +6,10 @@ $js1 = array(
     array("js/index.js", false)
 );
 
+$js2 = array(
+    array("library/plastique/javascripts/application.js", false)
+);
+
 use br\com\cf\library\core\cache\Cache;
 ?>
 
@@ -34,16 +38,6 @@ use br\com\cf\library\core\cache\Cache;
         <![endif]-->
 
         <?php Cache::factory()->js($js1)->output()->clean(); ?>          
-
-        <style type="text/css">
-            nav#secondary {
-                float: left;
-                width: 300px;
-            }
-            .avatar{
-                cursor: pointer;
-            }
-        </style>
 
     </head>
     <body>
@@ -86,19 +80,130 @@ use br\com\cf\library\core\cache\Cache;
 
         <nav id="primary" class="main-nav">
             <ul>
-                <!--Menu 1-->
+
                 <li id="container" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>Master Liga <span class="caret"></span></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>Perfil <span class="caret"></span></a>
+
                     <ul class="dropdown-menu">
                         <li>
                             <a class="linkcontent" value="/jogador/search" href="#">
-                                <i class="icon-search"></i> Jogos
+                                <i class="icon-search"></i> Editar
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/jogador/search" href="#">
+                                <i class="icon-search"></i> Amigos
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li id="container" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>Jogadores <span class="caret"></span></a>
+
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="linkcontent" value="/jogador/search" href="#">
+                                <i class="icon-search"></i> Trocar
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/jogador/search" href="#">
+                                <i class="icon-search"></i> Propostas Pendentes
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/jogador/search" href="#">
+                                <i class="icon-search"></i> Transações da Liga
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/jogador/search" href="#">
+                                <i class="icon-search"></i> Contratar
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/jogador/search" href="#">
+                                <i class="icon-search"></i> Gerenciar
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/jogador/search" href="#">
+                                <i class="icon-search"></i> Salários
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li id="container" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>Transações <span class="caret"></span></a>
+
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="linkcontent" value="/jogador/search" href="#">
+                                <i class="icon-search"></i> Contratar
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/jogador/search" href="#">
+                                <i class="icon-search"></i> Salários
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li id="container" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>Campeonatos <span class="caret"></span></a>
+
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="linkcontent" value="/jogador/search" href="#">
+                                <i class="icon-search"></i> Calendário
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/jogador/search" href="#">
+                                <i class="icon-search"></i> Classificação
                             </a>
                         </li>
                         <li class="divider"></li>
                         <li>
                             <a class="linkcontent" value="/jogador/list" href="#">
-                                <i class="icon-list"></i> Tabela
+                                <i class="icon-list"></i> Jogos
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li id="container" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>Copas <span class="caret"></span></a>
+
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="linkcontent" value="/jogador/search" href="#">
+                                <i class="icon-search"></i> Grupos
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/jogador/search" href="#">
+                                <i class="icon-search"></i> Finais
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/jogador/list" href="#">
+                                <i class="icon-list"></i> Jogos
                             </a>
                         </li>
                         <li class="divider"></li>
@@ -109,150 +214,83 @@ use br\com\cf\library\core\cache\Cache;
                         </li>
                     </ul>
                 </li>
-                <!--Menu 2-->
+
                 <li id="container" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-group"></i>Copas <span class="caret"></span></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>Master Liga <span class="caret"></span></a>
+
                     <ul class="dropdown-menu">
                         <li>
-                            <a class="linkcontent" value="/clube/search" href="#">
-                                <i class="icon-warning-sign"></i> Grupos
+                            <a class="linkcontent" value="/jogador/search" href="#">
+                                <i class="icon-search"></i> Conta Corrente
                             </a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a class="linkcontent" value="/clube/list" href="#">
-                                <i class="icon-off"></i> Finais
+                            <a class="linkcontent" value="/jogador/search" href="#">
+                                <i class="icon-search"></i> Leilões
                             </a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a class="linkcontent" value="/clube/list" href="#">
-                                <i class="icon-off"></i> Jogos
+                            <a class="linkcontent" value="/jogador/list" href="#">
+                                <i class="icon-list"></i> Equipe 
                             </a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a class="linkcontent" value="/clube/list" href="#">
-                                <i class="icon-off"></i> Artilharia
+                            <a class="linkcontent" value="/jogador/list" href="#">
+                                <i class="icon-list"></i> Transações
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/jogador/list" href="#">
+                                <i class="icon-list"></i> Patrocínio
                             </a>
                         </li>
                     </ul>
                 </li>
-                <!--Menu 3-->
+
                 <li id="container" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown"><i class=" icon-trophy"></i>Minha Equipe <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="linkcontent" value="/selecao/search" href="#">
-                                <i class="icon-warning-sign"></i> Conta Corrente
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="linkcontent" value="/selecao/list" href="#">
-                                <i class="icon-off"></i> Leilões
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="linkcontent" value="/selecao/list" href="#">
-                                <i class="icon-off"></i> Minha Equipe
-                            </a>
-                        </li>
-                    </ul>
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>Fórum <span class="caret"></span></a>
                 </li>
-                <!--Menu 4-->
+
                 <li id="container" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown"><i class=" icon-trophy"></i>Calendário de Jogos <span class="caret"></span></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class=" icon-trophy"></i>Notificações <span class="caret"></span></a>
+
                     <ul class="dropdown-menu">
                         <li>
                             <a class="linkcontent" value="/selecao/search" href="#">
-                                <i class="icon-warning-sign"></i> Menu 1
+                                <i class="icon-warning-sign"></i> Lidas
                             </a>
                         </li>
                         <li class="divider"></li>
                         <li>
                             <a class="linkcontent" value="/selecao/list" href="#">
-                                <i class="icon-off"></i> Menu 2
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="linkcontent" value="/selecao/list" href="#">
-                                <i class="icon-off"></i> Menu 3
+                                <i class="icon-off"></i> Não Lidas
                             </a>
                         </li>
                     </ul>
                 </li>
-                <!--Menu 5-->
-                <li id="container" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown"><i class=" icon-trophy"></i>Classificações e Artilharia <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="linkcontent" value="/selecao/search" href="#">
-                                <i class="icon-warning-sign"></i> Menu 1
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="linkcontent" value="/selecao/list" href="#">
-                                <i class="icon-off"></i> Menu 2
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="linkcontent" value="/selecao/list" href="#">
-                                <i class="icon-off"></i> Menu 3
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <!--Menu 6-->
-                <li id="container" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown"><i class=" icon-trophy"></i>Mercado <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="linkcontent" value="/selecao/search" href="#">
-                                <i class="icon-warning-sign"></i> Menu 1
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="linkcontent" value="/selecao/list" href="#">
-                                <i class="icon-off"></i> Menu 2
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="linkcontent" value="/selecao/list" href="#">
-                                <i class="icon-off"></i> Menu 3
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <!--Menu 7-->
+
                 <li id="container" class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown"><i class=" icon-trophy"></i>Configurações <span class="caret"></span></a>
+
                     <ul class="dropdown-menu">
                         <li>
                             <a class="linkcontent" value="/selecao/search" href="#">
-                                <i class="icon-warning-sign"></i> Menu 1
+                                <i class="icon-warning-sign"></i> Pesquisar
                             </a>
                         </li>
                         <li class="divider"></li>
                         <li>
                             <a class="linkcontent" value="/selecao/list" href="#">
-                                <i class="icon-off"></i> Menu 2
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="linkcontent" value="/selecao/list" href="#">
-                                <i class="icon-off"></i> Menu 3
+                                <i class="icon-off"></i> Listar Todas
                             </a>
                         </li>
                     </ul>
                 </li>
+
                 <li class="">
                     <a href="/usuario/logoff">
                         <i class="icon-off"></i> Sair
@@ -263,39 +301,37 @@ use br\com\cf\library\core\cache\Cache;
         </nav>
 
         <nav id="secondary" class="main-nav">
-            <div class="profile-menu">
-                <div class="pull-left">
-                    <div class="avatar">
-                        <img title="Você" src="/img/avatars/usuarios/250.png" />
-                    </div>
-                    <div class="avatar">
-                        <img title="Sua Equipe" src="/img/avatars/equipes/974.png" />
-                    </div>
-                    <table class="title">
-                        <tr><td><strong>SALDO</strong></td></tr>
-                        <tr><td>1.000.000,00</td></tr>
-                        <tr><td><strong>SALÁRIOS</strong></td></tr>
-                        <tr><td>1.000.000,00</td></tr>
-                        <tr><td><strong>LÍQUIDO</strong></td></tr>
-                        <tr><td>1.000.000,00</td></tr>
-                    </table>
-                    <?php // print($this->nm_usuario); ?>
-                    <!--                </div>
-                                    <div class="pull-left">-->
-                    <!--                    <div class="title">
-                    
-                                        </div>-->
-                </div>
-                <!--<strong>VALÊNCIA CF</strong> (FPIREZ - SÉRIE A)-->
-                <!--                    <div class="">
-                                        <strong>VALÊNCIA CF</strong> (FPIREZ - SÉRIE A)
-                                    </div>-->
-                <!--                <div class="pull-right profile-menu-nav-collapse">
-                                    <button class="button black"><i class="icon-reorder"></i></button>
-                                </div>-->
-            </div>
 
             <div class="profile-menu">
+
+                <div class="pull-left">
+                    <div class="avatar">
+                        <img src="https://avatar-ssl.xboxlive.com/avatar/ekalil/avatarpic-l.png" />
+                    </div>
+                </div>
+
+                <div class="pull-left">
+                    <div class="title">
+                        <?php print($this->nm_usuario); ?>
+                    </div>
+                    <div class="btn-group">
+                        <button class="button mini inset black"><i class="icon-search"></i></button>
+                        <button class="button mini inset black">Projects</button>
+                        <button class="button mini inset black dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i></button>
+                        <ul class="dropdown-menu black-box-dropdown">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div class="pull-right profile-menu-nav-collapse">
+                    <button class="button black"><i class="icon-reorder"></i></button>
+                </div>
 
             </div>
 
