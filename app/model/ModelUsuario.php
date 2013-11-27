@@ -13,7 +13,7 @@ class ModelUsuario extends ModelAbstract {
     /**
      * @var string
      */
-    protected $_entry = '';
+    protected $_entry = 'default';
 
     /**
      * @var string

@@ -22,14 +22,12 @@ use br\com\cf\library\core\controller\ControllerAbstract,
 /**
  * @autor Michael F. Rodrigues <cerberosnash@gmail.com>
  */
-class ControllerIndex extends ControllerAbstract
-{
+class ControllerIndex extends ControllerAbstract {
 
     /**
      * @return void
      */
-    public function indexAction ()
-    {
+    public function indexAction() {
 
         if (!Auth::isAuthenticated()) {
             $this->forward('Usuario', 'formAuth');
@@ -39,15 +37,14 @@ class ControllerIndex extends ControllerAbstract
 
         $this->setView('index', $view)
                 ->set('background', '/img/wallpaper.jpg')
-                ->set('nm_usuario', Session::get('user')->nm_usuario)
+                ->set('nm_usuario', current(explode(' ', Session::get('user')->nm_usuario)))
                 ->render();
     }
 
     /**
      * @return void
      */
-    public function clienteAction ()
-    {
+    public function clienteAction() {
         $this->setView('index', 'cliente')->render();
     }
 
@@ -55,8 +52,7 @@ class ControllerIndex extends ControllerAbstract
      * @todo Test
      * @return void
      */
-    public function jasperAction ()
-    {
+    public function jasperAction() {
         try {
             Jasper::factory()
                     ->setParams(array("id_usuario" => $this->getParam('id_usuario')))
@@ -72,8 +68,7 @@ class ControllerIndex extends ControllerAbstract
      * @todo Test
      * @return void
      */
-    public function respectAction ()
-    {
+    public function respectAction() {
 
         try {
             /**
@@ -143,8 +138,7 @@ class ControllerIndex extends ControllerAbstract
      * @todo Test Email
      * @return void
      */
-    public function emailAction ()
-    {
+    public function emailAction() {
         try {
             set_time_limit(15);
             ini_set('memory_limit', '32M');
@@ -166,8 +160,7 @@ class ControllerIndex extends ControllerAbstract
      * Test Message
      * @todo
      */
-    public function messageAction ()
-    {
+    public function messageAction() {
         print Message::getMessage($this->getParam('message'));
     }
 
@@ -175,8 +168,7 @@ class ControllerIndex extends ControllerAbstract
      * Test Clean
      * @todo
      */
-    public function cleanCacheAction ()
-    {
+    public function cleanCacheAction() {
         if ($handle = opendir(CF_APP_CACHE_PATH)) {
             while (($file = readdir($handle)) !== false) {
                 if ($file != '.' && $file != '..') {
@@ -191,8 +183,7 @@ class ControllerIndex extends ControllerAbstract
      * Test PaymentRequest
      * @todo
      */
-    public function paymentRequestAction ()
-    {
+    public function paymentRequestAction() {
 
         $cfg = Bootstrap::factory()->getConfig();
 
@@ -226,8 +217,7 @@ class ControllerIndex extends ControllerAbstract
      * Test PaymentRequest
      * @todo
      */
-    public function paymentReturnAction ()
-    {
+    public function paymentReturnAction() {
         $file = CF_APP_CACHE_PATH . '/paymentReturn.js';
 
         file_put_contents($file, file_get_contents($file) . print_r($_REQUEST, true));
@@ -237,8 +227,7 @@ class ControllerIndex extends ControllerAbstract
      * Test notificationListenerAction
      * @todo
      */
-    public function notificationListenerAction ()
-    {
+    public function notificationListenerAction() {
 
         $paymentAdapter = Payment::factory('pagseguro');
 
@@ -276,8 +265,7 @@ class ControllerIndex extends ControllerAbstract
      * Test searchTransactionByCodeAction
      * @todo
      */
-    public function searchTransactionByCodeAction ()
-    {
+    public function searchTransactionByCodeAction() {
         $paymentAdapter = Payment::factory('pagseguro');
 
         $transaction_code = 'DA83F7BB-7466-442C-B7BF-708BD1DD158A';
@@ -345,8 +333,7 @@ class ControllerIndex extends ControllerAbstract
      * Test searchTransactionsByDateIntervalAction
      * @todo
      */
-    public function searchTransactionsByDateIntervalAction ()
-    {
+    public function searchTransactionsByDateIntervalAction() {
         print('searchTransactionsByDateIntervalAction');
     }
 
@@ -354,8 +341,7 @@ class ControllerIndex extends ControllerAbstract
      * Test searchTransactionsAbandonedAction
      * @todo
      */
-    public function searchTransactionsAbandonedAction ()
-    {
+    public function searchTransactionsAbandonedAction() {
         print('searchTransactionsAbandonedAction');
     }
 
@@ -363,8 +349,7 @@ class ControllerIndex extends ControllerAbstract
      * Test searchTransactionsAbandonedAction
      * @todo
      */
-    public function enderecoAction ()
-    {
+    public function enderecoAction() {
 
         include (CF_APP_LIBRARY_PATH . '/phpquery/phpQuery.php');
 
@@ -406,8 +391,7 @@ class ControllerIndex extends ControllerAbstract
      * Test Cpf WebService
      * @todo
      */
-    public function cpfAction ()
-    {
+    public function cpfAction() {
 
         $ch = curl_init('http://api.develman.com/receita/cpf.dm?xml&v=' . $this->getParam('numero'));
 
@@ -425,8 +409,7 @@ class ControllerIndex extends ControllerAbstract
      * Test encrypt
      * @todo
      */
-    public function encryptAction ()
-    {
+    public function encryptAction() {
 
         $key = Bootstrap::factory()->getConfig()->getParam('config.hash');
         $password = $this->getParam('password');
@@ -441,8 +424,7 @@ class ControllerIndex extends ControllerAbstract
      * Test decrypt
      * @todo
      */
-    public function decryptAction ()
-    {
+    public function decryptAction() {
 
         $key = Bootstrap::factory()->getConfig()->getParam('config.hash');
         $hash = $this->getParam('hash');
@@ -457,8 +439,7 @@ class ControllerIndex extends ControllerAbstract
      * Test checkout project
      * @todo
      */
-    public function checkoutAction ()
-    {
+    public function checkoutAction() {
         if (PHP_OS != 'WINNT') {
             print shell_exec(sprintf("svn update --force %s/*", CF_APP_BASE_PATH));
         }
@@ -468,8 +449,7 @@ class ControllerIndex extends ControllerAbstract
      * Test Tmp
      * @todo
      */
-    public function manterAgendaAction ()
-    {
+    public function manterAgendaAction() {
         $this->setView('tmp', 'manterAgenda')->render();
     }
 
@@ -477,8 +457,7 @@ class ControllerIndex extends ControllerAbstract
      * Test Tmp
      * @todo
      */
-    public function salvarAgendaAction ()
-    {
+    public function salvarAgendaAction() {
 
         $dias = $this->getParam('dia');
         $horarios = $this->getParam('horario');
@@ -497,8 +476,7 @@ class ControllerIndex extends ControllerAbstract
      * Test Tmp
      * @todo
      */
-    public function formUploadAction ()
-    {
+    public function formUploadAction() {
         $this->setView('tmp', 'upload')->render();
     }
 
@@ -506,8 +484,7 @@ class ControllerIndex extends ControllerAbstract
      * Test Upload
      * @todo
      */
-    public function uploadAction ()
-    {
+    public function uploadAction() {
 
         try {
             $copier = $movier = array();
@@ -535,8 +512,7 @@ class ControllerIndex extends ControllerAbstract
     /**
      * @todo Test
      */
-    public function testModelAbstractAction ()
-    {
+    public function testModelAbstractAction() {
         $model = \br\com\cf\app\model\ModelProduto::factory();
 
         $tmpl = "<br><h2>%s</h2><fieldset>%s</fieldset><hr><br><br>";
@@ -589,8 +565,7 @@ class ControllerIndex extends ControllerAbstract
     /**
      * @todo Test
      */
-    public function iniAction ()
-    {
+    public function iniAction() {
         $usuarios = \br\com\cf\app\model\ModelMunicipio::factory()->textual($this->getParam('tag'));
 
         foreach ($usuarios as $key => $value) {
@@ -601,8 +576,7 @@ class ControllerIndex extends ControllerAbstract
     /**
      * @todo Test
      */
-    public function tramiteAction ()
-    {
+    public function tramiteAction() {
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
 
@@ -610,8 +584,7 @@ class ControllerIndex extends ControllerAbstract
          * @return integer
          * @param integer $current
          */
-        function root ($current, $root = NULL)
-        {
+        function root($current, $root = NULL) {
 
             $selected = \br\com\cf\app\model\ModelUnidade::factory('corp')->find($current);
 
@@ -621,8 +594,7 @@ class ControllerIndex extends ControllerAbstract
         /**
          * 
          */
-        function childrens ($parent)
-        {
+        function childrens($parent) {
             $childrens = \br\com\cf\app\model\ModelUnidade::factory('corp')->childrens($parent);
             $aux = array();
             if (count($childrens) > 0) {
@@ -637,8 +609,7 @@ class ControllerIndex extends ControllerAbstract
         /**
          * 
          */
-        function make ($tree, $selected, $root = true)
-        {
+        function make($tree, $selected, $root = true) {
             $content = '';
 
             $ul = '<ul class="explorer1">%s</ul>';
@@ -678,8 +649,7 @@ class ControllerIndex extends ControllerAbstract
     /**
      * Database
      */
-    public function databaseAction ()
-    {
+    public function databaseAction() {
         /**
          * Find
          */
@@ -748,8 +718,7 @@ class ControllerIndex extends ControllerAbstract
     /**
      * @todo Test Logger
      */
-    public function loggerAction ()
-    {
+    public function loggerAction() {
         $log = \br\com\cf\library\core\logger\Logger::factory();
 
 //        $log = new KLogger("log.txt", KLogger::INFO);
@@ -761,8 +730,7 @@ class ControllerIndex extends ControllerAbstract
     /**
      * @todo Test Auth
      */
-    public function testAuthAction ()
-    {
+    public function testAuthAction() {
         $usuario = Auth::factory()->autheticate(array(
             'tx_email' => 'cerberosnash@gmail.com',
             'tx_senha' => md5('123456'),
@@ -774,16 +742,14 @@ class ControllerIndex extends ControllerAbstract
     /**
      * 
      */
-    public function gridAction ()
-    {
+    public function gridAction() {
         $this->setView('tmp', 'datatable')->render();
     }
 
     /**
      * @todo Test Grid
      */
-    public function gridPostgresAction ()
-    {
+    public function gridPostgresAction() {
         #Test Postgres
         $query = 'public.produto p inner join segmento s on s.sq_segmento = p.sq_segmento';
 
@@ -806,8 +772,7 @@ class ControllerIndex extends ControllerAbstract
     /**
      * 
      */
-    public function gridMysqlAction ()
-    {
+    public function gridMysqlAction() {
         #Test Mysql!
         $query = 'usuario u';
 
@@ -830,8 +795,7 @@ class ControllerIndex extends ControllerAbstract
     /**
      * 
      */
-    public function ganttAction ()
-    {
+    public function ganttAction() {
 
         $project1 = Project::factory(1, 'Violencia', '2013-01-14');
 

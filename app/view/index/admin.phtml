@@ -1,10 +1,12 @@
 <?php
 $js1 = array(
-    array("library/jquery/jquery.min.js", false),
-    array("library/validate/jquery.validate.pt-Br.js", false),
+    array("library/jquery/jquery-1.10.2.min.js", false),
+    array("library/inputmask/jquery.maskedinput-1.3.1.min.js", false),
+    array("library/validate/jquery.validate-1.11.1.js", false),
     array("js/util.js", false),
     array("js/index.js", false)
 );
+
 
 $js2 = array(
     array("library/plastique/javascripts/application.js", false)
@@ -86,7 +88,7 @@ use br\com\cf\library\core\cache\Cache;
 
                     <ul class="dropdown-menu">
                         <li>
-                            <a class="linkcontent" value="/jogador/search" href="#">
+                            <a class="linkcontent" value="/usuario/formCreate" href="#">
                                 <i class="icon-search"></i> Novo
                             </a>
                         </li>
@@ -348,7 +350,7 @@ use br\com\cf\library\core\cache\Cache;
 
                 <div class="pull-left">
                     <div class="avatar">
-                        <img src="https://avatar-ssl.xboxlive.com/avatar/ekalil/avatarpic-l.png" />
+                        <img src="/img/avatars/admin.png" />
                     </div>
                 </div>
 
@@ -358,14 +360,14 @@ use br\com\cf\library\core\cache\Cache;
                     </div>
                     <div class="btn-group">
                         <button class="button mini inset black"><i class="icon-search"></i></button>
-                        <button class="button mini inset black">Projects</button>
+                        <button class="button mini inset black">Online</button>
                         <button class="button mini inset black dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i></button>
                         <ul class="dropdown-menu black-box-dropdown">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
+                            <li><a href="#">Perfil</a></li>
+                            <li><a href="#">Amigos</a></li>
+                            <li><a href="#">Notificações</a></li>
                             <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
+                            <li><a href="#">Configurações</a></li>
                         </ul>
 
                     </div>
@@ -378,27 +380,51 @@ use br\com\cf\library\core\cache\Cache;
             </div>
 
             <ul class="secondary-nav-menu">
-                <li class="active">
+                <li class="">
                     <a href="stats.html">
-                        <i class="icon-dashboard"></i> Stats
+                        <i class="icon-dashboard"></i> Selecionado
                     </a>
                 </li>
 
                 <li>
                     <a href="#" id="modal-link">
-                        <i class="icon-random"></i> Open Modal
+                        <i class="icon-random"></i> Informações
                     </a>
                 </li>
 
                 <li id="notification-full-image">
                     <a href="#">
-                        <i class="icon-list-alt"></i> Notification #1
+                        <i class="icon-list-alt"></i> Saldo
                     </a>
                 </li>
 
                 <li id="notification-small-image">
                     <a href="#">
-                        <i class="icon-table"></i> Notification #2
+                        <i class="icon-table"></i> Chat
+                    </a>
+                </li>
+
+                <li id="notification-small-image">
+                    <a href="#">
+                        <i class="icon-table"></i> Meus Replays
+                    </a>
+                </li>
+
+                <li id="notification-small-image">
+                    <a href="#">
+                        <i class="icon-table"></i> Meus Rivais
+                    </a>
+                </li>
+
+                <li id="notification-small-image">
+                    <a href="#">
+                        <i class="icon-table"></i> Agenda
+                    </a>
+                </li>
+
+                <li id="notification-small-image">
+                    <a href="#">
+                        <i class="icon-table"></i> Youtube
                     </a>
                 </li>
             </ul>

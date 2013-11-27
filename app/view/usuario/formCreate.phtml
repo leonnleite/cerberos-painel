@@ -1,79 +1,120 @@
-<h2>Novo Usuário</h2>
-<hr>
-<fieldset>
-    <form id="formCreateUsuario" method="post" action="/usuario/create/ajax/true">
-        <div class="control-group">
-            <label class="control-label" for="nm_usuario">Nome</label>
-            <div class="controls">
-                <input class="input-xlarge focused required" id="nm_usuario" name="nm_usuario" type="text" maxlength="50">
+<script type="text/javascript" src="library/validate/jquery.validate-1.11.1.js"></script>
+
+<section id="main">
+    <div class="top-nav">
+        <div class="container-fluid">
+            <div class="row-fluid search-button-bar-container">
+                <div class="span12">
+                    <ul class="breadcrumb">
+                        <li><a href="#"><i class="icon-user"></i> Usuários </a></li>
+                        <li><a href="#"><i class="icon-user"></i> Novo </a></li>
+                    </ul>
+                    <a class="search-button-trigger" href="#"><i class="icon-search"></i></a>
+                </div>
+            </div>
+
+            <div class="row-fluid search-bar-nav">
+                <div class="span12">
+                    <form>
+                        <input class="search" placeholder="Search..." type="text">
+                    </form>
+                </div>
             </div>
         </div>
-        <div class="control-group">
-            <label class="control-label" for="nu_cpf">CPF</label>
-            <div class="controls">
-                <input class="input-xlarge focused required cpf" id="nu_cpf" name="nu_cpf" type="text" maxlength="14">
+    </div>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+
+                <div class="box">
+                    <div class="tab-header">
+                        Novo Usuário
+                        <span class="pull-right">
+                            <span class="options">
+                                <a href="#"><i class="icon-cog"></i></a>
+                            </span>
+                        </span>
+                    </div>
+                    <form id="formCreateUsuario" class="fill-up" action="/usuario/create/ajax/true" method="post">
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <div class="padded">
+                                    <div class="input">
+                                        <input class="required" title="informe o nome completo!" placeholder="Nome Completo" type="text" name="nm_usuario">
+                                    </div>
+                                    <div class="input">
+                                        <input class="required" title="informe um email válido!" placeholder="Email" type="email" name="tx_email">
+                                    </div>
+                                    <div class="input">
+                                        <input class="required" title="informe um nick válido da live!" placeholder="Nick Live" type="text" name="lg_live">
+                                    </div>
+
+                                    <div class="input">
+                                        <input class="required" title="informe um senha segura!" placeholder="Senha" class="error" type="password" name="tx_senha">
+                                    </div>
+
+                                    <div class="note pull-right">defina uma senha segura!</div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="button blue">Salvar</button>
+                            <button type="reset" class="button">Cancelar</button>
+                            <div class="pull-right">
+                                <div class="input">
+                                    <input id="fg_perfil" class="normal-check" type="checkbox" name="fg_perfil">
+                                    <label for="fg_perfil">Este usuário é Administrador?</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-        <div class="control-group">
-            <label class="control-label" for="fg_perfil">Perfil</label>
-            <div class="controls">
-                <select id="fg_perfil" name="fg_perfil" class="input-xlarge">
-                    <option value="0">Cliente</option>
-                    <option value="1">Administrador</option>
-                </select>
+
+        <!--DEFINIR COMO PARTIALS FOOTERS-->
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="footer">
+                    <div>2014 © Painel FIFA 2014</div>
+                    <div>desenvolvido por <a href="https://nexussit.com.br">Nexuss</a></div>
+                </div>
             </div>
         </div>
-        <div class="control-group">
-            <label class="control-label" for="tx_email">Email</label>
-            <div class="controls">
-                <input class="input-xlarge focused required email" id="tx_email" name="tx_email" type="text" maxlength="50">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="tx_senha">Senha</label>
-            <div class="controls">
-                <input class="input-xlarge focused required" id="tx_senha" name="tx_senha" type="password" minlength="6">
-            </div>
-        </div>
-        <div class="">
-            <button type="submit" class="btn btn-primary">Salvar</button>
-            <button class="btn" type="reset">Limpar</button>
-        </div>
-    </form>
-</fieldset>
+        <!--DEFINIR COMO PARTIALS FOOTERS-->
+    </div>
+</section>
 
 <script type="text/javascript">
 
-        !(function($){
-        'use strict'
-        $(document).ready(function(){
-            
-            $('#nu_cpf').mask('999.999.999-99');
-          
-            // Validacao do Formulario : Novo Usuario
+
+    !(function($) {
+
+        $(document).ready(function() {
+
             var formNew = $('#formCreateUsuario');
             var actionNew = formNew.attr('action');
-       
+
             $("#formCreateUsuario").validate({
                 errorClass: "help-inline",
                 submitHandler: function() {
-                    if(confirm('Você tem certeza que deseja cadastrar este novo usuário?')){
-                        $.post(actionNew, formNew.serialize(), function(response){
-                            if(response.status == 'success'){
-                                formNew.each(function(){
+                    if (confirm('Você tem certeza que deseja cadastrar este novo usuário?')) {
+                        $.post(actionNew, formNew.serialize(), function(response) {
+                            if (response.status === 'success') {
+                                formNew.each(function() {
                                     this.reset();
                                 });
                             }
                             Util.showMessageBox(response);
-                        }, 'json') ;  
+                        }, 'json');
                     }
                 }
             });
-        
+
         });
 
-
     })(jQuery);
-
 
 </script>

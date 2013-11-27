@@ -7,8 +7,7 @@ use br\com\cf\library\core\connection\Connection;
 /**
  * @author Michael F. Rodrigues <cerberosnash@gmail.com>
  */
-abstract class ModelAbstract
-{
+abstract class ModelAbstract {
 
     /**
      * @var string 
@@ -63,8 +62,7 @@ abstract class ModelAbstract
     /**
      * @return void
      */
-    protected function __construct ($entry = NULL)
-    {
+    protected function __construct($entry = NULL) {
 
         $entry = (is_null($entry)) ? $this->_entry : $entry;
 
@@ -77,8 +75,7 @@ abstract class ModelAbstract
     /**
      * @return ModelAbstract
      */
-    public static function factory ($entry = NULL)
-    {
+    public static function factory($entry = NULL) {
         $class = get_called_class();
 
         return new $class($entry);
@@ -88,8 +85,7 @@ abstract class ModelAbstract
      * @return integer
      * @param array $object
      */
-    public function insert ($object)
-    {
+    public function insert($object) {
         $count = 1;
 
         $jokers = $fields = array();
@@ -129,8 +125,7 @@ abstract class ModelAbstract
      * @return integer
      * @param array $object
      */
-    public function update ($object)
-    {
+    public function update($object) {
 
         if (!array_key_exists($this->_primary, $object)) {
             throw new \Exception("A chave primária ($this->_primary) do registro não foi informada!");
@@ -173,8 +168,7 @@ abstract class ModelAbstract
      * @return integer
      * @param integer $id
      */
-    public function delete ($id)
-    {
+    public function delete($id) {
 
         try {
 
@@ -196,8 +190,7 @@ abstract class ModelAbstract
      * @return \stdClass
      * @param integer $id
      */
-    public function find ($id)
-    {
+    public function find($id) {
         try {
 
             $fields = $this->_fields;
@@ -226,8 +219,7 @@ abstract class ModelAbstract
      * @param string $order
      * @param string $asc
      */
-    public function findAll ($offset = 0, $limit = 10, $order = null, $asc = 'asc')
-    {
+    public function findAll($offset = 0, $limit = 10, $order = null, $asc = 'asc') {
         if (is_null($order)) {
             $order = $this->_primary;
         }
@@ -255,8 +247,7 @@ abstract class ModelAbstract
     /**
      * @return array
      */
-    public function findByParam ($object)
-    {
+    public function findByParam($object) {
 
         $count = 1;
 
@@ -292,8 +283,7 @@ abstract class ModelAbstract
     /**
      * @return ModelAbstract
      */
-    public function beginTransaction ()
-    {
+    public function beginTransaction() {
         $this->_conn->beginTransaction();
         return $this;
     }
@@ -301,8 +291,7 @@ abstract class ModelAbstract
     /**
      * @return ModelAbstract
      */
-    public function commit ()
-    {
+    public function commit() {
         $this->_conn->commit();
         return $this;
     }
@@ -310,8 +299,7 @@ abstract class ModelAbstract
     /**
      * @return ModelAbstract
      */
-    public function rollback ()
-    {
+    public function rollback() {
         $this->_conn->rollBack();
         return $this;
     }
@@ -319,8 +307,7 @@ abstract class ModelAbstract
     /**
      * @return void
      */
-    private function _check ()
-    {
+    private function _check() {
         if (is_null($this->_fields)) {
             throw new \Exception('Os campos da tabela não foram definidos!');
         }
