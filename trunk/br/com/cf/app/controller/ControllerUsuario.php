@@ -96,7 +96,13 @@ class ControllerUsuario extends ControllerAbstract {
      */
     public function createAction() {
         try {
-            BusinessUsuario::factory()->save($this->getParams());
+
+            $params = $this->getParams();
+
+            $params['fg_perfil'] = (isset($params['fg_perfil']) && $params['fg_perfil'] === 'on') ? 1 : 0;
+            $params['tx_senha'] = md5($params['tx_senha']);
+
+            BusinessUsuario::factory()->save($params);
             $response = array('status' => 'success', 'message' => 'Novo usuário cadastrado com sucesso!');
         } catch (\Exception $e) {
             $response = array('status' => 'error', 'message' => $e->getMessage());

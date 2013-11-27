@@ -10,14 +10,12 @@ use br\com\cf\library\core\business\BusinessAbstract,
 /**
  * @author Michael F. Rodrigues <cerberosnash@gmail.com>
  */
-class BusinessUsuario extends BusinessAbstract
-{
+class BusinessUsuario extends BusinessAbstract {
 
     /**
      * @return BusinessUsuario
      */
-    public static function factory ()
-    {
+    public static function factory() {
         return new self();
     }
 
@@ -25,8 +23,7 @@ class BusinessUsuario extends BusinessAbstract
      * @return \stdClass
      * @param integer $id_usuario
      */
-    public function findUsuarioById ($id_usuario)
-    {
+    public function findUsuarioById($id_usuario) {
         return ModelUsuario::factory()->findUsuarioById($id_usuario);
     }
 
@@ -34,8 +31,7 @@ class BusinessUsuario extends BusinessAbstract
      * @return void
      * @param array $usuario
      */
-    public function edit ($usuario)
-    {
+    public function edit($usuario) {
         $usuario['nu_cpf'] = preg_replace("/[^0-9]/", "", $usuario['nu_cpf']);
         try {
             return ModelUsuario::factory()->update($usuario);
@@ -48,9 +44,7 @@ class BusinessUsuario extends BusinessAbstract
      * @return void
      * @param array $usuario
      */
-    public function save ($usuario)
-    {
-        $usuario['nu_cpf'] = preg_replace("/[^0-9]/", "", $usuario['nu_cpf']);
+    public function save($usuario) {
         try {
             return ModelUsuario::factory()->insert($usuario);
         } catch (\Exception $e) {
@@ -61,8 +55,7 @@ class BusinessUsuario extends BusinessAbstract
     /**
      * @return \stdClass[]
      */
-    public function listActiveUsuario ()
-    {
+    public function listActiveUsuario() {
         try {
             return ModelUsuario::factory()->listActiveUsuario();
         } catch (\Exception $e) {
@@ -73,16 +66,14 @@ class BusinessUsuario extends BusinessAbstract
     /**
      * @return \stdClass[]
      */
-    public function listActiveCliente ()
-    {
+    public function listActiveCliente() {
         return ModelUsuario::factory()->listActiveCliente();
     }
 
     /**
      * @return \stdClass[]
      */
-    public function listActiveAdministrador ()
-    {
+    public function listActiveAdministrador() {
         return ModelUsuario::factory()->listActiveAdministrador();
     }
 
@@ -90,8 +81,7 @@ class BusinessUsuario extends BusinessAbstract
      * @return void
      * @param integer $id_usuario
      */
-    public function delete ($id_usuario)
-    {
+    public function delete($id_usuario) {
         ModelUsuario::factory()->delete($id_usuario);
     }
 
@@ -99,8 +89,7 @@ class BusinessUsuario extends BusinessAbstract
      * @return \stdClass
      * @param string $nu_cpf
      */
-    public function findClienteByCpf ($nu_cpf)
-    {
+    public function findClienteByCpf($nu_cpf) {
         return ModelUsuario::factory()->findClienteByCpf($nu_cpf);
     }
 
