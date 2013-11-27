@@ -13,14 +13,12 @@ use br\com\cf\library\core\business\BusinessAbstract,
 /**
  * @author Michael F. Rodrigues <cerberosnash@gmail.com>
  */
-class BusinessImport extends BusinessAbstract
-{
+class BusinessImport extends BusinessAbstract {
 
     /**
      * @return BusinessImport
      */
-    public static function factory ()
-    {
+    public static function factory() {
         return new self();
     }
 
@@ -30,8 +28,7 @@ class BusinessImport extends BusinessAbstract
      * @param integer $beginPageNumber
      * @param integer $endPageNumber
      */
-    public function generateListLinksProfilesPlayers ($beginPageNumber = 1, $endPageNumber = 247)
-    {
+    public function generateListLinksProfilesPlayers($beginPageNumber = 1, $endPageNumber = 247) {
         include('../library/simplehtmldom/simple_html_dom.php');
 
         for ($active = $beginPageNumber; $active <= $endPageNumber; $active++) {
@@ -55,9 +52,17 @@ class BusinessImport extends BusinessAbstract
      * @param integer $beginPageNumber
      * @param integer $endPageNumber
      */
-    public function generateInsertsCountries ($beginPageNumber = 1, $endPageNumber = 4)
-    {
+    public function generateInsertsCountries($beginPageNumber = 1, $endPageNumber = 4) {
+
         include('../library/simplehtmldom/simple_html_dom.php');
+
+        $proxy = stream_context_create(array(
+            'http' => array(
+                'header' => 'Authorization: Basic ' . base64_encode('73762385149' . ':' . '2051206'),
+                'proxy' => 'https://pxdf01161.icmbio.gov.br:8080',
+                'request_fulluri' => true,
+            ))
+        );
 
         $sql = '';
 
@@ -65,7 +70,7 @@ class BusinessImport extends BusinessAbstract
 
         for ($active = $beginPageNumber; $active <= $endPageNumber; $active++) {
 
-            $html = file_get_html("http://sofifa.com/br/fifa13/nation/browse?page={$active}");
+            $html = file_get_html("http://sofifa.com/br/fifa13/nation/browse?page={$active}", false, $proxy);
 
             foreach ($html->find('table[class="responsive"] tr[class="odd"], table[class="responsive"] tr[class="even"]') as $tr) {
                 $sql .= sprintf($query, trim(str_replace('/br/fifa13/player/nation/', '', $tr->find('td[3] a', 0)->href)), trim($tr->find('td[3] a', 0)->plaintext), trim($tr->find('td[4]', 0)->plaintext), trim($tr->find('td[5]', 0)->plaintext));
@@ -83,8 +88,7 @@ class BusinessImport extends BusinessAbstract
      * @param integer $beginPageNumber
      * @param integer $endPageNumber
      */
-    public function generateInsertsClubs ($beginPageNumber = 1, $endPageNumber = 9)
-    {
+    public function generateInsertsClubs($beginPageNumber = 1, $endPageNumber = 9) {
         include('../library/simplehtmldom/simple_html_dom.php');
 
         $sql = '';
@@ -109,8 +113,7 @@ class BusinessImport extends BusinessAbstract
      * generateInsertsSelections
      * @return BusinessImport
      */
-    public function generateInsertsSelections ()
-    {
+    public function generateInsertsSelections() {
         include('../library/simplehtmldom/simple_html_dom.php');
 
         $sql = '';
@@ -132,8 +135,7 @@ class BusinessImport extends BusinessAbstract
      * generateInsertsPlayers
      * @return BusinessImport
      */
-    public function generateInsertsPlayers ()
-    {
+    public function generateInsertsPlayers() {
         $query = $query = "insert into jogador (
             id_jogador,
             nm_abreviado,
@@ -209,8 +211,7 @@ class BusinessImport extends BusinessAbstract
      * @return string
      * @param string $link
      */
-    public function generateInsertPlayer ($link)
-    {
+    public function generateInsertPlayer($link) {
         include('../library/simplehtmldom/simple_html_dom.php');
 
         $values = "('%s',%s,%s,'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s',%d,%d,'%s'),\r\n";
@@ -350,8 +351,7 @@ class BusinessImport extends BusinessAbstract
      * mergerInsertsPlayers
      * @return BusinessImport
      */
-    public function mergeInsertsPlayers ()
-    {
+    public function mergeInsertsPlayers() {
 
         $sql = '';
 
@@ -370,8 +370,7 @@ class BusinessImport extends BusinessAbstract
      * updatePhotosPlayers
      * @return BusinessImport
      */
-    public function updatePhotosPlayers ()
-    {
+    public function updatePhotosPlayers() {
         $jogadores = ModelJogador::factory()->findAll(0, 100000);
 
         foreach ($jogadores as $index => $jogador) {
@@ -385,8 +384,7 @@ class BusinessImport extends BusinessAbstract
      * updatePhotosClubs
      * @return BusinessImport
      */
-    public function updatePhotosClubs ()
-    {
+    public function updatePhotosClubs() {
 
         include('../library/simplehtmldom/simple_html_dom.php');
 
@@ -413,8 +411,7 @@ class BusinessImport extends BusinessAbstract
      * updatePhotosClubs
      * @return BusinessImport
      */
-    public function updatePhotosSelections ()
-    {
+    public function updatePhotosSelections() {
 
         include('../library/simplehtmldom/simple_html_dom.php');
 

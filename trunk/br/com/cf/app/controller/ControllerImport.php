@@ -10,15 +10,17 @@ use br\com\cf\library\core\controller\ControllerAbstract,
 /**
  * @autor Michael F. Rodrigues <cerberosnash@gmail.com>
  */
-class ControllerImport extends ControllerAbstract
-{
+class ControllerImport extends ControllerAbstract {
 
     /**
      * @return void
      */
-    public function indexAction ()
-    {
-        throw new Exception('Ocorreu um erro!');
+    public function indexAction() {
+
+
+        BusinessImport::factory()->generateInsertsCountries();
+
+//        throw new Exception('Ocorreu um erro!');
 //        set_time_limit(0);
 //
 //        $result = BusinessImport::factory()->updatePhotosSelections();
