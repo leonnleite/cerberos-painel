@@ -1,0 +1,30 @@
+table.tablesorter {
+
+}
+table.tablesorter th {
+
+}
+table.tablesorter td {
+
+}
+table.tablesorter .even {
+
+}
+table.tablesorter .odd {
+
+}
+table.tablesorter .header {
+    background-image: url(../img/bg.png);
+    background-repeat: no-repeat;
+    padding-left: 30px;
+    padding-top: 8px;
+    height: auto;
+}
+table.tablesorter .headerSortUp {
+    background-image: url(../img/asc.png);
+    background-repeat: no-repeat;
+}
+table.tablesorter .headerSortDown {
+    background-image: url(../img/desc.png);
+    background-repeat: no-repeat;
+}
