@@ -59,32 +59,32 @@ use br\com\cf\library\core\cache\Cache;
                         </form>
                     </div>
 
-                    <div id="register" class="login-wrapper animated" style="display: none;">
-                        <form action="http://beer2code.com/themes/plastique/pages/dashboard/stats.html">
-                            <div class="input-group">
-                                <input type="text" placeholder="email" class="input-transparent" />
-                                <input type="text" placeholder="first name" class="input-transparent"/>
-                                <input type="text" placeholder="last name" class="input-transparent"/>
-                                <input type="email" placeholder="confirm password" class="input-transparent"/>
-                                <input type="password" placeholder="password" class="input-transparent"/>
-                            </div>
-                            <button id="register-submit" type="submit" class="login-button">Register</button>
-                        </form>
-                    </div>
+                    <!--                    <div id="register" class="login-wrapper animated" style="display: none;">
+                                            <form action="http://beer2code.com/themes/plastique/pages/dashboard/stats.html">
+                                                <div class="input-group">
+                                                    <input type="text" placeholder="email" class="input-transparent" />
+                                                    <input type="text" placeholder="first name" class="input-transparent"/>
+                                                    <input type="text" placeholder="last name" class="input-transparent"/>
+                                                    <input type="email" placeholder="confirm password" class="input-transparent"/>
+                                                    <input type="password" placeholder="password" class="input-transparent"/>
+                                                </div>
+                                                <button id="register-submit" type="submit" class="login-button">Register</button>
+                                            </form>
+                                        </div>-->
 
                     <div id="forgot" class="login-wrapper animated" style="display: none;">
                         <form action="http://beer2code.com/themes/plastique/pages/dashboard/stats.html" method="get">
                             <div class="input-group">
                                 <input type="text" placeholder="email" class="input-transparent" />
                             </div>
-                            <button id="forgot-submit" type="submit" class="login-button">Recover</button>
+                            <button id="forgot-submit" type="submit" class="login-button">Recuperar Senha</button>
                         </form>
                     </div>
 
                     <div class="inner-well" style="text-align: center; margin: 20px 0;">
-                        <a href="#" id="login-link" class="button mini rounded gray"><i class="icon-signin"></i> Login</a>
-                        <a href="#" id="register-link" class="button mini rounded gray"><i class="icon-plus"></i> Register</a>
-                        <a href="#" id="forgot-link" class="button mini rounded gray"><i class="icon-question-sign"></i> Forgot Password?</a>
+                        <a href="#" id="login-link" class="button mini rounded gray"><i class="icon-signin"></i> Entrar</a>
+                        <!--<a href="#" id="register-link" class="button mini rounded gray"><i class="icon-plus"></i> Register</a>-->
+                        <a href="#" id="forgot-link" class="button mini rounded gray"><i class="icon-question-sign"></i> Recuperar Senha</a>
                     </div>
                 </div>
             </div>
@@ -94,32 +94,32 @@ use br\com\cf\library\core\cache\Cache;
     <script type="text/javascript">
 
         !(function($) {
-        'use strict'
-        $(document).ready(function() {
+            'use strict'
+            $(document).ready(function() {
 
-        // Validacao do Formulario : Novo Produto
-        var process = false;
-        var formNew = $('#formAuthUsuario');
-        var actionNew = formNew.attr('action');
+                // Validacao do Formulario : Novo Produto
+                var process = false;
+                var formNew = $('#formAuthUsuario');
+                var actionNew = formNew.attr('action');
 
-        $("#formAuthUsuario").validate({
-        errorClass: "help-inline",
-        submitHandler: function() {
-        if (!process) {
-        process = true;
-        $.post(actionNew, formNew.serialize(), function(response) {
-        if (response.status === 'success') {
-        window.location = response.url;
-        } else {
-        Util.showMessageBox(response);
-        }
-        process = false;
-        }, 'json');
-        }
-        }
-        });
+                $("#formAuthUsuario").validate({
+                    errorClass: "help-inline",
+                    submitHandler: function() {
+                        if (!process) {
+                            process = true;
+                            $.post(actionNew, formNew.serialize(), function(response) {
+                                if (response.status === 'success') {
+                                    window.location = response.url;
+                                } else {
+                                    Util.showMessageBox(response);
+                                }
+                                process = false;
+                            }, 'json');
+                        }
+                    }
+                });
 
-        });
+            });
 
         })(jQuery);
 
