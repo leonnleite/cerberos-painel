@@ -38,6 +38,7 @@ class ControllerIndex extends ControllerAbstract {
         $this->setView('index', $view)
                 ->set('background', '/img/wallpaper.jpg')
                 ->set('nm_usuario', current(explode(' ', Session::get('user')->nm_usuario)))
+                ->set('lg_live', Session::get('user')->lg_live)
                 ->render();
     }
 
