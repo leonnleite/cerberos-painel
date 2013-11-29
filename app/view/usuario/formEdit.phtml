@@ -1,0 +1,65 @@
+<script type="text/javascript" src="library/validate/jquery.validate-1.11.1.js"></script>
+
+<div class="box">
+    <div class="tab-header">
+        Editar
+        <span class="pull-right">
+            <span class="options">
+                <a href="#"><i class="icon-cog"></i></a>
+            </span>
+        </span>
+    </div>
+    <form id="formEditUsuario" class="fill-up" action="/usuario/edit/ajax/true" method="post">
+        <div class="row-fluid">
+            <div class="span6">
+                <div class="padded">
+                    <div class="input">
+                        <input class="required" type="hidden" name="id_usuario" value="<?php print($this->id_usuario); ?>">
+                        <input class="required" title="informe o nome completo!" placeholder="Nome Completo" type="text" name="nm_usuario" value="<?php print($this->nm_usuario); ?>">
+                    </div>
+                    <div class="input">
+                        <input class="required" title="informe um email válido!" placeholder="Email" type="email" name="tx_email" value="<?php print($this->tx_email); ?>">
+                    </div>
+                    <div class="input">
+                        <input class="required" title="informe um nick válido da live!" placeholder="Nick Live" type="text" name="lg_live" value="<?php print($this->lg_live); ?>">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="button blue">Salvar</button>
+            <div class="pull-right">
+                <div class="input">
+                    <input id="fg_perfil" class="normal-check" type="checkbox" <?php print($this->fg_perfil); ?> name="fg_perfil">
+                    <label for="fg_perfil">Este usuário é Administrador?</label>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+
+        var formNew = $('#formEditUsuario');
+        var actionNew = formNew.attr('action');
+
+        $("#formEditUsuario").validate({
+            errorClass: "help-inline",
+            submitHandler: function() {
+                if (confirm('Você tem certeza que deseja salvar as alterações do perfil do usuário?')) {
+                    $.post(actionNew, formNew.serialize(), function(response) {
+                        if (response.status === 'success') {
+                            Util.hideModal();
+                            Index.global.gridUsers.fnDraw(false);
+                        }
+                        Util.showMessageBox(response);
+                    }, 'json');
+                }
+            }
+        });
+
+    });
+
+</script>

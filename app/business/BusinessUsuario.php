@@ -24,7 +24,7 @@ class BusinessUsuario extends BusinessAbstract {
      * @param integer $id_usuario
      */
     public function findUsuarioById($id_usuario) {
-        return ModelUsuario::factory()->findUsuarioById($id_usuario);
+        return ModelUsuario::factory()->find($id_usuario);
     }
 
     /**
@@ -32,7 +32,6 @@ class BusinessUsuario extends BusinessAbstract {
      * @param array $usuario
      */
     public function edit($usuario) {
-        $usuario['nu_cpf'] = preg_replace("/[^0-9]/", "", $usuario['nu_cpf']);
         try {
             return ModelUsuario::factory()->update($usuario);
         } catch (\Exception $e) {

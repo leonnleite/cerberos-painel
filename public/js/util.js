@@ -14,6 +14,23 @@
     }
 
     /**
+     * Mostrar Modal
+     **/
+    Util.showModal = function(titleWindow, titleModal, url) {
+        $('#modalTitleWindow').html(titleWindow);
+        $('#modalTitle').html(titleModal);
+        $('#modalContent').load(url);
+        $('#modal').modal();
+    }
+
+    /**
+     * Ocultar Modal
+     **/
+    Util.hideModal = function() {
+        $('#modal').modal('hide');
+    }
+
+    /**
      * Reload Container
      **/
     Util.reloadContainer = function(url) {

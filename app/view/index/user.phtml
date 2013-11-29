@@ -1,9 +1,10 @@
 <?php
 $js1 = array(
-    array("library/jquery/jquery.min.js", false),
-    array("library/validate/jquery.validate.pt-Br.js", false),
+    array("library/jquery/jquery-1.10.2.min.js", false),
     array("js/util.js", false),
-    array("js/index.js", false)
+    array("js/index.js", false),
+    array("js/index.user.js", false),
+    array("js/index.user.global.js", false)
 );
 
 $js2 = array(
@@ -42,47 +43,11 @@ use br\com\cf\library\core\cache\Cache;
     </head>
     <body>
 
-        <div id="modal" class="black-box modal hide fade">
-            <div class="modal-header tab-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <span>Some modal title</span>
-            </div>
-            <div class="modal-body separator">
-                <h4>Text in a modal</h4>
-                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem.</p>
-            </div>
-            <div class="modal-footer">
-                <div class="inner-well">
-                    <a class="button mini rounded light-gray" data-dismiss="modal">Close</a>
-                    <a class="button mini rounded blue">Save changes</a>
-                </div>
-            </div>
-        </div>
-
-        <div id="modal-gallery" class="black-box modal modal-gallery hide fade">
-            <div class="modal-header tab-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <span class="modal-title"></span>
-            </div>
-            <div class="modal-body"><div class="modal-image"></div></div>
-            <div class="modal-footer">
-                <div class="pull-left">
-                    You can also change the images<br/> by scrolling the mouse wheel!
-                </div>
-                <div class="pull-right">
-                    <a class="button blue modal-next">Next <i class="icon-arrow-right icon-white"></i></a>
-                    <a class="button gray modal-prev"><i class="icon-arrow-left icon-white"></i> Previous</a>
-                    <a class="button green modal-play modal-slideshow" data-slideshow="5000"><i class="icon-play icon-white"></i> Slideshow</a>
-                    <a class="button black" target="_blank"><i class="icon-download"></i> Download</a>
-                </div>
-            </div>
-        </div>
-
         <nav id="primary" class="main-nav">
             <ul>
 
                 <li id="container" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>Jogadores <span class="caret"></span></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>Master Liga <span class="caret"></span></a>
 
                     <ul class="dropdown-menu">
                         <li>
@@ -120,23 +85,28 @@ use br\com\cf\library\core\cache\Cache;
                                 <i class="icon-search"></i> Salários
                             </a>
                         </li>
-                    </ul>
-                </li>
-
-
-                <li id="container" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>Transações <span class="caret"></span></a>
-
-                    <ul class="dropdown-menu">
+                        <li class="divider"></li>
                         <li>
                             <a class="linkcontent" value="/jogador/search" href="#">
-                                <i class="icon-search"></i> Contratar
+                                <i class="icon-search"></i> Conta Corrente
                             </a>
                         </li>
                         <li class="divider"></li>
                         <li>
                             <a class="linkcontent" value="/jogador/search" href="#">
-                                <i class="icon-search"></i> Salários
+                                <i class="icon-search"></i> Leilões
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/jogador/list" href="#">
+                                <i class="icon-list"></i> Equipe 
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="linkcontent" value="/jogador/list" href="#">
+                                <i class="icon-list"></i> Transações
                             </a>
                         </li>
                     </ul>
@@ -196,45 +166,7 @@ use br\com\cf\library\core\cache\Cache;
                     </ul>
                 </li>
 
-                <li id="container" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>Master Liga <span class="caret"></span></a>
 
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="linkcontent" value="/jogador/search" href="#">
-                                <i class="icon-search"></i> Conta Corrente
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="linkcontent" value="/jogador/search" href="#">
-                                <i class="icon-search"></i> Leilões
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="linkcontent" value="/jogador/list" href="#">
-                                <i class="icon-list"></i> Equipe 
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="linkcontent" value="/jogador/list" href="#">
-                                <i class="icon-list"></i> Transações
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="linkcontent" value="/jogador/list" href="#">
-                                <i class="icon-list"></i> Patrocínio
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li id="container" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>Fórum <span class="caret"></span></a>
-                </li>
 
                 <li class="">
                     <a href="/usuario/logoff">
@@ -282,26 +214,83 @@ use br\com\cf\library\core\cache\Cache;
 
             <ul class="secondary-nav-menu">
                 <li class="active">
-                    <a href="stats.html">
-                        <i class="icon-dashboard"></i> Stats
+                    <a href="#">
+                        <i class=""></i> Banco
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="icon-adjust"></i> Saldo: R$ 19.000,00
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="icon-adjust"></i> Saldo: R$ 19.000,00
                     </a>
                 </li>
 
                 <li>
-                    <a href="#" id="modal-link">
-                        <i class="icon-random"></i> Open Modal
+                    <a href="#">
+                        <i class="icon-money"></i> Salário: R$ 23.000,00
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="icon-magnet"></i> Total: R$ 23.000,00
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+<!--                        <i class="icon-magnet"></i> Total: R$ 23.000,00-->
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+<!--                        <i class="icon-magnet"></i> Total: R$ 23.000,00-->
                     </a>
                 </li>
 
                 <li id="notification-full-image">
                     <a href="#">
-                        <i class="icon-list-alt"></i> Notification #1
+                        <i class="icon-list-alt"></i> Saldo
                     </a>
                 </li>
 
                 <li id="notification-small-image">
                     <a href="#">
-                        <i class="icon-table"></i> Notification #2
+                        <i class="icon-table"></i> Chat
+                    </a>
+                </li>
+
+                <li id="notification-small-image">
+                    <a href="#">
+                        <i class="icon-table"></i> Meus Replays
+                    </a>
+                </li>
+
+                <li id="notification-small-image">
+                    <a href="#">
+                        <i class="icon-table"></i> Meus Rivais
+                    </a>
+                </li>
+
+                <li id="notification-small-image">
+                    <a href="#">
+                        <i class="icon-table"></i> Agenda
+                    </a>
+                </li>
+
+                <li id="notification-small-image">
+                    <a class="linkcontent" value="index/home" href="#">
+                        <i class="icon-table"></i> Youtube
+                    </a>
+                </li>
+
+                <li id="notification-small-image">
+                    <a class="linkcontent" value="index/forum" href="#">
+                        <i class="icon-table"></i> Fórum
                     </a>
                 </li>
             </ul>
