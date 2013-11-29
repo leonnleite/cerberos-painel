@@ -58,12 +58,12 @@ class ControllerUsuario extends ControllerAbstract {
 
             $usuario = BusinessUsuario::factory()->findUsuarioById($this->getParam('id_usuario'));
 
-            $this->setView('usuario', 'edit')
-                    ->set('id_usuario', $usuario['id_usuario'])
-                    ->set('nm_usuario', $usuario['nm_usuario'])
-                    ->set('nu_cpf', $usuario['nu_cpf'])
-                    ->set('fg_perfil', $usuario['fg_perfil'])
-                    ->set('tx_email', $usuario['tx_email'])
+            $this->setView('usuario', 'formEdit')
+                    ->set('id_usuario', $usuario->id_usuario)
+                    ->set('nm_usuario', $usuario->nm_usuario)
+                    ->set('tx_email', $usuario->tx_email)
+                    ->set('lg_live', $usuario->lg_live)
+                    ->set('fg_perfil', $usuario->fg_perfil == 1 ? 'checked' : '')
                     ->render();
         } catch (\Exception $e) {
             print('Ocorreu um erro ao tentar carregar as informações solicitadas!');
@@ -82,7 +82,12 @@ class ControllerUsuario extends ControllerAbstract {
      */
     public function editAction() {
         try {
-            BusinessUsuario::factory()->edit($this->getParams());
+
+            $params = $this->getParams();
+
+            $params['fg_perfil'] = (isset($params['fg_perfil']) && $params['fg_perfil'] === 'on') ? 1 : 0;
+
+            BusinessUsuario::factory()->edit($params);
             $response = array('status' => 'success', 'message' => 'Alteração concluída com sucesso!');
         } catch (\Exception $e) {
             $response = array('status' => 'error', 'message' => $e->getMessage());
@@ -115,70 +120,31 @@ class ControllerUsuario extends ControllerAbstract {
      * @return void
      */
     public function listAction() {
-
-        $usuarios = BusinessUsuario::factory()->listActiveUsuario();
-
-        $this->setView('usuario', 'list')
-                ->set('usuarios', $usuarios)
-                ->render();
+        $this->setView('usuario', 'list')->render();
     }
 
     /**
      * @return void
      */
-    public function listClienteAction() {
+    public function loadGridSearchAction() {
+        $query = 'usuario u';
 
-        $usuarios = BusinessUsuario::factory()->listActiveCliente();
+        $grid = \br\com\cf\library\core\grid\Grid::factory()
+                ->primary('id_usuario')
+                ->columns(array(
+                    0 => array('u.id_usuario' => 'id_usuario'),
+                    1 => array('u.nm_usuario' => 'nm_usuario'),
+                    2 => array('u.tx_email' => 'tx_email'),
+                    3 => array('u.lg_live' => 'lg_live'),
+                    4 => array('u.fg_perfil' => 'fg_perfil')
+                ))
+                ->query($query)
+                ->params($this->getParams())
+                ->make()
+                ->output()
+        ;
 
-        $this->setView('usuario', 'listCliente')
-                ->set('usuarios', $usuarios)
-                ->render();
-    }
-
-    /**
-     * @return void
-     */
-    public function listAdministradorAction() {
-
-        $usuarios = BusinessUsuario::factory()->listActiveAdministrador();
-
-        $this->setView('usuario', 'listAdministrador')
-                ->set('usuarios', $usuarios)
-                ->render();
-    }
-
-    /**
-     * @return void
-     */
-    public function deleteAction() {
-        try {
-            BusinessUsuario::factory()->delete($this->getParam('id'));
-            $response = array('status' => 'success', 'message' => 'Usuário excluído com sucesso!');
-        } catch (\Exception $e) {
-            $response = array('status' => 'error', 'message' => 'Ocorreu um erro ao tentar excluir o usuário!');
-        }
-
-        $this->json($response);
-    }
-
-    /**
-     * @return void
-     */
-    public function findClienteByCpfAction() {
-        try {
-
-            $usuario = BusinessUsuario::factory()->findClienteByCpf(preg_replace("/[^0-9]/", "", $this->getParam('nu_cpf')));
-
-            if (is_array($usuario)) {
-                $response = array('status' => 'success', 'id_usuario' => $usuario['id_usuario'], 'nm_usuario' => $usuario['nm_usuario']);
-            } else {
-                $response = array('status' => 'error', 'message' => 'Não foi encontrado um cliente com o cpf informado!');
-            }
-        } catch (\Exception $e) {
-            $response = array('status' => 'error', 'message' => 'Ocorreu um erro ao tentar verificar o CPF do Cliente!');
-        }
-
-        $this->json($response);
+        $this->json($grid);
     }
 
 }

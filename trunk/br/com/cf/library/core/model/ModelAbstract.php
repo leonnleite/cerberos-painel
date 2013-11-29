@@ -206,7 +206,7 @@ abstract class ModelAbstract {
 
             $stmt->execute();
 
-            return $stmt->fetchAll(\PDO::FETCH_OBJ);
+            return $stmt->fetch(\PDO::FETCH_OBJ);
         } catch (\PDOException $e) {
             throw new \Exception($e->getMessage());
         }

@@ -117,7 +117,7 @@ insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (31,'Luxemburg
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (179,'Paquistão','Ásia','PAK');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (191,'Uzbequistão','Ásia','UZB');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (128,'Maurício','África','MRI');
-insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (211,'Resto do Mundo','Outros','nation.code.211');
+insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (211,'Resto do Mundo','Outros','211');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (68,'Bermuda','América do Norte','BER');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (186,'Síria','Ásia','SYR');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (132,'Níger','África','NIG');
@@ -146,8 +146,8 @@ insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (106,'Chade','
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (164,'Jordânia','Ásia','JOR');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (114,'Etiópia','África','ETH');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (188,'Tailândia','Ásia','THA');
-insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (216,'Creation Centre','Outros','nation.code.216');
-insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (210,'Niezrzeszony','Outros','nation.code.210');
+insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (216,'Creation Centre','Outros','216');
+insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (210,'Niezrzeszony','Outros','210');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (142,'Suazilândia','África','SWZ');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (160,'Indonésia','Ásia','IDN');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (192,'Vietnã','Ásia','VIE');
@@ -162,15 +162,15 @@ insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (141,'Sudão',
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (187,'Tadjiquistão','Ásia','TJK');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (65,'Bahamas','América do Norte','BAH');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (91,'SÃO VICENTE E GRANADINAS','América do Norte','VIN');
-insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (206,'Groenlândia','Outros','nation.code.206');
-insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (209,'Jogadores Criados','Outros','nation.code.209');
+insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (206,'Groenlândia','Outros','206');
+insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (209,'Jogadores Criados','Outros','209');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (154,'Camboja','Ásia','CAM');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (137,'Seychelles','África','SEY');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (215,'New Caledonia','Oceânia','NCL');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (157,'Guam','Ásia','GUM');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (67,'Belize','América do Norte','BLZ');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (214,'Timor Leste','África','COM');
-insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (205,'Gibraltar','Outros','nation.code.205');
+insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (205,'Gibraltar','Outros','205');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (190,'Emirados Árabes Unidos','Ásia','UAE');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (152,'Butão','Ásia','BHU');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (123,'Líbia','África','LBY');
@@ -197,7 +197,7 @@ insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (193,'Iêmen',
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (194,'Samoa Americana','Oceânia','ASA');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (212,'Comores','Ásia','TLS');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (69,'ILHAS VIRGENS BRITÂNICAS','América do Norte','VGB');
-insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (75,'Internacional','Outros','nation.code.75');
+insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (75,'Internacional','Outros','75');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (204,'Vanuatu','Oceânia','VAN');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (143,'Tanzânia','África','TAN');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (64,'Aruba','América do Norte','ARU');
@@ -213,7 +213,3 @@ insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (86,'Nicarágu
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (189,'Turcomenistão','Ásia','TKM');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (184,'Cingapura','Ásia','SIN');
 insert into pais (id_pais,nm_pais,nm_confederacao,cd_pais) values (180,'PALESTINA','Ásia','PLE');
-
-
-
-select * from pais where id_pais = 209

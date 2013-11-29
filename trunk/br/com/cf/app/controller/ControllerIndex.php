@@ -27,6 +27,20 @@ class ControllerIndex extends ControllerAbstract {
     /**
      * @return void
      */
+    public function homeAction() {
+        $this->setView('index', 'home')->render();
+    }
+
+    /**
+     * @return void
+     */
+    public function forumAction() {
+        $this->setView('index', 'forum')->render();
+    }
+
+    /**
+     * @return void
+     */
     public function indexAction() {
 
         if (!Auth::isAuthenticated()) {

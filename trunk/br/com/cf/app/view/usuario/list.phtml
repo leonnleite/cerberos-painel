@@ -1,35 +1,105 @@
-<h2>Lista de Usuários</h2>
-<hr>
-<table class="table table-bordered table-striped tablesorter">
-    <thead>
-        <tr>
-            <th>Nome</th>
-            <th>CPF</th>
-            <th>Perfil</th>
-            <th>Email</th>
-            <th>Opções</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($this->usuarios as $usuario) : ?>
-            <tr>
-                <td><?php print($usuario['nm_usuario']); ?></td>
-                <td><?php print($usuario['nu_cpf']); ?></td>
-                <td><?php print($usuario['fg_perfil'] ? 'Administrador' : 'Cliente'); ?></td>
-                <td><?php print($usuario['tx_email']); ?></td>
-                <td>
-                    <img title="Editar" class="btn16" onClick="Usuario.editarUsuario(<?php print($usuario['id_usuario']); ?>)" src="/img/edit.png"> 
-                    <img title="Excluir" class="btn16" onClick="Usuario.excluirUsuario(<?php print($usuario['id_usuario']); ?>)" src="/img/delete.png"> 
-                </td>
-            </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+<style type="text/css">
+    .foto-jogador-100{
+        width: 100px;
+        height: 100px;
+    }
+</style>
+
+<section id="main">
+    <div class="top-nav">
+        <div class="container-fluid">
+            <div class="row-fluid search-button-bar-container">
+                <div class="span12">
+                    <ul class="breadcrumb">
+                        <li><a href="#"><i class="icon-user"></i> Usuários</a></li>
+                        <li class="active"><a href="#"><i class="icon-list"></i> Listar Todos</a></li>
+                    </ul>
+                    <a class="search-button-trigger" href="#"><i class="icon-search"></i></a>
+                </div>
+            </div>
+
+            <div class="row-fluid search-bar-nav">
+                <div class="span12">
+                    <form>
+                        <input class="search" placeholder="Search..." type="text">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="row-fluid">
+            <div class="box" style="position:relative;">
+                <div class="tab-header">
+                    Usuários
+                </div>
+                <div  class="dataTables_wrapper" role="grid">
+                    <table id="gridUsers" class="table table-striped data-table dataTable">
+                        <thead>
+                            <tr role="row">
+                                <th class="ui-state-default">
+                        <div class="DataTables_sort_wrapper">#<span class="DataTables_sort_icon css_right ui-icon ui-icon-triangle-1-n"></span></div>
+                        </th>
+                        <th class="ui-state-default">
+                        <div class="DataTables_sort_wrapper">N. Completo<span class="DataTables_sort_icon css_right ui-icon ui-icon-triangle-1-n"></span></div>
+                        </th>
+                        <th class="ui-state-default">
+                        <div class="DataTables_sort_wrapper">Email<span class="DataTables_sort_icon css_right ui-icon ui-icon-carat-2-n-s"></span></div>
+                        </th>
+                        <th class="ui-state-default">
+                        <div class="DataTables_sort_wrapper">Nick<span class="DataTables_sort_icon css_right ui-icon ui-icon-carat-2-n-s"></span></div>
+                        </th>
+                        <th class="ui-state-default">
+                        <div class="DataTables_sort_wrapper">Perfil<span class="DataTables_sort_icon css_right ui-icon ui-icon-carat-2-n-s"></span></div>
+                        </th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!--DEFINIR COMO PARTIALS FOOTERS-->
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="footer">
+                    <div>2014 © Painel FIFA 2014</div>
+                    <div>desenvolvido por <a href="https://nexussit.com.br">Nexuss</a></div>
+                </div>
+            </div>
+        </div>
+        <!--DEFINIR COMO PARTIALS FOOTERS-->
+
+    </div>
+</section>
+
 <script type="text/javascript">
-        !(function($){
-        'use strict'
-        $(document).ready(function(){
-            $(".table").tablesorter();
+
+    $(document).ready(function() {
+
+        $("#btnDetailUser").die('click').live('click', function() {
+            Util.showModal('Informações Usuário', 'Editar', '/usuario/formEdit/id_usuario/' + $(this).attr('id_usuario'));
         });
-    })(jQuery);
+
+        Index.global.gridUsers = $('#gridUsers').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            sPaginationType: "full_numbers",
+            bJQueryUI: true,
+            sAjaxSource: "/usuario/loadGridSearch/ajax/true/",
+            oLanguage: {
+                "sLengthMenu": "mostrar _MENU_",
+                "sZeroRecords": "nenhum jogador encontrado",
+                "sInfo": "mostrando _START_ até _END_ de _TOTAL_ jogadores",
+                "sInfoEmpty": "mostrando 0 até 0 de 0 jogadores",
+                "sInfoFiltered": "(filtrado de _MAX_ jogadores)"
+            },
+            fnRowCallback: function(nRow, aData, iDisplayIndex) {
+                $('td:eq(0)', nRow).html('<a title="Editar" id="btnDetailUser" id_usuario="' + aData[0] + '" href="#"><img class="avatar" src="https://avatar-ssl.xboxlive.com/avatar/' + aData[3] + '/avatarpic-l.png" /></a>');
+                $('td:eq(4)', nRow).html(aData[4] === '1' ? '<strong>Administrador</strong>' : 'Comum');
+            }
+        });
+    });
 </script>

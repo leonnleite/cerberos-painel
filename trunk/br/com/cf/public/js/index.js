@@ -1,5 +1,9 @@
 ;
-(function($) {
+{
+    var Index = {};
+
+    Index.global = {};
+
     $(document).ready(function() {
         $('.linkcontent').click(function() {
             $('#loaging-content-container').show();
@@ -8,4 +12,5 @@
             });
         });
     });
-}(jQuery));
+}
+;
