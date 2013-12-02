@@ -167,4 +167,21 @@ class ControllerJogador extends ControllerAbstract {
         $this->json($grid);
     }
 
+    /**
+     * @return void
+     */
+    public function formEditAction() {
+        try {
+
+            $jogador = \br\com\cf\app\model\ModelJogador::factory()->find($this->getParam('id_jogador'));
+
+            $this->setView('jogador', 'formEdit')
+                    ->set('id_jogador', $jogador->id_jogador)
+                    ->set('nm_jogador', $jogador->nm_completo)
+                    ->render();
+        } catch (\Exception $e) {
+            print('Ocorreu um erro ao tentar carregar as informações solicitadas!');
+        }
+    }
+
 }
