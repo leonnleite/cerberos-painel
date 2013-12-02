@@ -1,14 +1,20 @@
 <script type="text/javascript" src="library/datatables/plugins/jquery.dataTables.columnFilter.js"></script>
 
+<style type="text/css">
+    .dataTables_filter{
+        display: none;
+    }
+</style>
+
 <section id="main">
     <div class="top-nav">
         <div class="container-fluid">
             <div class="row-fluid search-button-bar-container">
                 <div class="span12">
                     <ul class="breadcrumb">
-                        <li><a href="#"><i class="icon-home"></i> Listar Todas Seleções</a></li>
+                        <li><a href="#"><i class="icon-home"></i> Jogadores</a></li>
                     </ul>
-                    <a class="search-button-trigger" href="#"><i class="icon-search"></i></a>
+                    <a class="search-button-trigger" href="#"><i title="Pesquisa Avançada" id="bthSearchJogadorAdmin" class="icon-search"></i></a>
                 </div>
             </div>
         </div>
@@ -16,15 +22,15 @@
 
     <div class="container-fluid">
 
-        <div class="row-fluid">
+        <div id="rowSearchJogadorAdmin" class="row-fluid hidden">
             <div class="span12">
 
                 <div class="box">
                     <div class="tab-header">
-                        Pesquisar
-                        <span class="pull-right">
+                        Pesquisa Avançada
+                        <span class="pull-left">
                             <span class="options">
-                                <a href="#"><i class="icon-cog"></i></a>
+                                <a href="#"><i class="icon-search"></i></a>
                             </span>
                         </span>
                     </div>
@@ -38,16 +44,6 @@
                                 <?php endforeach; ?>
                             </div>
                         </div>
-                        <div class="form-actions">
-                            <button type="submit" class="button blue">Salvar</button>
-                            <button type="reset" class="button">Cancelar</button>
-                            <div class="pull-right">
-                                <div class="input">
-                                    <input id="fg_perfil" class="normal-check" type="checkbox" name="fg_perfil">
-                                    <label for="fg_perfil">Este usuário é Administrador?</label>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -57,9 +53,14 @@
             <div class="box" style="position:relative;">
                 <div class="tab-header">
                     Jogadores
+                    <span class="pull-left">
+                        <span class="options">
+                            <a href="#"><i class="icon-user"></i></a>
+                        </span>
+                    </span>
                 </div>
                 <div  class="dataTables_wrapper" role="grid">
-                    <table id="tabela" class="table table-striped data-table dataTable">
+                    <table id="gridJogadorAdmin" class="table table-striped data-table dataTable">
                         <thead>
                             <?php foreach ($this->columns as $key => $attr): ?>
                             <th>
@@ -76,11 +77,28 @@
 
 <script type="text/javascript">
 
-    $('#tabela').dataTable({
-        "bProcessing": false,
+    $(document).ready(function() {
+
+        $("#btnDetailJogadorAdmin").die('click').live('click', function() {
+            Util.showModal('Informações Jogador', 'Editar', '/jogador/formEdit/id_jogador/' + $(this).attr('id_jogador'));
+        });
+
+        $('#bthSearchJogadorAdmin').click(function() {
+            Index.admin.btnSearchJogadorAdminHiddenToggle = !Index.admin.btnSearchJogadorAdminHiddenToggle;
+            if (Index.admin.btnSearchJogadorAdminHiddenToggle) {
+                $('#rowSearchJogadorAdmin').addClass('hidden');
+            } else {
+                $('#rowSearchJogadorAdmin').removeClass('hidden');
+            }
+        });
+    });
+
+    Index.global.gridJogadorAdmin = $('#gridJogadorAdmin').dataTable({
+        "bFilter": true,
+        "bProcessing": true,
         "bServerSide": true,
         "sPaginationType": "full_numbers",
-        "bJQueryUI": false,
+        "bJQueryUI": true,
         "sAjaxSource": "/jogador/loadGridSearch/ajax/true/",
         "oLanguage": {
             "sLengthMenu": "mostrar _MENU_",
@@ -90,12 +108,12 @@
             "sInfoFiltered": "(filtrado de _MAX_ jogadores)"
         },
         "fnRowCallback": function(nRow, aData, iDisplayIndex) {
-            $('td:eq(0)', nRow).html('<img class="avatar" src="/img/jogadores/fotos/' + aData[0] + '.png">');
+            $('td:eq(0)', nRow).html('<img id="btnDetailJogadorAdmin" id_jogador="' + aData[0] + '" class="avatar" src="/img/jogadores/fotos/' + aData[0] + '.png">');
             $('td:eq(3)', nRow).html(aData[3] + ' cm');
             $('td:eq(4)', nRow).html(aData[4] + ' kg');
         }
     }).columnFilter({
-        sPlaceHolder: "head:after",
+        sPlaceHolder: "head:before",
         aoColumns: [
 <?php foreach ($this->columns as $key => $attr): ?>
                 {sSelector: "#filterListJogadorAdmin-<?php print current($attr); ?>"},

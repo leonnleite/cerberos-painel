@@ -1,0 +1,53 @@
+<script type="text/javascript" src="library/validate/jquery.validate-1.11.1.js"></script>
+
+<div class="box">
+    <div class="tab-header">
+        Editar
+        <span class="pull-right">
+            <span class="options">
+                <a href="#"><i class="icon-cog"></i></a>
+            </span>
+        </span>
+    </div>
+    <form id="formEditJogador" class="fill-up" action="/jogador/edit/ajax/true" method="post">
+        <div class="row-fluid">
+            <div class="span6">
+                <div class="padded">
+                    <div class="input">
+                        <input class="required" type="hidden" name="id_jogador" value="<?php print($this->id_jogador); ?>">
+                        <input class="required" title="informe o nome completo!" placeholder="Nome Completo" type="text" name="nm_jogador" value="<?php print($this->nm_jogador); ?>">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="button blue">Salvar</button>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+
+        var formNew = $('#formEditJogador');
+        var actionNew = formNew.attr('action');
+
+        $("#formEditJogador").validate({
+            errorClass: "help-inline",
+            submitHandler: function() {
+                if (confirm('Você tem certeza que deseja salvar as alterações do perfil do usuário?')) {
+                    $.post(actionNew, formNew.serialize(), function(response) {
+                        if (response.status === 'success') {
+                            Util.hideModal();
+                            Index.global.gridUsers.fnDraw(false);
+                        }
+                        Util.showMessageBox(response);
+                    }, 'json');
+                }
+            }
+        });
+
+    });
+
+</script>
