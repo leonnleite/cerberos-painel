@@ -112,9 +112,17 @@ abstract class GridAbstract
 
     /**
      * @return string
+     */
+    public function getParams ()
+    {
+        return $this->_params;
+    }
+
+    /**
+     * @return string
      * @param string $param
      */
-    public function getParams ($param)
+    public function getParam ($param)
     {
         return $this->_params["{$param}"];
     }
@@ -333,9 +341,17 @@ abstract class GridAbstract
     /**
      * @return void
      */
-    public function _filtering ()
+    protected function _individualFiltering ($filter)
     {
-        $this->_adapter->filtering($this);
+        $this->_adapter->individualFiltering($this, $filter);
+    }
+
+    /**
+     * @return void
+     */
+    public function _filtering ($filter)
+    {
+        $this->_adapter->filtering($this, $filter);
     }
 
     /**
@@ -363,28 +379,26 @@ abstract class GridAbstract
     }
 
     /**
-     * 
-     */
-    protected function _individualFiltering ()
-    {
-        // @todo Implementar...
-//        for ($i = 0; $i < count($this->_columns); $i++) {
-//            if ($this->_params['bSearchable_' . $i] == "true" && $this->_params['sSearch_' . $i] != '') {
-//                if ($this->_where == "") {
-//                    $this->_where = "WHERE ";
-//                } else {
-//                    $this->_where .= " AND ";
-//                }
-//                $this->_where .= $this->_columns[$i] . " ILIKE '%" . pg_escape_string($this->_params['sSearch_' . $i]) . "%' ";
-//            }
-//        }
-    }
-
-    /**
      * @return Grid
      */
-    public function make ()
+    public function make ($filter = 'or')
     {
+
+        # Filtering
+
+        if ($filter == 'or') {
+            $this->_filtering($filter);
+        }
+
+        if ($filter == 'and') {
+            $this->_individualFiltering($filter);
+        }
+
+        if ($filter == 'or' || $filter == 'and') {
+            if ($this->getWhere()) {
+                $this->setWhere('where (' . $this->getWhere() . ')');
+            }
+        }
 
         # Paging
         $this->_paging();
@@ -392,14 +406,9 @@ abstract class GridAbstract
         # Ordering
         $this->_ordering();
 
-        # Filtering
-        $this->_filtering();
 
         # Result
         $this->_result();
-
-        # Individual column filtering
-        $this->_individualFiltering();
 
         # TotalRecords
         $this->_totalRecords();

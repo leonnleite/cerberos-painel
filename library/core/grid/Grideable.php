@@ -12,8 +12,16 @@ interface Grideable
     /**
      * @return void
      * @param GridAbstract $grid
+     * @param string $filter
      */
-    public function filtering (GridAbstract $grid);
+    public function filtering (GridAbstract $grid, $filter);
+
+    /**
+     * @return void
+     * @param GridAbstract $grid
+     * @param string $filter
+     */
+    public function individualFiltering (GridAbstract $grid, $filter);
 
     /**
      * @return void
