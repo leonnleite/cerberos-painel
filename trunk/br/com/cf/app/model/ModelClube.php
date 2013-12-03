@@ -38,5 +38,20 @@ class ModelClube extends ModelAbstract {
         'nm_clube' => 'string'
     );
 
+    /**
+     * @return array
+     * @param string $arguments
+     */
+    public function autocomplete($arguments) {
+
+        $arguments = "%{$arguments}%";
+
+        $stmt = $this->_conn->prepare('select id_clube as id, nm_clube as value, nm_clube as label from clube where nm_clube like ? limit 10');
+        $stmt->bindParam(1, $arguments);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
 }
 

@@ -1,6 +1,6 @@
 ;
 {
-    Index.global.gridUsers = null;
+
 
 }
 ;

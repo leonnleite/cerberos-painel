@@ -2,43 +2,42 @@
 
 namespace br\com\cf\app\controller;
 
-use br\com\cf\library\core\controller\ControllerAbstract;
+use br\com\cf\library\core\controller\ControllerAbstract,
+    br\com\cf\app\model\ModelSelecao
+
+;
 
 /**
  * @autor Michael F. Rodrigues <cerberosnash@gmail.com>
  */
-class ControllerSelecao extends ControllerAbstract
-{
+class ControllerSelecao extends ControllerAbstract {
 
     /**
      * @return void
      */
-    public function indexAction ()
-    {
+    public function indexAction() {
         $this->setView('selecao', 'index')->render();
     }
 
     /**
      * @return void
      */
-    public function searchAction ()
-    {
+    public function searchAction() {
         $this->setView('selecao', 'search')->render();
     }
 
     /**
      * @return void
      */
-    public function listAction ()
-    {
+    public function listAction() {
         $this->setView('selecao', 'list')->render();
     }
 
     /**
      * @return void
      */
-    public function loadGridSearchAction ()
-    {
+    public function loadGridSearchAction() {
+
         $query = 'selecao s inner join pais p on p.id_pais = s.id_pais';
 
         $grid = \br\com\cf\library\core\grid\Grid::factory()
@@ -57,6 +56,13 @@ class ControllerSelecao extends ControllerAbstract
 
 
         $this->json($grid);
+    }
+
+    /**
+     * @return void
+     */
+    public function autocompleteAction() {
+        $this->json(ModelSelecao::factory()->autocomplete($this->getParam('term')));
     }
 
 }

@@ -2,43 +2,41 @@
 
 namespace br\com\cf\app\controller;
 
-use br\com\cf\library\core\controller\ControllerAbstract;
+use br\com\cf\library\core\controller\ControllerAbstract,
+    br\com\cf\app\model\ModelClube
+
+;
 
 /**
  * @autor Michael F. Rodrigues <cerberosnash@gmail.com>
  */
-class ControllerClube extends ControllerAbstract
-{
+class ControllerClube extends ControllerAbstract {
 
     /**
      * @return void
      */
-    public function indexAction ()
-    {
+    public function indexAction() {
         $this->setView('clube', 'index')->render();
     }
 
     /**
      * @return void
      */
-    public function searchAction ()
-    {
+    public function searchAction() {
         $this->setView('clube', 'search')->render();
     }
 
     /**
      * @return void
      */
-    public function listAction ()
-    {
+    public function listAction() {
         $this->setView('clube', 'list')->render();
     }
 
     /**
      * @return void
      */
-    public function loadGridSearchAction ()
-    {
+    public function loadGridSearchAction() {
         $query = 'clube c inner join pais p on p.id_pais = c.id_pais';
 
         $grid = \br\com\cf\library\core\grid\Grid::factory()
@@ -57,6 +55,13 @@ class ControllerClube extends ControllerAbstract
 
 
         $this->json($grid);
+    }
+
+    /**
+     * @return void
+     */
+    public function autocompleteAction() {
+        $this->json(ModelClube::factory()->autocomplete($this->getParam('term')));
     }
 
 }

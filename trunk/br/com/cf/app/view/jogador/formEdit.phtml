@@ -1,5 +1,22 @@
 <script type="text/javascript" src="library/validate/jquery.validate-1.11.1.js"></script>
 
+<style>
+    #project-label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 1em;
+    }
+    #project-icon {
+        float: left;
+        height: 32px;
+        width: 32px;
+    }
+    #project-description {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
 <div class="box">
     <div class="tab-header">
         Editar
@@ -13,10 +30,29 @@
         <div class="row-fluid">
             <div class="span6">
                 <div class="padded">
-                    <div class="input">
-                        <input class="required" type="hidden" name="id_jogador" value="<?php print($this->id_jogador); ?>">
-                        <input class="required" title="informe o nome completo!" placeholder="Nome Completo" type="text" name="nm_jogador" value="<?php print($this->nm_jogador); ?>">
-                    </div>
+                    <?php
+                    foreach ($this->fields as $key => $field) :
+                        $attr = key($field);
+                        $value = "nm_{$attr}";
+                        print $field[$attr];
+                        ?>
+                        <div class="input">
+                            <?php if ($attr == 'id_selecao' || $attr == 'id_pais' || $attr == 'id_clube'): ?>
+                                <hr>
+                                <input id="fieldEditJogadorAdmin-<?php print($attr); ?>-target" class="required" type="text" value="<?php print($this->jogador->{$value}); ?>">
+                                <?php if ($attr == 'id_clube'): ?>
+                                    <img class="avatar" id="fieldEditJogadorAdmin-<?php print($attr); ?>-logo" src="<?php print ("/img/clubes/logos/{$this->jogador->{$attr}}.png"); ?>">
+                                <?php endif; ?>
+                                <?php if ($attr == 'id_selecao'): ?>
+                                    <img class="avatar" id="fieldEditJogadorAdmin-<?php print($attr); ?>-logo" src="<?php print ("/img/selecoes/logos/{$this->jogador->{$attr}}.png"); ?>">
+                                <?php endif; ?>
+                                <input id="fieldEditJogadorAdmin-<?php print($attr); ?>-id" class="required" type="hidden" name="<?php print($attr); ?>" value="<?php print($this->jogador->{$attr}); ?>">
+                                <hr>                           
+                            <?php else: ?>
+                                <input id="fieldEditJogadorAdmin-<?php print($attr); ?>" class="required" type="text" name="<?php print($attr); ?>" value="<?php print($this->jogador->{$attr}); ?>">
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
@@ -36,17 +72,65 @@
         $("#formEditJogador").validate({
             errorClass: "help-inline",
             submitHandler: function() {
-                if (confirm('Você tem certeza que deseja salvar as alterações do perfil do usuário?')) {
+                if (confirm('Você tem certeza que deseja salvar as alterações deste jogador?')) {
                     $.post(actionNew, formNew.serialize(), function(response) {
                         if (response.status === 'success') {
                             Util.hideModal();
-                            Index.global.gridUsers.fnDraw(false);
+                            Index.admin.gridJogadorAdmin.fnDraw(false);
                         }
                         Util.showMessageBox(response);
                     }, 'json');
                 }
             }
         });
+
+
+    });
+
+    $(document).ready(function() {
+
+        Index.admin.autocompletePaisJogadorAdmin = $("#fieldEditJogadorAdmin-id_pais-target").autocomplete({
+            minLength: 0,
+            source: "/pais/autocomplete/ajax/true",
+            focus: function(event, ui) {
+                $("#fieldEditJogadorAdmin-id_pais-target").val(ui.item.label);
+                return false;
+            },
+            select: function(event, ui) {
+                $("#fieldEditJogadorAdmin-id_pais-id").val(ui.item.id);
+                $("#fieldEditJogadorAdmin-id_pais-logo").attr("src", "/img/selecoes/logos/" + ui.item.id + ".png");
+                return false;
+            }
+        });
+
+        Index.admin.autocompleteSelecaoJogadorAdmin = $("#fieldEditJogadorAdmin-id_selecao-target").autocomplete({
+            minLength: 0,
+            source: "/selecao/autocomplete/ajax/true",
+            focus: function(event, ui) {
+                $("#fieldEditJogadorAdmin-id_selecao-target").val(ui.item.label);
+                return false;
+            },
+            select: function(event, ui) {
+                $("#fieldEditJogadorAdmin-id_selecao-id").val(ui.item.id);
+                $("#fieldEditJogadorAdmin-id_selecao-logo").attr("src", "/img/selecoes/logos/" + ui.item.id + ".png");
+                return false;
+            }
+        });
+
+        Index.admin.autocompleteClubeJogadorAdmin = $("#fieldEditJogadorAdmin-id_clube-target").autocomplete({
+            minLength: 0,
+            source: "/clube/autocomplete/ajax/true",
+            focus: function(event, ui) {
+                $("#fieldEditJogadorAdmin-id_clube-target").val(ui.item.label);
+                return false;
+            },
+            select: function(event, ui) {
+                $("#fieldEditJogadorAdmin-id_clube-id").val(ui.item.id);
+                $("#fieldEditJogadorAdmin-id_clube-logo").attr("src", "/img/clubes/logos/" + ui.item.id + ".png");
+                return false;
+            }
+        });
+
 
     });
 
