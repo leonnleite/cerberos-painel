@@ -4,6 +4,10 @@
     .dataTables_filter{
         display: none;
     }
+    .avatar{
+        width: 50px;
+        height: 50px;
+    }
 </style>
 
 <section id="main">
@@ -93,7 +97,7 @@
         });
     });
 
-    Index.global.gridJogadorAdmin = $('#gridJogadorAdmin').dataTable({
+    Index.admin.gridJogadorAdmin = $('#gridJogadorAdmin').dataTable({
         "bFilter": true,
         "bProcessing": true,
         "bServerSide": true,
@@ -111,6 +115,8 @@
             $('td:eq(0)', nRow).html('<img id="btnDetailJogadorAdmin" id_jogador="' + aData[0] + '" class="avatar" src="/img/jogadores/fotos/' + aData[0] + '.png">');
             $('td:eq(3)', nRow).html(aData[3] + ' cm');
             $('td:eq(4)', nRow).html(aData[4] + ' kg');
+            $('td:eq(8)', nRow).html('<img class="avatar" src="/img/clubes/logos/' + aData[8] + '.png">');
+            $('td:eq(9)', nRow).html('<img class="avatar" src="/img/selecoes/logos/' + aData[9] + '.png">');
         }
     }).columnFilter({
         sPlaceHolder: "head:before",

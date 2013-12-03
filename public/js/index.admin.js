@@ -7,6 +7,12 @@
 
     Index.admin.btnSearchJogadorAdminHiddenToggle = true;
 
+    Index.admin.autocompleteClubeJogadorAdmin = null;
+
+    Index.admin.autocompletePaisJogadorAdmin = null;
+
+    Index.admin.autocompleteSelecaoJogadorAdmin = null;
+
 }
 ;
 

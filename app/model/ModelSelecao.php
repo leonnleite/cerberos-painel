@@ -37,5 +37,20 @@ class ModelSelecao extends ModelAbstract {
         'nm_selecao' => 'string'
     );
 
+    /**
+     * @return array
+     * @param string $arguments
+     */
+    public function autocomplete($arguments) {
+
+        $arguments = "%{$arguments}%";
+
+        $stmt = $this->_conn->prepare('select id_selecao as id, nm_selecao as value, nm_selecao as label from selecao where nm_selecao like ? limit 10');
+        $stmt->bindParam(1, $arguments);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
 }
 
