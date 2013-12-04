@@ -97,7 +97,7 @@ class ControllerJogador extends ControllerAbstract {
 //                    array('j.tx_ataque' => 'tx_ataque'),
 //                    array('j.tx_defesa' => 'tx_defesa'),
                     array('j.id_clube' => 'Clube'),
-                    array('j.id_selecao' => 'Selecao'),
+                    array('j.id_selecao' => 'Seleção'),
 //                    array('j.id_sofifa' => 'id_sofifa'),
                 ))
                 ->render();
@@ -107,6 +107,9 @@ class ControllerJogador extends ControllerAbstract {
      * @return void
      */
     public function loadGridSearchAction() {
+
+//        var_dump($_REQUEST);
+//        exit;
 
         $query = 'jogador j '
                 . 'inner join pais p on p.id_pais = j.id_pais '

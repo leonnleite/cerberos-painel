@@ -1,4 +1,8 @@
 <?php
+$css1 = array(
+    array('library/jquery-ui-1.10.3.custom/css/ui-darkness/jquery-ui-1.10.3.custom.min.css', false)
+);
+
 $js1 = array(
     array("library/jquery/jquery-1.10.2.min.js", false),
     array("js/util.js", false),
@@ -339,6 +343,8 @@ use br\com\cf\library\core\cache\Cache;
         <script type="text/javascript">
             prettyPrint();
         </script>
+
+        <?php Cache::factory()->css($css1)->output()->clean(); ?>          
 
     </body>
 

@@ -12,8 +12,7 @@ use br\com\cf\library\core\grid\GridAbstract,
  * @author Michael F. Rodrigues
  * @version 0.0.0
  */
-class AdapterMysql extends \br\com\cf\library\core\model\ModelAbstract implements Grideable
-{
+class AdapterMysql extends \br\com\cf\library\core\model\ModelAbstract implements Grideable {
 
     /**
      * @var string
@@ -28,15 +27,24 @@ class AdapterMysql extends \br\com\cf\library\core\model\ModelAbstract implement
     /**
      * 
      */
-    public function individualFiltering (GridAbstract $grid, $filter = 'or')
-    {
+    public function individualFiltering(GridAbstract $grid, $filter = 'or') {
 
         $params = $grid->getParams();
+        $condition = explode(',', $params['sColumns']);
 
         for ($i = 0; $i < count($grid->getColumns()); $i++) {
             if (isset($params['bSearchable_' . $i]) && $params['bSearchable_' . $i] == "true" && $params['sSearch_' . $i] != '') {
+
                 $where = $grid->getWhere();
-                $where .= sprintf("%s like '%s%s%s' {$filter} ", $grid->getColumns($i), '%', $params['sSearch_' . $i], '%');
+
+                if ($condition[$i] == 'equals') {
+                    $where .= sprintf("%s = '%s' {$filter} ", $grid->getColumns($i), $params['sSearch_' . $i]);
+                }
+
+                if ($condition[$i] == 'like') {
+                    $where .= sprintf("%s %s '%s%s%s' {$filter} ", $grid->getColumns($i), $condition[$i], '%', $params['sSearch_' . $i], '%');
+                }
+
                 $grid->setWhere($where);
             }
         }
@@ -46,8 +54,7 @@ class AdapterMysql extends \br\com\cf\library\core\model\ModelAbstract implement
     /**
      * @return void
      */
-    public function filtering (GridAbstract $grid, $filter = 'or')
-    {
+    public function filtering(GridAbstract $grid, $filter = 'or') {
         if ($grid->getParams('sSearch') != '') {
             for ($i = 0; $i < count($grid->getColumns()); $i++) {
                 if ($grid->getParams('bSearchable_' . $i) == 'true') {
@@ -63,8 +70,8 @@ class AdapterMysql extends \br\com\cf\library\core\model\ModelAbstract implement
     /**
      * 
      */
-    public function result (GridAbstract $grid)
-    {
+    public function result(GridAbstract $grid) {
+
         $implode = '';
         $columns = $grid->getColumns();
 
@@ -85,8 +92,7 @@ class AdapterMysql extends \br\com\cf\library\core\model\ModelAbstract implement
     /**
      * 
      */
-    public function totalRecords (GridAbstract $grid)
-    {
+    public function totalRecords(GridAbstract $grid) {
         $sQuery = sprintf('select count(*) as total from %s ', $grid->getQuery());
         $stmt = $this->_conn->prepare($sQuery);
         $stmt->execute();
@@ -96,8 +102,7 @@ class AdapterMysql extends \br\com\cf\library\core\model\ModelAbstract implement
     /**
      * 
      */
-    public function totalDisplayRecords (GridAbstract $grid)
-    {
+    public function totalDisplayRecords(GridAbstract $grid) {
         if ($grid->getWhere() != '') {
             $sQuery = sprintf('select count(*) as total from %s %s %s %s', $grid->getQuery(), $grid->getWhere(), $grid->getOrder(), $grid->getLimit());
             $stmt = $this->_conn->prepare($sQuery);
