@@ -262,4 +262,80 @@ class ControllerJogador extends ControllerAbstract {
         }
     }
 
+    /**
+     * @return void
+     */
+    public function detailAction() {
+        try {
+
+            $jogador = \br\com\cf\app\model\ModelJogador::factory()->find($this->getParam('id_jogador'));
+
+            $jogador->nm_selecao = \br\com\cf\app\model\ModelSelecao::factory()->find($jogador->id_selecao)->nm_selecao;
+            $jogador->nm_pais = \br\com\cf\app\model\ModelPais::factory()->find($jogador->id_pais)->nm_pais;
+            $jogador->nm_clube = \br\com\cf\app\model\ModelClube::factory()->find($jogador->id_clube)->nm_clube;
+
+            $this->setView('jogador', 'detail')
+                    ->set('jogador', $jogador)
+                    ->set('attrs', array(
+                        array('tx_ataque' => 'Ataque'),
+                        array('tx_defesa' => 'Defesa'),
+                        array('tx_pe_preferido' => 'Pé preferido'),
+//                        array('id_jogador' => 'ID'),
+//                        array('nm_abreviado' => 'N. Abreviado'),
+//                        array('nm_completo' => 'N. Completo'),
+//                        array('dt_nascimento' => 'Nascimento'),
+//                        array('nu_altura' => 'Altura'),
+//                        array('nu_peso' => 'Peso'),
+//                        array('id_pais' => 'Pais'),
+                        array('cd_po_preferida_1' => 'Posição preferida I'),
+                        array('cd_po_preferida_2' => 'Posição preferida II'),
+                        array('cd_po_preferida_3' => 'Posição preferida III'),
+                        array('nu_overall' => 'Overall'),
+                        array('nu_aceleracao' => 'Aceleracao'),
+                        array('nu_velocidade_final' => 'Velocidade final'),
+                        array('nu_agilidade' => 'Agilidade'),
+                        array('nu_equilibrio' => 'Equilibrio'),
+                        array('nu_pulo' => 'Pulo'),
+                        array('nu_resistencia' => 'Resistência'),
+                        array('nu_forca' => 'Força'),
+                        array('nu_reacao' => 'Reação'),
+                        array('nu_agressao' => 'Agressão'),
+                        array('nu_intercepcao' => 'Intercepção'),
+                        array('nu_posicionamento' => 'Posicionamento'),
+                        array('nu_visao_jogo' => 'Visão de jogo'),
+                        array('nu_controle_bola' => 'Coontrole de bola'),
+                        array('nu_cruzamento' => 'Cruzamento'),
+                        array('nu_drible' => 'Drible'),
+                        array('nu_finalizacao' => 'Finalização'),
+                        array('nu_cobranca_falta' => 'Cobrança de falta'),
+                        array('nu_cabeceio' => 'Cabeceio'),
+                        array('nu_passe_longo' => 'Passe longo'),
+                        array('nu_passe_curto' => 'Passe curto'),
+                        array('nu_marcacao' => 'Marcação'),
+                        array('nu_forca_chute' => 'Fora do chute'),
+                        array('nu_chute_longe' => 'Chute longe'),
+                        array('nu_roubada_bola' => 'Roubada de bola'),
+                        array('nu_carrinho' => 'Carrinho'),
+                        array('nu_voleios' => 'Voleios'),
+                        array('nu_curva' => 'Curva'),
+                        array('nu_penaltis' => 'Penaltis'),
+                        array('nu_salto' => 'Salto'),
+                        array('nu_habilidade_mao' => 'Habilidade com a mão'),
+                        array('nu_habilidade_pe' => 'Habilidade com o pé'),
+                        array('nu_reflexo' => 'Reflexo'),
+                        array('nu_posicionamento_goleiro' => 'Posicionamento goleiro'),
+                        array('nu_potencial' => 'Potencial'),
+                        array('nu_reputacao_internacional' => 'Reputação internacional'),
+                        array('nu_pe_ruim' => 'Pé ruim'),
+                        array('nu_dribles_habilidade' => 'Dribles'),
+//                        array('id_clube' => 'Clube'),
+//                        array('id_selecao' => 'Seleção'),
+//                        array('id_sofifa' => 'ID FIFA')
+                    ))
+                    ->render();
+        } catch (\Exception $e) {
+            print('Ocorreu um erro ao tentar carregar as informações solicitadas!');
+        }
+    }
+
 }

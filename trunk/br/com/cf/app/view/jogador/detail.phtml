@@ -1,0 +1,219 @@
+<!--<script type="text/javascript" src="library/validate/jquery.validate-1.11.1.js"></script>-->
+
+<!--<div class="box">
+    <div class="tab-header">
+        Editar
+        <span class="pull-right">
+            <span class="options">
+                <a href="#"><i class="icon-cog"></i></a>
+            </span>
+        </span>
+    </div>-->
+
+<!--<div class="row-fluid">
+    <div class="span12">-->
+<!--<table class="table table-condensed box">-->
+
+<!--    <tbody>
+        <tr>
+            <td style="width: 101px;">-->
+
+<!--            </td>
+            <td>-->
+
+
+<div class="row-fluid">
+    <div class="span4">
+        <div class="box">
+            <div class="tab-header">
+                <?php print($this->jogador->nm_abreviado); ?>
+            </div>
+            <div class="padded">
+                <img class="img-polaroid" src="img/jogadores/fotos/<?php print($this->jogador->id_jogador); ?>.png">
+                <p><div class="label">Nome Completo: <strong><?php print($this->jogador->nm_completo); ?></strong></div></p>
+                <p><div class="label">Nascimento: <strong><?php print($this->jogador->dt_nascimento); ?></strong></div></p>
+                <p><div class="label">Nacionalidade: <strong><?php print($this->jogador->nm_pais); ?></strong></div></p>
+                <p><div class="label">Altura: <strong><?php print($this->jogador->nu_altura); ?> cm</strong></div></p>
+                <p><div class="label">Peso: <strong><?php print($this->jogador->nu_peso); ?> kg</strong></div></p>
+                <p><div class="label">Clube: <?php print($this->jogador->nm_clube); ?></div></p>
+                <p><div class="label">Seleção: <?php print($this->jogador->nm_selecao); ?></div></p>
+            </div>
+        </div>
+    </div>
+    <div class="span8">
+        <div class="box">
+            <div class="tab-header">
+                Atributos do jogador
+            </div>
+            <div class="padded">
+                <?php
+                foreach ($this->attrs as $key => $field) :
+                    $attr = key($field);
+                    $value = "nm_{$attr}";
+                    print '<div class="label">' . $field[$attr] . '</div>';
+
+                    $color = '';
+
+                    if ($this->jogador->{$attr} <= 25) {
+                        $color = 'progress-danger';
+                    }
+
+                    if ($this->jogador->{$attr} > 25 && $this->jogador->{$attr} <= 50) {
+                        $color = 'progress-warning';
+                    }
+
+                    if ($this->jogador->{$attr} > 50 && $this->jogador->{$attr} <= 75) {
+                        $color = 'progress-info';
+                    }
+
+                    if ($this->jogador->{$attr} > 75) {
+                        $color = 'progress-success';
+                    }
+                    ?>
+
+                    <div class="input">
+                        <?php if ($color): ?>
+                            <div class="progress <?php print($color); ?>" style="margin-bottom: 9px;">
+                                <span><?php print($this->jogador->{$attr}); ?></span>
+                                <div title="<?php print($this->jogador->{$attr}); ?>" class="bar" style="width: <?php print($this->jogador->{$attr}); ?>%"></div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+    </div>
+    <div class="span4">
+        <div class="box">
+            <div class="tab-header">
+                <?php print($this->jogador->nm_clube); ?>
+            </div>
+            <div class="padded">
+                <img class="img-polaroid" src="img/clubes/logos/<?php print($this->jogador->id_clube); ?>.png">
+            </div>
+        </div>
+    </div>
+    <div class="span4">
+        <div class="box">
+            <div class="tab-header">
+                <?php print($this->jogador->nm_clube); ?>
+            </div>
+            <div class="padded">
+                <img class="img-polaroid" src="img/clubes/logos/<?php print($this->jogador->id_clube); ?>.png">
+            </div>
+        </div>
+    </div>
+    <div class="span4">
+        <div class="box">
+            <div class="tab-header">
+                <?php print($this->jogador->nm_selecao); ?>
+            </div>
+            <div class="padded">
+                <img class="img-polaroid" src="img/selecoes/logos/<?php print($this->jogador->id_selecao); ?>.png">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row-fluid">
+
+</div>
+
+<!--            </td>
+        </tr>
+    </tbody>-->
+<!--<tfoot>
+
+</tfoot>-->
+<!--</table>-->
+<!--    </div>
+</div>-->
+<!--    <form id="formEditJogador" class="fill-up" action="/jogador/edit/ajax/true" method="post">
+        <div class="row-fluid">
+
+
+            <div class="span6">
+                <div class="padded">
+
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="button blue">Salvar</button>
+        </div>
+    </form>-->
+</div>
+
+<!--<script type="text/javascript">
+        $(document).ready(function() {
+
+        var formNew = $('#formEditJogador');
+            var actionNew = formNew.attr('action');
+
+            $("#formEditJogador").validate({
+                errorClass: "help-inline",
+            submitHandler: function() {
+                    if (confirm('Você tem certeza que deseja salvar as alterações deste jogador?')) {
+                            $.post(actionNew, formNew.serialize(), function(response) {                         if (response.status === 'success') {
+                            Util.hideModal();
+                        Index.admin.gridJogadorAdmin.fnDraw(false);
+                        }
+                Util.showMessageBox(response);
+    }, 'json');
+    }
+            }
+        });
+
+
+    });
+
+    $(document).ready(function() {
+
+            Index.admin.autocompletePaisJogadorAdmin = $("#fieldEditJogadorAdmin-id_pais-target").autocomplete({
+            minLength: 0,
+                source: "/pais/autocomplete/ajax/true",
+            focus: function(event, ui) {
+            $("#fieldEditJogadorAdmin-id_pais-target").val(ui.item.label);
+                return false;
+                },
+            select: function(event, ui) {
+                $("#fieldEditJogadorAdmin-id_pais-id").val(ui.item.id);
+        $("#fieldEditJogadorAdmin-id_pais-logo").attr("src", "/img/selecoes/logos/" + ui.item.id + ".png");
+        return false;
+            }
+        });
+
+            Index.admin.autocompleteSelecaoJogadorAdmin = $("#fieldEditJogadorAdmin-id_selecao-target").autocomplete({
+            minLength: 0,
+                source: "/selecao/autocomplete/ajax/true",
+            focus: function(event, ui) {
+            $("#fieldEditJogadorAdmin-id_selecao-target").val(ui.item.label);
+                return false;
+                },
+            select: function(event, ui) {
+                $("#fieldEditJogadorAdmin-id_selecao-id").val(ui.item.id);
+        $("#fieldEditJogadorAdmin-id_selecao-logo").attr("src", "/img/selecoes/logos/" + ui.item.id + ".png");
+        return false;
+            }
+        });
+
+            Index.admin.autocompleteClubeJogadorAdmin = $("#fieldEditJogadorAdmin-id_clube-target").autocomplete({
+            minLength: 0,
+                source: "/clube/autocomplete/ajax/true",
+            focus: function(event, ui) {
+            $("#fieldEditJogadorAdmin-id_clube-target").val(ui.item.label);
+                return false;
+                },
+            select: function(event, ui) {
+                $("#fieldEditJogadorAdmin-id_clube-id").val(ui.item.id);
+        $("#fieldEditJogadorAdmin-id_clube-logo").attr("src", "/img/clubes/logos/" + ui.item.id + ".png");
+    return false;
+            }
+        });
+
+
+    });
+
+</script>-->

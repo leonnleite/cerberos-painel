@@ -17,7 +17,7 @@
                     foreach ($this->fields as $key => $field) :
                         $attr = key($field);
                         $value = "nm_{$attr}";
-                        print $field[$attr];
+                        print '<div class="label">' . $field[$attr] . '</div>';
                         ?>
                         <div class="input">
                             <?php if ($attr == 'id_selecao' || $attr == 'id_pais' || $attr == 'id_clube'): ?>
