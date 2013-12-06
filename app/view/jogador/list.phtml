@@ -125,6 +125,10 @@
             Util.showModal('Informações Jogador', 'Editar', '/jogador/formEdit/id_jogador/' + $(this).attr('id_jogador'));
         });
 
+        $("#btnDetailJogadorUser").die('click').live('click', function() {
+            Util.showModal('Informações Jogador', 'Editar', '/jogador/detail/id_jogador/' + $(this).attr('id_jogador'));
+        });
+
         $('#bthSearchJogadorAdmin').click(function() {
             Index.admin.btnSearchJogadorAdminHiddenToggle = !Index.admin.btnSearchJogadorAdminHiddenToggle;
             if (Index.admin.btnSearchJogadorAdminHiddenToggle) {
@@ -203,7 +207,7 @@
                 "sInfoFiltered": "(filtrado de _MAX_ jogadores)"
             },
             "fnRowCallback": function(nRow, aData, iDisplayIndex) {
-                $('td:eq(0)', nRow).html('<img id="btnDetailJogadorAdmin" id_jogador="' + aData[0] + '" class="avatar" src="/img/jogadores/fotos/' + aData[0] + '.png">');
+                $('td:eq(0)', nRow).html('<img id="btnDetailJogadorUser" id_jogador="' + aData[0] + '" class="avatar" src="/img/jogadores/fotos/' + aData[0] + '.png">');
                 $('td:eq(3)', nRow).html(aData[3] + ' cm');
                 $('td:eq(4)', nRow).html(aData[4] + ' kg');
                 $('td:eq(8)', nRow).html('<img class="avatar" src="/img/clubes/logos/' + aData[8] + '.png">');
