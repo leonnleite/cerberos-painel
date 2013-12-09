@@ -4,9 +4,10 @@
     .dataTables_filter{
         display: none;
     }
-    .avatar{
+    .mini-img-in-grid{
         width: 50px;
         height: 50px;
+        border: 0px;
     }
 </style>
 
@@ -76,9 +77,9 @@
                             <div class="span4">
                                 <div class="padded">
                                     Clube <input id="fieldFilterGridClubeJogadorAdmin-target" type="text">
-                                    <img class="avatar" id="fieldFilterGridClubeJogadorAdmin-logo">
+                                    <img class="mini-img-in-grid" id="fieldFilterGridClubeJogadorAdmin-logo">
                                     Seleção <input id="fieldFilterGridSelecaoJogadorAdmin-target" type="text">
-                                    <img class="avatar" id="fieldFilterGridSelecaoJogadorAdmin-logo">
+                                    <img class="mini-img-in-grid" id="fieldFilterGridSelecaoJogadorAdmin-logo">
                                 </div>
                             </div>
                         </div>
@@ -127,6 +128,10 @@
 
         $("#btnDetailJogadorUser").die('click').live('click', function() {
             Util.showModal('Informações Jogador', 'Editar', '/jogador/detail/id_jogador/' + $(this).attr('id_jogador'));
+        });
+
+        $("#btnPhotoJogadorAdmin").die('click').live('click', function() {
+            Util.showModal('Foto', 'Alterar fotografia', '/jogador/formPhoto/id_jogador/' + $(this).attr('id_jogador'));
         });
 
         $('#bthSearchJogadorAdmin').click(function() {
@@ -207,11 +212,11 @@
                 "sInfoFiltered": "(filtrado de _MAX_ jogadores)"
             },
             "fnRowCallback": function(nRow, aData, iDisplayIndex) {
-                $('td:eq(0)', nRow).html('<img id="btnDetailJogadorUser" id_jogador="' + aData[0] + '" class="avatar" src="/img/jogadores/fotos/' + aData[0] + '.png">');
+                $('td:eq(0)', nRow).html('<img id="btnDetailJogadorUser" id_jogador="' + aData[0] + '" class="mini-img-in-grid" src="/img/jogadores/fotos/' + aData[0] + '.png">');
                 $('td:eq(3)', nRow).html(aData[3] + ' cm');
                 $('td:eq(4)', nRow).html(aData[4] + ' kg');
-                $('td:eq(8)', nRow).html('<img class="avatar" src="/img/clubes/logos/' + aData[8] + '.png">');
-                $('td:eq(9)', nRow).html('<img class="avatar" src="/img/selecoes/logos/' + aData[9] + '.png">');
+                $('td:eq(8)', nRow).html('<img class="mini-img-in-grid" src="/img/clubes/logos/' + aData[8] + '.png">');
+                $('td:eq(9)', nRow).html('<img class="mini-img-in-grid" src="/img/selecoes/logos/' + aData[9] + '.png">');
             }
         }).columnFilter({
             sPlaceHolder: "head:before",

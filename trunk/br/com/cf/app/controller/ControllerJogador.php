@@ -7,26 +7,30 @@ use br\com\cf\library\core\controller\ControllerAbstract;
 /**
  * @autor Michael F. Rodrigues <cerberosnash@gmail.com>
  */
-class ControllerJogador extends ControllerAbstract {
+class ControllerJogador extends ControllerAbstract
+{
 
     /**
      * @return void
      */
-    public function indexAction() {
+    public function indexAction ()
+    {
         $this->setView('jogador', 'index')->render();
     }
 
     /**
      * @return void
      */
-    public function searchAction() {
+    public function searchAction ()
+    {
         $this->setView('jogador', 'search')->render();
     }
 
     /**
      * @return void
      */
-    public function editAction() {
+    public function editAction ()
+    {
         try {
 
             \br\com\cf\app\model\ModelJogador::factory()->update($this->getParams());
@@ -42,7 +46,8 @@ class ControllerJogador extends ControllerAbstract {
     /**
      * @return void
      */
-    public function listAction() {
+    public function listAction ()
+    {
         $this->setView('jogador', 'list')
                 ->set('columns', array(
                     array('j.id_jogador' => 'ID'),
@@ -106,7 +111,8 @@ class ControllerJogador extends ControllerAbstract {
     /**
      * @return void
      */
-    public function loadGridSearchAction() {
+    public function loadGridSearchAction ()
+    {
 
 //        var_dump($_REQUEST);
 //        exit;
@@ -189,7 +195,8 @@ class ControllerJogador extends ControllerAbstract {
     /**
      * @return void
      */
-    public function formEditAction() {
+    public function formEditAction ()
+    {
         try {
 
             $jogador = \br\com\cf\app\model\ModelJogador::factory()->find($this->getParam('id_jogador'));
@@ -265,7 +272,8 @@ class ControllerJogador extends ControllerAbstract {
     /**
      * @return void
      */
-    public function detailAction() {
+    public function detailAction ()
+    {
         try {
 
             $jogador = \br\com\cf\app\model\ModelJogador::factory()->find($this->getParam('id_jogador'));
@@ -277,9 +285,9 @@ class ControllerJogador extends ControllerAbstract {
             $this->setView('jogador', 'detail')
                     ->set('jogador', $jogador)
                     ->set('attrs', array(
-                        array('tx_ataque' => 'Ataque'),
-                        array('tx_defesa' => 'Defesa'),
-                        array('tx_pe_preferido' => 'Pé preferido'),
+//                        array('tx_ataque' => 'Ataque'),
+//                        array('tx_defesa' => 'Defesa'),
+//                        array('tx_pe_preferido' => 'Pé preferido'),
 //                        array('id_jogador' => 'ID'),
 //                        array('nm_abreviado' => 'N. Abreviado'),
 //                        array('nm_completo' => 'N. Completo'),
@@ -287,9 +295,9 @@ class ControllerJogador extends ControllerAbstract {
 //                        array('nu_altura' => 'Altura'),
 //                        array('nu_peso' => 'Peso'),
 //                        array('id_pais' => 'Pais'),
-                        array('cd_po_preferida_1' => 'Posição preferida I'),
-                        array('cd_po_preferida_2' => 'Posição preferida II'),
-                        array('cd_po_preferida_3' => 'Posição preferida III'),
+//                        array('cd_po_preferida_1' => 'Posição preferida I'),
+//                        array('cd_po_preferida_2' => 'Posição preferida II'),
+//                        array('cd_po_preferida_3' => 'Posição preferida III'),
                         array('nu_overall' => 'Overall'),
                         array('nu_aceleracao' => 'Aceleracao'),
                         array('nu_velocidade_final' => 'Velocidade final'),
@@ -335,6 +343,58 @@ class ControllerJogador extends ControllerAbstract {
                     ->render();
         } catch (\Exception $e) {
             print('Ocorreu um erro ao tentar carregar as informações solicitadas!');
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function formPhotoAction ()
+    {
+        $this->setView('jogador', 'formPhoto')->render();
+    }
+
+    /**
+     * @return void
+     */
+    public function uploadPhotoAction ()
+    {
+
+        $valid_exts = array('jpeg', 'jpg', 'png', 'gif');
+        $max_file_size = 200000000000 * 10240; #200kb
+        $nw = $nh = 100; # image with # height
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_FILES['image'])) {
+                if (!$_FILES['image']['error'] && $_FILES['image']['size'] < $max_file_size) {
+                    $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+                    if (in_array($ext, $valid_exts)) {
+                        $path = CF_APP_PUBLIC_PATH . '/uploads/' . uniqid() . '.' . $ext;
+                        $size = getimagesize($_FILES['image']['tmp_name']);
+
+                        $x = (int) $_POST['x'];
+                        $y = (int) $_POST['y'];
+                        $w = (int) $_POST['w'] ? $_POST['w'] : $size[0];
+                        $h = (int) $_POST['h'] ? $_POST['h'] : $size[1];
+
+                        $data = file_get_contents($_FILES['image']['tmp_name']);
+                        $vImg = imagecreatefromstring($data);
+                        $dstImg = imagecreatetruecolor($nw, $nh);
+                        imagecopyresampled($dstImg, $vImg, 0, 0, $x, $y, $nw, $nh, $w, $h);
+                        imagejpeg($dstImg, $path);
+                        imagedestroy($dstImg);
+                        echo "<img src='$path' />";
+                    } else {
+                        echo 'unknown problem!';
+                    }
+                } else {
+                    echo 'file is too small or large';
+                }
+            } else {
+                echo 'file not set';
+            }
+        } else {
+            echo 'bad request!';
         }
     }
 
