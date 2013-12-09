@@ -1,6 +1,6 @@
 <script type="text/javascript" src="library/validate/jquery.validate-1.11.1.js"></script>
 
-<div class="box">
+<div class="black-box">
     <div class="tab-header">
         Editar
         <span class="pull-right">
@@ -17,11 +17,10 @@
                     foreach ($this->fields as $key => $field) :
                         $attr = key($field);
                         $value = "nm_{$attr}";
-                        print '<div class="label">' . $field[$attr] . '</div>';
+                        print '<span class="">' . $field[$attr] . '</span>';
                         ?>
                         <div class="input">
                             <?php if ($attr == 'id_selecao' || $attr == 'id_pais' || $attr == 'id_clube'): ?>
-                                <hr>
                                 <input id="fieldEditJogadorAdmin-<?php print($attr); ?>-target" class="required" type="text" value="<?php print($this->jogador->{$value}); ?>">
                                 <?php if ($attr == 'id_clube'): ?>
                                     <img class="avatar" id="fieldEditJogadorAdmin-<?php print($attr); ?>-logo" src="<?php print ("/img/clubes/logos/{$this->jogador->{$attr}}.png"); ?>">
@@ -29,8 +28,7 @@
                                 <?php if ($attr == 'id_selecao'): ?>
                                     <img class="avatar" id="fieldEditJogadorAdmin-<?php print($attr); ?>-logo" src="<?php print ("/img/selecoes/logos/{$this->jogador->{$attr}}.png"); ?>">
                                 <?php endif; ?>
-                                <input id="fieldEditJogadorAdmin-<?php print($attr); ?>-id" class="required" type="hidden" name="<?php print($attr); ?>" value="<?php print($this->jogador->{$attr}); ?>">
-                                <hr>                           
+                                <input id="fieldEditJogadorAdmin-<?php print($attr); ?>-id" class="required" type="hidden" name="<?php print($attr); ?>" value="<?php print($this->jogador->{$attr}); ?>">                 
                             <?php else: ?>
                                 <input id="fieldEditJogadorAdmin-<?php print($attr); ?>" class="required" type="text" name="<?php print($attr); ?>" value="<?php print($this->jogador->{$attr}); ?>">
                             <?php endif; ?>
