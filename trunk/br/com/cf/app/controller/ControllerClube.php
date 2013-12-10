@@ -48,7 +48,7 @@ class ControllerClube extends ControllerAbstract {
                 ))
                 ->query($query)
                 ->params($this->getParams())
-                ->make()
+                ->make('or')
                 ->output()
         ;
 

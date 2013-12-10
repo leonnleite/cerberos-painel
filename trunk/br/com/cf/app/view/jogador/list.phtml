@@ -102,8 +102,8 @@
                         </span>
                     </span>
                 </div>
-                <div  class="dataTables_wrapper" role="grid">
-                    <table id="gridJogadorAdmin" class="table table-striped data-table dataTable">
+                <div>
+                    <table id="gridJogadorAdmin" class="table table-striped table-condensed">
                         <thead>
                             <?php foreach ($this->columns as $key => $attr): ?>
                             <th>
@@ -205,10 +205,16 @@
                 {"sName": "equals", "aTargets": [9]}
             ],
             "oLanguage": {
-                "sLengthMenu": "mostrar _MENU_",
-                "sZeroRecords": "nenhum jogador encontrado",
-                "sInfo": "mostrando _START_ até _END_ de _TOTAL_ jogadores",
-                "sInfoEmpty": "mostrando 0 até 0 de 0 jogadores",
+                "oPaginate": {
+                    "sFirst": "Primeira",
+                    "sPrevious": "Anterior",
+                    "sNext": "Próxima",
+                    "sLast": "Última"
+                },
+                "sLengthMenu": "_MENU_",
+                "sZeroRecords": "Nenhum jogador encontrado",
+                "sInfo": "Visualizando _START_ até _END_ de _TOTAL_ jogadores",
+                "sInfoEmpty": "Visualizando 0 até 0 de 0 jogadores",
                 "sInfoFiltered": "(filtrado de _MAX_ jogadores)"
             },
             "fnRowCallback": function(nRow, aData, iDisplayIndex) {
