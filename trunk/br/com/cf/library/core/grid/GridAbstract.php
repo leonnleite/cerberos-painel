@@ -11,8 +11,7 @@ use br\com\cf\library\core\grid\Grideable,
  * @author Michael F. Rodrigues <cerberosnash@gmail.com>
  * @version 0.0.0
  */
-abstract class GridAbstract
-{
+abstract class GridAbstract {
 
     /**
      * @var Grideable
@@ -88,8 +87,7 @@ abstract class GridAbstract
      * @return void
      * @param string $entry
      */
-    protected function __construct ($entry = NULL)
-    {
+    protected function __construct($entry = NULL) {
         $driver = Bootstrap::factory()->getConfig()->getParam((is_null($entry)) ? 'database.default.driver' : "database.{$entry}.driver");
 
         $adapter = "Adapter" . ucfirst($driver);
@@ -105,16 +103,14 @@ abstract class GridAbstract
     /**
      * @return string
      */
-    public function getQuery ()
-    {
+    public function getQuery() {
         return $this->_query;
     }
 
     /**
      * @return string
      */
-    public function getParams ()
-    {
+    public function getParams() {
         return $this->_params;
     }
 
@@ -122,8 +118,7 @@ abstract class GridAbstract
      * @return string
      * @param string $param
      */
-    public function getParam ($param)
-    {
+    public function getParam($param) {
         return $this->_params["{$param}"];
     }
 
@@ -132,8 +127,7 @@ abstract class GridAbstract
      * @param string $key
      * @param boolean $alias
      */
-    public function getColumns ($key = NULL, $alias = true)
-    {
+    public function getColumns($key = NULL, $alias = true) {
         $column = '';
 
         if (is_null($key)) {
@@ -152,32 +146,28 @@ abstract class GridAbstract
     /**
      * @return string
      */
-    public function getLimit ()
-    {
+    public function getLimit() {
         return $this->_limit;
     }
 
     /**
      * @return string
      */
-    public function getOrder ()
-    {
+    public function getOrder() {
         return $this->_order;
     }
 
     /**
      * @return string
      */
-    public function getGroup ()
-    {
+    public function getGroup() {
         return $this->_group;
     }
 
     /**
      * @return string
      */
-    public function getWhere ()
-    {
+    public function getWhere() {
         return $this->_where;
     }
 
@@ -185,9 +175,17 @@ abstract class GridAbstract
      * @return GridAbstract
      * @param string $where
      */
-    public function setWhere ($where)
-    {
+    public function setWhere($where) {
         $this->_where = $where;
+        return $this;
+    }
+
+    /**
+     * @return GridAbstract
+     * @param string $limit
+     */
+    public function setLimit($limit) {
+        $this->_limit = $limit;
         return $this;
     }
 
@@ -195,8 +193,7 @@ abstract class GridAbstract
      * @return GridAbstract
      * @param array $result
      */
-    public function setResult ($result)
-    {
+    public function setResult($result) {
         $this->_result = $result;
         return $this;
     }
@@ -204,16 +201,14 @@ abstract class GridAbstract
     /**
      * @return array
      */
-    public function getResult ()
-    {
+    public function getResult() {
         return $this->_result;
     }
 
     /**
      * @return integer
      */
-    public function getTotal ()
-    {
+    public function getTotal() {
         return $this->_total;
     }
 
@@ -221,8 +216,7 @@ abstract class GridAbstract
      * @return GridAbstract
      * @param integer $total
      */
-    public function setTotal ($total)
-    {
+    public function setTotal($total) {
         $this->_total = $total;
         return $this;
     }
@@ -231,8 +225,7 @@ abstract class GridAbstract
      * @return GridAbstract
      * @param integer $filtered_total
      */
-    public function setFilteredTotal ($filtered_total)
-    {
+    public function setFilteredTotal($filtered_total) {
         $this->_filtered_total = $filtered_total;
         return $this;
     }
@@ -241,8 +234,7 @@ abstract class GridAbstract
      * @return GridAbstract
      * @param string $entry
      */
-    public static function factory ($entry = NULL)
-    {
+    public static function factory($entry = NULL) {
         $class = get_called_class();
 
         return new $class($entry);
@@ -252,8 +244,7 @@ abstract class GridAbstract
      * @return Grid
      * @param array $columns
      */
-    public function columns ($columns)
-    {
+    public function columns($columns) {
         $this->_columns = $columns;
         return $this;
     }
@@ -262,8 +253,7 @@ abstract class GridAbstract
      * @return Grid
      * @param string $query
      */
-    public function query ($query)
-    {
+    public function query($query) {
         $this->_query = $query;
         return $this;
     }
@@ -272,8 +262,7 @@ abstract class GridAbstract
      * @return Grid
      * @param string $group
      */
-    public function group ($group = '')
-    {
+    public function group($group = '') {
         if ($group != '') {
             $group = " group by {$group} ";
         }
@@ -286,8 +275,7 @@ abstract class GridAbstract
      * @return Grid
      * @param string $primary
      */
-    public function primary ($primary)
-    {
+    public function primary($primary) {
         $this->_primary = $primary;
         return $this;
     }
@@ -296,35 +284,35 @@ abstract class GridAbstract
      * @return Grid
      * @param array $params
      */
-    public function params ($params)
-    {
+    public function params($params) {
+
+        foreach ($params as $key => $param) {
+            $params[$key] = addcslashes($param, "'");
+        }
+
         $this->_params = $params;
+
         return $this;
     }
 
     /**
      * @return array
      */
-    public function output ()
-    {
+    public function output() {
         return $this->_output;
     }
 
     /**
      * @return void
      */
-    protected function _paging ()
-    {
-        if (isset($this->_params['iDisplayStart']) && $this->_params['iDisplayLength'] != '-1') {
-            $this->_limit = sprintf('limit %d offset %d', $this->_params['iDisplayLength'], $this->_params['iDisplayStart']);
-        }
+    protected function _paging() {
+        $this->_adapter->paging($this);
     }
 
     /**
      * @return void
      */
-    public function _ordering ()
-    {
+    public function _ordering() {
         if (isset($this->_params['iSortCol_0'])) {
             for ($i = 0; $i < intval($this->_params['iSortingCols']); $i++) {
                 if ($this->_params['bSortable_' . intval($this->_params['iSortCol_' . $i])] == "true") {
@@ -341,51 +329,44 @@ abstract class GridAbstract
     /**
      * @return void
      */
-    protected function _individualFiltering ($filter)
-    {
+    protected function _individualFiltering($filter) {
         $this->_adapter->individualFiltering($this, $filter);
     }
 
     /**
      * @return void
      */
-    public function _filtering ($filter)
-    {
+    public function _filtering($filter) {
         $this->_adapter->filtering($this, $filter);
     }
 
     /**
      * @return void
      */
-    protected function _result ()
-    {
+    protected function _result() {
         $this->_adapter->result($this);
     }
 
     /**
      * @return void
      */
-    protected function _totalRecords ()
-    {
+    protected function _totalRecords() {
         $this->_adapter->totalRecords($this);
     }
 
     /**
      * @return void
      */
-    protected function _totalDisplayRecords ()
-    {
+    protected function _totalDisplayRecords() {
         $this->_adapter->totalDisplayRecords($this);
     }
 
     /**
      * @return Grid
      */
-    public function make ($filter = 'or')
-    {
+    public function make($filter = 'or') {
 
         # Filtering
-
         if ($filter == 'or') {
             $this->_filtering($filter);
         }

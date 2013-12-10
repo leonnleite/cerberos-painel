@@ -1,4 +1,5 @@
 <script type="text/javascript" src="library/datatables/plugins/jquery.dataTables.columnFilter.js"></script>
+<script type="text/javascript" src="library/datatables/plugins/jquery.dataTables.filteringDelay.js"></script>
 
 <style type="text/css">
     .dataTables_filter{
@@ -232,6 +233,8 @@
 <?php endforeach; ?>
             ]}
         );
+
+        Index.admin.gridJogadorAdmin.fnSetFilteringDelay(100000);
 
     });
 </script>
