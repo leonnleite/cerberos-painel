@@ -5,11 +5,6 @@
     .dataTables_filter{
         display: none;
     }
-    .mini-img-in-grid{
-        width: 50px;
-        height: 50px;
-        border: 0px;
-    }
 </style>
 
 <section id="main">
@@ -232,9 +227,7 @@
                     {sSelector: "#filterListJogadorAdmin-<?php print current($attr); ?>"},
 <?php endforeach; ?>
             ]}
-        );
-
-        Index.admin.gridJogadorAdmin.fnSetFilteringDelay(100000);
+        ).fnSetFilteringDelay(3);
 
     });
 </script>
