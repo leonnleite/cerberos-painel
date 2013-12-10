@@ -25,7 +25,9 @@ class AdapterMysql extends \br\com\cf\library\core\model\ModelAbstract implement
     protected $_table = '';
 
     /**
-     * 
+     * return void
+     * @param GridAbstract $grid
+     * @param string $filter
      */
     public function individualFiltering(GridAbstract $grid, $filter = 'or') {
 
@@ -52,14 +54,16 @@ class AdapterMysql extends \br\com\cf\library\core\model\ModelAbstract implement
     }
 
     /**
-     * @return void
+     * return void
+     * @param GridAbstract $grid
+     * @param string $filter
      */
     public function filtering(GridAbstract $grid, $filter = 'or') {
         if ($grid->getParams('sSearch') != '') {
             for ($i = 0; $i < count($grid->getColumns()); $i++) {
-                if ($grid->getParams('bSearchable_' . $i) == 'true') {
+                if ($grid->getParam('bSearchable_' . $i) == 'true') {
                     $where = $grid->getWhere();
-                    $where .= sprintf("%s like '%s%s%s' {$filter} ", $grid->getColumns($i), '%', $grid->getParams('sSearch'), '%');
+                    $where .= sprintf("%s like '%s%s%s' {$filter} ", $grid->getColumns($i), '%', $grid->getParam('sSearch'), '%');
                     $grid->setWhere($where);
                 }
             }
@@ -68,7 +72,8 @@ class AdapterMysql extends \br\com\cf\library\core\model\ModelAbstract implement
     }
 
     /**
-     * 
+     * return void
+     * @param GridAbstract $grid
      */
     public function result(GridAbstract $grid) {
 
@@ -90,26 +95,58 @@ class AdapterMysql extends \br\com\cf\library\core\model\ModelAbstract implement
     }
 
     /**
-     * 
+     * return void
+     * @param GridAbstract $grid
      */
     public function totalRecords(GridAbstract $grid) {
         $sQuery = sprintf('select count(*) as total from %s ', $grid->getQuery());
         $stmt = $this->_conn->prepare($sQuery);
         $stmt->execute();
-        $grid->setTotal($stmt->fetch(\PDO::FETCH_OBJ)->total);
+
+        $result = $stmt->fetch(\PDO::FETCH_OBJ);
+
+        $total = 0;
+
+        if (!empty($result)) {
+            $total = $result->total;
+        }
+
+        $grid->setTotal($total);
     }
 
     /**
-     * 
+     * return void
+     * @param GridAbstract $grid
      */
     public function totalDisplayRecords(GridAbstract $grid) {
         if ($grid->getWhere() != '') {
-            $sQuery = sprintf('select count(*) as total from %s %s %s %s', $grid->getQuery(), $grid->getWhere(), $grid->getOrder(), $grid->getLimit());
+
+            $sQuery = sprintf('select count(*) as total from %s %s limit 1', $grid->getQuery(), $grid->getWhere());
+
             $stmt = $this->_conn->prepare($sQuery);
             $stmt->execute();
-            $grid->setFilteredTotal($stmt->fetch(\PDO::FETCH_OBJ)->total);
+
+            $result = $stmt->fetch(\PDO::FETCH_OBJ);
+
+            $total = 0;
+
+            if (!empty($result)) {
+                $total = $result->total;
+            }
+
+            $grid->setFilteredTotal($total);
         } else {
             $grid->setFilteredTotal($grid->getTotal());
+        }
+    }
+
+    /**
+     * @return void
+     * @param GridAbstract $grid
+     */
+    public function paging(GridAbstract $grid) {
+        if ($grid->getParam('iDisplayStart') && $grid->getParam('iDisplayLength') != '-1') {
+            $grid->setLimit(sprintf('limit %d,%d', $grid->getParam('iDisplayStart'), $grid->getParam('iDisplayLength') + $grid->getParam('iDisplayStart')));
         }
     }
 

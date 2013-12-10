@@ -1,11 +1,4 @@
-<style type="text/css">
-    .mini-img-in-grid{
-        width: 50px;
-        height: 50px;
-        border: 0px;
-    }
-
-</style>
+<script type="text/javascript" src="library/datatables/plugins/jquery.dataTables.filteringDelay.js"></script>
 
 <section id="main">
     <div class="top-nav">
@@ -71,9 +64,7 @@
             },
             "fnRowCallback": function(nRow, aData, iDisplayIndex) {
                 $('td:eq(0)', nRow).html('<img class="mini-img-in-grid" src="/img/clubes/logos/' + aData[0] + '.png">');
-                $('td:eq(4)', nRow).html(aData[4] + '<b> cm</b>');
-                $('td:eq(5)', nRow).html(aData[5] + '<b> kg</b>');
             }
-        });
+        }).fnSetFilteringDelay(3);
     });
 </script>
