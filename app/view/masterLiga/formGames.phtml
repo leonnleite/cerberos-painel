@@ -1,0 +1,110 @@
+<script type="text/javascript" src="library/validate/jquery.validate-1.11.1.js"></script>
+
+<section id="main">
+    <div class="top-nav">
+        <div class="container-fluid">
+            <div class="row-fluid search-button-bar-container">
+                <div class="span12">
+                    <ul class="breadcrumb">
+                        <li><a href="#"><i class="icon-user"></i> Master Liga </a></li>
+                        <li><a href="#"><i class="icon-user"></i> Jogos </a></li>
+                    </ul>
+                    <a class="search-button-trigger" href="#"><i class="icon-search"></i></a>
+                </div>
+            </div>
+
+            <div class="row-fluid search-bar-nav">
+                <div class="span12">
+                    <form>
+                        <input class="search" placeholder="Search..." type="text">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+
+                <div class="box">
+                    <div class="tab-header">
+                        Novo Usuário
+                        <span class="pull-right">
+                            <span class="options">
+                                <a href="#"><i class="icon-cog"></i></a>
+                            </span>
+                        </span>
+                    </div>
+                    <form id="formCreateUsuario" class="fill-up" action="/usuario/create/ajax/true" method="post">
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <div class="padded">
+                                    <div class="input">
+                                        <input class="required" title="informe o nome completo!" placeholder="Nome Completo" type="text" name="nm_usuario">
+                                    </div>
+                                    <div class="input">
+                                        <input class="required" title="informe um email válido!" placeholder="Email" type="email" name="tx_email">
+                                    </div>
+                                    <div class="input">
+                                        <input class="required" title="informe um nick válido da live!" placeholder="Nick Live" type="text" name="lg_live">
+                                    </div>
+
+                                    <div class="input">
+                                        <input class="required" title="informe um senha segura!" placeholder="Senha" class="error" type="password" name="tx_senha">
+                                    </div>
+
+                                    <div class="note pull-right">defina uma senha segura!</div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="button blue">Salvar</button>
+                            <button type="reset" class="button">Cancelar</button>
+                            <div class="pull-right">
+                                <div class="input">
+                                    <input id="fg_perfil" class="normal-check" type="checkbox" name="fg_perfil">
+                                    <label for="fg_perfil">Este usuário é Administrador?</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <?php print br\com\cf\library\core\view\View::partials('footer'); ?>
+    </div>
+</section>
+
+<script type="text/javascript">
+
+
+    !(function($) {
+
+        $(document).ready(function() {
+
+            var formNew = $('#formCreateUsuario');
+            var actionNew = formNew.attr('action');
+
+            $("#formCreateUsuario").validate({
+                errorClass: "help-inline",
+                submitHandler: function() {
+                    if (confirm('Você tem certeza que deseja cadastrar este novo usuário?')) {
+                        $.post(actionNew, formNew.serialize(), function(response) {
+                            if (response.status === 'success') {
+                                formNew.each(function() {
+                                    this.reset();
+                                });
+                            }
+                            Util.showMessageBox(response);
+                        }, 'json');
+                    }
+                }
+            });
+
+        });
+
+    })(jQuery);
+
+</script>
