@@ -9,15 +9,6 @@
                         <li><a href="#"><i class="icon-user"></i> Usuários </a></li>
                         <li><a href="#"><i class="icon-user"></i> Novo </a></li>
                     </ul>
-                    <a class="search-button-trigger" href="#"><i class="icon-search"></i></a>
-                </div>
-            </div>
-
-            <div class="row-fluid search-bar-nav">
-                <div class="span12">
-                    <form>
-                        <input class="search" placeholder="Search..." type="text">
-                    </form>
                 </div>
             </div>
         </div>
@@ -40,22 +31,58 @@
                         <div class="row-fluid">
                             <div class="span6">
                                 <div class="padded">
+
+                                    <div class="note pull-left">Nome Completo</div>
                                     <div class="input">
-                                        <input class="required" title="informe o nome completo!" placeholder="Nome Completo" type="text" name="nm_usuario">
-                                    </div>
-                                    <div class="input">
-                                        <input class="required" title="informe um email válido!" placeholder="Email" type="email" name="tx_email">
-                                    </div>
-                                    <div class="input">
-                                        <input class="required" title="informe um nick válido da live!" placeholder="Nick Live" type="text" name="lg_live">
+                                        <input class="required" title="informe o nome completo!" placeholder="Ex. João da Silva" type="text" name="nm_usuario">
                                     </div>
 
+                                    <div class="note pull-left">Email</div>
+                                    <div class="input">
+                                        <input class="required" title="informe um email válido!" placeholder="Ex. cerberosnash@gmail.com" type="email" name="tx_email">
+                                    </div>
+
+<!--                                    <div class="note pull-left">Série</div>
+                                    <div class="input input-mini">
+                                        <select name="id_serie" class="required input-small">
+                                            <?php foreach ($this->series as $serie) : ?>
+                                                <option value="<?php print ($serie->id_serie); ?>"><?php print ($serie->nm_serie); ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>-->
+
+                                    <div class="note pull-left">Nome da Equipe</div>
+                                    <div class="input">
+                                        <input class="required" title="informe um nome válido para a sua equipe!" placeholder="Ex. xXproSoccerXx" type="text" name="nm_equipe">
+                                    </div>
+
+                                    <div class="note pull-left">Nick Microsoft Live</div>
+                                    <div class="input">
+                                        <input class="required" title="informe um nick válido da live!" placeholder="Ex. cerberosnash" type="text" name="lg_live">
+                                    </div>
+
+                                    <div class="note pull-left">Senha</div>
                                     <div class="input">
                                         <input class="required" title="informe um senha segura!" placeholder="Senha" class="error" type="password" name="tx_senha">
                                     </div>
 
                                     <div class="note pull-right">defina uma senha segura!</div>
 
+                                </div>
+                            </div>
+                            <div class="span6">
+                                <div class="black-box">
+                                    <div class="tab-header">
+                                        Novo Usuário
+                                        <span class="pull-right">
+                                            <span class="options">
+                                                <a href="#"><i class="icon-cog"></i></a>
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        LOGO @TODO UPLOAD
+                                    </div>
                                 </div>
                             </div>
                         </div>

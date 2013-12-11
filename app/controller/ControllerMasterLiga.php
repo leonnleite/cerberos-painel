@@ -65,35 +65,57 @@ class ControllerMasterLiga extends ControllerAbstract {
      */
     public function formConfigurationAction() {
 
-        $fields = array(
-            'id_temporada' => 'integer',
-            'st_painel_ativo' => 'boolean',
-            'st_negociacao' => 'boolean',
-            'st_compra_multa' => 'boolean',
-            'st_reduzir_salario' => 'boolean',
-            'st_mostrar_salario' => 'boolean',
-            'nu_premio_variacao' => 'integer',
-            'nu_premio_empate' => 'integer',
-            'nu_premio_gol' => 'integer',
-            'nu_multa_vermelho' => 'integer',
-            'nu_multa_amarelo' => 'integer',
-            'nu_multa_wo' => 'integer',
-            'nu_per_compra_multa' => 'integer',
-            'nu_multa_recisao_contrato' => 'integer',
-            'nu_dias_confirmar_resultado' => 'integer',
-            'nu_horas_finalizar_leilao' => 'integer',
-            'nu_perc_negociacao' => 'integer',
-            'nu_relacao_passe_salario' => 'integer',
-            'nu_premio_vitoria' => 'integer',
-            'dt_inicio_draft' => 'date'
+        $columns = array(
+            0 => array(
+                'st_painel_ativo' => 'Permitir Acesso PAINEL', #manutencao
+                'st_negociacao' => 'Permitir Negociações', #compra, venda e troca de jogadores
+                'st_compra_multa' => 'Permitir Comprar por Multa', #rouba o jogador e paga a multa sugerida
+                'st_reduzir_salario' => 'Permitir Gerenciar Salários', #trava a opcao de alterar salarios
+            ),
+            1 => array(
+                'nu_per_compra_multa' => '% Acressímo Compra por Multa', #esse % serah somado total vez que um jogador for robado, quanto for permitido gerenciar salarios
+                'nu_multa_recisao_contrato' => 'Multa por recisão de contrato', #esse valor serah debitado do saldo do usuario quando um jogador for demitido
+                'nu_dias_confirmar_resultado' => 'Qtd. de dia para confirmar resultado', # tempo maximo para confirmar o resultado do jogo
+                'nu_perc_negociacao' => 'Percentual negociação', #??????
+                'nu_relacao_passe_salario' => 'Relação passe salário', #?????
+                'nu_premio_vitoria' => 'Prêmio por vitória', # serah o valor credito na conta do usuario quando ele ganhar um partida
+            ),
+            2 => array(
+                'nu_premio_variacao' => 'Variação do Prêmio',
+                'nu_premio_empate' => 'Prêmio Empate',
+                'nu_premio_gol' => 'Prêmio Gol',
+                'nu_multa_vermelho' => 'Multa Cartão Vermelho',
+                'nu_multa_amarelo' => 'Multa Cartão Amarelo',
+                'nu_multa_wo' => 'Multa WO'
+            ),
+            3 => array(
+                'id_temporada' => '',
+                'id_configuracao' => '',
+                'dt_inicio_draft' => 'Início do Draft' #????
+            ),
         );
 
         $configuracao = current(\br\com\cf\app\model\ModelConfiguracao::factory()->findByParam(array('id_temporada' => 2)));
 
         $this->setView('masterLiga', 'formConfiguration')
-                ->set('fields', $fields)
+                ->set('columns', $columns)
                 ->set('configuracao', $configuracao)
                 ->render();
+    }
+
+    /**
+     * @return void
+     */
+    public function configurationAction() {
+
+        try {
+            \br\com\cf\app\model\ModelConfiguracao::factory()->update($this->getParams());
+            $response = array('status' => 'success', 'message' => 'Configurações da Master Liga alteração com sucesso!');
+        } catch (\Exception $e) {
+            $response = array('status' => 'success', 'message' => $e->getMessage());
+        }
+
+        $this->json($response);
     }
 
 }

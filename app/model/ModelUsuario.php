@@ -35,6 +35,7 @@ class ModelUsuario extends ModelAbstract {
      */
     protected $_fields = array(
         'nm_usuario' => 'string',
+        'nm_equipe' => 'string',
         'tx_senha' => 'string',
         'tx_email' => 'string',
         'lg_live' => 'string',

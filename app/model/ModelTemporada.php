@@ -38,5 +38,17 @@ class ModelTemporada extends ModelAbstract {
         'dt_final' => 'date'
     );
 
+    /**
+     * @return array
+     * @param string $arguments
+     */
+    public function active() {
+
+        $stmt = $this->_conn->prepare('select * from temporada where id_temporada_status != 2 and dt_final is null limit 1');
+        $stmt->execute();
+
+        return $stmt->fetch(\PDO::FETCH_OBJ);
+    }
+
 }
 
