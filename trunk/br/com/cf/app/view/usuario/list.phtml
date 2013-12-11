@@ -45,18 +45,7 @@
                 </div>
             </div>
         </div>
-
-        <!--DEFINIR COMO PARTIALS FOOTERS-->
-        <div class="row-fluid">
-            <div class="span12">
-                <div class="footer">
-                    <div>2014 © Painel FIFA 2014</div>
-                    <div>desenvolvido por <a href="https://nexussit.com.br">Nexuss</a></div>
-                </div>
-            </div>
-        </div>
-        <!--DEFINIR COMO PARTIALS FOOTERS-->
-
+        <?php print br\com\cf\library\core\view\View::partials('footer'); ?>     
     </div>
 </section>
 
@@ -89,7 +78,7 @@
                 "sInfoFiltered": "(filtrado de _MAX_ jogadores)"
             },
             fnRowCallback: function(nRow, aData, iDisplayIndex) {
-                $('td:eq(0)', nRow).html('<a title="Editar" id="btnDetailUser" id_usuario="' + aData[0] + '" href="#"><img class="avatar" src="https://avatar-ssl.xboxlive.com/avatar/' + aData[3] + '/avatarpic-l.png" /></a>');
+                $('td:eq(0)', nRow).html('<a title="Editar" id="btnDetailUser" id_usuario="' + aData[0] + '" href="#"><img class="mini-img-in-grid" src="https://avatar-ssl.xboxlive.com/avatar/' + aData[3] + '/avatarpic-l.png" /></a>');
                 $('td:eq(4)', nRow).html(aData[4] === '1' ? '<strong>Administrador</strong>' : 'Comum');
             }
         }).fnSetFilteringDelay(3);

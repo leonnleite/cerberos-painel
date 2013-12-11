@@ -49,10 +49,12 @@ class ControllerIndex extends ControllerAbstract {
 
         $view = Session::get('user')->fg_perfil == 1 ? 'admin' : 'user';
 
+        $temporada = \br\com\cf\app\model\ModelTemporada::factory()->active();
+
         $this->setView('index', $view)
                 ->set('background', '/img/wallpaper.jpg')
-                ->set('nm_usuario', current(explode(' ', Session::get('user')->nm_usuario)))
-                ->set('lg_live', Session::get('user')->lg_live)
+                ->set('usuario', Session::get('user'))
+                ->set('temporada', $temporada)
                 ->render();
     }
 

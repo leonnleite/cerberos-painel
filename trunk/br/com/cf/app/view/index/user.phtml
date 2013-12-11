@@ -166,8 +166,6 @@ use br\com\cf\library\core\cache\Cache;
                     </ul>
                 </li>
 
-
-
                 <li class="">
                     <a href="/usuario/logoff">
                         <i class="icon-off"></i> Sair
@@ -183,17 +181,17 @@ use br\com\cf\library\core\cache\Cache;
 
                 <div class="pull-left">
                     <div class="avatar">
-                        <img src="https://avatar-ssl.xboxlive.com/avatar/<?php print($this->lg_live); ?>/avatarpic-l.png" />
+                        <img src="https://avatar-ssl.xboxlive.com/avatar/<?php print($this->usuario->lg_live); ?>/avatarpic-l.png" />
                     </div>
                 </div>
 
                 <div class="pull-left">
                     <div class="title">
-                        <?php print($this->nm_usuario); ?>
+                        <?php print(current(explode(' ', $this->usuario->nm_usuario))); ?>
                     </div>
                     <div class="btn-group">
                         <button class="button mini inset black"><i class="icon-search"></i></button>
-                        <button class="button mini inset black">Online</button>
+                        <button class="button mini inset black"><?php print($this->usuario->nm_equipe); ?></button>
                         <button class="button mini inset black dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i></button>
                         <ul class="dropdown-menu black-box-dropdown">
                             <li><a href="#">Perfil</a></li>
@@ -252,46 +250,50 @@ use br\com\cf\library\core\cache\Cache;
                     </a>
                 </li>
 
-                <li id="notification-full-image">
+                <li id="">
                     <a href="#">
                         <i class="icon-list-alt"></i> Saldo
                     </a>
                 </li>
 
-                <li id="notification-small-image">
+                <li id="">
                     <a href="#">
                         <i class="icon-table"></i> Chat
                     </a>
                 </li>
 
-                <li id="notification-small-image">
+                <li id="">
                     <a href="#">
                         <i class="icon-table"></i> Meus Replays
                     </a>
                 </li>
 
-                <li id="notification-small-image">
+                <li id="">
                     <a href="#">
                         <i class="icon-table"></i> Meus Rivais
                     </a>
                 </li>
 
-                <li id="notification-small-image">
+                <li id="">
                     <a href="#">
                         <i class="icon-table"></i> Agenda
                     </a>
                 </li>
 
-                <li id="notification-small-image">
+                <li id="">
                     <a class="linkcontent" value="index/home" href="#">
                         <i class="icon-table"></i> Youtube
                     </a>
                 </li>
 
-                <li id="notification-small-image">
+                <li id="">
                     <a class="linkcontent" value="index/forum" href="#">
                         <i class="icon-table"></i> Fórum
                     </a>
+                </li>
+
+                <li>
+                    <img class="img-rounded center"  src="img/escudos/36.png">
                 </li>
             </ul>
 

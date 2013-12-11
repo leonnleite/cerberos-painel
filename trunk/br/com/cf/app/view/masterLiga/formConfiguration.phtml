@@ -28,40 +28,56 @@
                             </span>
                         </span>
                     </div>
-                    <form id="formCreateUsuario" class="fill-up" action="/usuario/create/ajax/true" method="post">
+                    <form id="formEditConfiguracao" class="fill-up" action="/masterLiga/configuration/ajax/true" method="post">
                         <div class="row-fluid">
-                            <div class="span6">
-                                <div class="padded">
-                                    <!--                                    <div class="input">
-                                                                            <input class="required" title="informe o nome completo!" placeholder="Nome Completo" type="text" name="nm_usuario">
-                                                                        </div>
-                                                                        <div class="input">
-                                                                            <input class="required" title="informe um email válido!" placeholder="Email" type="email" name="tx_email">
-                                                                        </div>
-                                                                        <div class="input">
-                                                                            <input class="required" title="informe um nick válido da live!" placeholder="Nick Live" type="text" name="lg_live">
-                                                                        </div>-->
 
-                                    <?php foreach ($this->fields as $key => $field): print ($key . $field); ?>
-                                        <div class="input">
-                                            <input class="required"  type="text" name="<?php print ($key); ?>" value="<?php print ($this->configuracao->{$key}); ?>">
+                            <div class="span3">
+                                <div class="padded">
+                                    <?php foreach ($this->columns[0] as $key => $label): ?>
+                                        <div class="note pull-left"><?php print ($label); ?></div>
+                                        <div class="input input-mini">
+                                            <select class="required input-small" name="<?php print ($key); ?>" value="<?php print ($this->configuracao->{$key}); ?>">
+                                                <option value="1" <?php print ($this->configuracao->{$key} == 1) ? 'selected="selected"' : ''; ?>>sim</option>
+                                                <option value="0" <?php print ($this->configuracao->{$key} == 0) ? 'selected="selected"' : ''; ?>>Não</option>
+                                            </select>
                                         </div>
                                     <?php endforeach; ?>
-
-                                    <div class="note pull-right">defina uma senha segura!</div>
-
+                                </div>
+                            </div>
+                            <div class="span3">
+                                <div class="padded">
+                                    <?php foreach ($this->columns[1] as $key => $label): ?>
+                                        <div class="note pull-left"><?php print ($label); ?></div>
+                                        <div class="input input-mini">
+                                            <input class="required number"  type="text" name="<?php print ($key); ?>" value="<?php print ($this->configuracao->{$key}); ?>">
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                            <div class="span3">
+                                <div class="padded">
+                                    <?php foreach ($this->columns[2] as $key => $label): ?>
+                                        <div class="note pull-left"><?php print ($label); ?></div>
+                                        <div class="input input-mini">
+                                            <input class="required number"  type="text" name="<?php print ($key); ?>" value="<?php print ($this->configuracao->{$key}); ?>">
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                            <div class="span3">
+                                <div class="padded">
+                                    <?php foreach ($this->columns[3] as $key => $label): ?>
+                                        <div class="note pull-left"><?php print ($label); ?></div>
+                                        <div class="input input-medium">
+                                            <input class="required date"  type="<?php print ($label == '') ? 'hidden' : 'text'; ?>" name="<?php print ($key); ?>" value="<?php print ($this->configuracao->{$key}); ?>">
+                                        </div>
+                                    <?php endforeach; ?>
                                 </div>
                             </div>
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="button blue">Salvar</button>
                             <button type="reset" class="button">Cancelar</button>
-                            <div class="pull-right">
-                                <div class="input">
-                                    <input id="fg_perfil" class="normal-check" type="checkbox" name="fg_perfil">
-                                    <label for="fg_perfil">Este usuário é Administrador?</label>
-                                </div>
-                            </div>
                         </div>
                     </form>
                 </div>
@@ -78,19 +94,15 @@
 
         $(document).ready(function() {
 
-            var formNew = $('#formCreateUsuario');
+            var formNew = $('#formEditConfiguracao');
             var actionNew = formNew.attr('action');
 
-            $("#formCreateUsuario").validate({
-                errorClass: "help-inline",
+            $("#formEditConfiguracao").validate({
+                errorClass: 'error',
+                validClass: 'success',
                 submitHandler: function() {
-                    if (confirm('Você tem certeza que deseja cadastrar este novo usuário?')) {
+                    if (confirm('Você tem certeza que deseja alterar as configurações da Master Liga atual?')) {
                         $.post(actionNew, formNew.serialize(), function(response) {
-                            if (response.status === 'success') {
-                                formNew.each(function() {
-                                    this.reset();
-                                });
-                            }
                             Util.showMessageBox(response);
                         }, 'json');
                     }

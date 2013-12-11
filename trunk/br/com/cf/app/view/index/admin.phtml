@@ -97,21 +97,24 @@ use br\com\cf\library\core\cache\Cache;
 
                     <ul class="dropdown-menu">
                         <!--quando iniciada soh pode ter uma aberta, esta vinculada a tabela temporada-->
-                        <li>
-                            <a class="linkcontent" value="/masterLiga/formCreate" href="#">
-                                <i class="icon-search"></i> Nova
-                            </a>
-                        </li>
-                        <!--quando iniciada soh pode ter uma aberta, esta vinculada a tabela temporada-->
-                        <li class="divider"></li>
-                        <!--quando iniciada soh pode ter uma aberta, esta vinculada a tabela temporada-->
-                        <li>
-                            <a class="linkcontent" value="/masterLiga/formClose" href="#">
-                                <i class="icon-search"></i> Encerrar
-                            </a>
-                        </li>
-                        <!--quando iniciada soh pode ter uma aberta, esta vinculada a tabela temporada-->
-                        <li class="divider"></li>
+                        <?php if (!$this->temporada): ?>
+                            <li>
+                                <a class="linkcontent" value="/masterLiga/formCreate" href="#">
+                                    <i class="icon-search"></i> Nova
+                                </a>
+                            </li>
+                            <!--quando iniciada soh pode ter uma aberta, esta vinculada a tabela temporada-->
+                            <li class="divider"></li>
+                        <?php else: ?>
+                            <!--quando iniciada soh pode ter uma aberta, esta vinculada a tabela temporada-->
+                            <li>
+                                <a class="linkcontent" value="/masterLiga/formClose" href="#">
+                                    <i class="icon-search"></i> Encerrar
+                                </a>
+                            </li>
+                            <!--quando iniciada soh pode ter uma aberta, esta vinculada a tabela temporada-->
+                            <li class="divider"></li>
+                        <?php endif; ?>
                         <li>
                             <a class="linkcontent" value="/masterLiga/formGames" href="#">
                                 <i class="icon-search"></i> Jogos

@@ -1,6 +1,6 @@
 <script type="text/javascript" src="library/validate/jquery.validate-1.11.1.js"></script>
 
-<div class="box">
+<div class="black-box">
     <div class="tab-header">
         Editar
         <span class="pull-right">
@@ -13,13 +13,16 @@
         <div class="row-fluid">
             <div class="span6">
                 <div class="padded">
+                    <div class="note pull-left">Nome Completo</div>
                     <div class="input">
                         <input class="required" type="hidden" name="id_usuario" value="<?php print($this->id_usuario); ?>">
                         <input class="required" title="informe o nome completo!" placeholder="Nome Completo" type="text" name="nm_usuario" value="<?php print($this->nm_usuario); ?>">
                     </div>
+                    <div class="note pull-left">Email</div>
                     <div class="input">
                         <input class="required" title="informe um email válido!" placeholder="Email" type="email" name="tx_email" value="<?php print($this->tx_email); ?>">
                     </div>
+                    <div class="note pull-left">Nick Live</div>
                     <div class="input">
                         <input class="required" title="informe um nick válido da live!" placeholder="Nick Live" type="text" name="lg_live" value="<?php print($this->lg_live); ?>">
                     </div>

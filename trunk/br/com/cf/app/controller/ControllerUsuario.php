@@ -71,10 +71,12 @@ class ControllerUsuario extends ControllerAbstract {
     }
 
     /**
-     * 
+     * @return void
      */
     public function formCreateAction() {
-        $this->setView('usuario', 'formCreate')->render();
+        $this->setView('usuario', 'formCreate')
+                ->set('series', \br\com\cf\app\model\ModelSerie::factory()->findAll())
+                ->render();
     }
 
     /**
@@ -108,6 +110,7 @@ class ControllerUsuario extends ControllerAbstract {
             $params['tx_senha'] = md5($params['tx_senha']);
 
             BusinessUsuario::factory()->save($params);
+
             $response = array('status' => 'success', 'message' => 'Novo usuário cadastrado com sucesso!');
         } catch (\Exception $e) {
             $response = array('status' => 'error', 'message' => $e->getMessage());
