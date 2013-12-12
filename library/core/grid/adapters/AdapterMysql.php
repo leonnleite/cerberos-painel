@@ -145,7 +145,7 @@ class AdapterMysql extends \br\com\cf\library\core\model\ModelAbstract implement
      * @param GridAbstract $grid
      */
     public function paging(GridAbstract $grid) {
-        if ($grid->getParam('iDisplayStart') && $grid->getParam('iDisplayLength') != '-1') {
+        if ($grid->getParam('iDisplayStart') != '' && $grid->getParam('iDisplayLength') != '-1') {
             $grid->setLimit(sprintf('limit %d,%d', $grid->getParam('iDisplayStart'), $grid->getParam('iDisplayLength') + $grid->getParam('iDisplayStart')));
         }
     }
