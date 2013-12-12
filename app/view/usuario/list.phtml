@@ -10,12 +10,78 @@
                         <li><a href="#"><i class="icon-user"></i> Usuários</a></li>
                         <li class="active"><a href="#"><i class="icon-list"></i> Listar Todos</a></li>
                     </ul>
+                    <a class="search-button-trigger" href="#"><i title="Pesquisa Avançada" id="bthSearchUsuarioAdmin" class="icon-search"></i></a>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="container-fluid">
+
+        <div id="rowSearchUsuarioAdmin" class="row-fluid hidden">
+            <div class="span12">
+
+                <div class="box">
+                    <div class="tab-header">
+                        Pesquisa Avançada
+                        <span class="pull-left">
+                            <span class="options">
+                                <a href="#"><i class="icon-search"></i></a>
+                            </span>
+                        </span>
+                    </div>
+                    <?php
+                    $left = $right = '';
+                    foreach ($this->columns as $key => $attr) {
+
+                        $visible = '';
+
+                        if (current($attr) == 'Clube') {
+                            $visible = 'hide';
+                        }
+
+                        if (current($attr) == 'Seleção') {
+                            $visible = 'hide';
+                        }
+
+                        if ($key % 2 == 0) {
+                            $left .= '<div class="input ' . $visible . '">' . current($attr) . '<span id="filterListJogadorAdmin-' . current($attr) . '"></span></div>';
+                        } else {
+                            $right .= '<div class="input ' . $visible . '">' . current($attr) . '<span id="filterListJogadorAdmin-' . current($attr) . '"></span></div>';
+                        }
+
+                        $visible = '';
+                    }
+                    ?>
+                    <form class="fill-up">
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <div class="padded">
+                                    <?php print ($left); ?>
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <div class="padded">
+                                    <?php print ($right); ?>
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <div class="padded">
+                                    Clube <input id="fieldFilterGridClubeJogadorAdmin-target" type="text">
+                                    <img class="mini-img-in-grid" id="fieldFilterGridClubeJogadorAdmin-logo">
+                                    Seleção <input id="fieldFilterGridSelecaoJogadorAdmin-target" type="text">
+                                    <img class="mini-img-in-grid" id="fieldFilterGridSelecaoJogadorAdmin-logo">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="button blue" type="submit">Pesquisar</button>
+                            <button class="button" type="reset">Limpar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <div class="row-fluid">
             <div class="box" style="position:relative;">
@@ -38,6 +104,12 @@
                         <div>Nick</div>
                         </th>
                         <th>
+                        <div>Série</div>
+                        </th>
+                        <th>
+                        <div>Equipe</div>
+                        </th>
+                        <th>
                         <div>Perfil</div>
                         </th>
                         </thead>
@@ -53,34 +125,43 @@
 
     $(document).ready(function() {
 
-        $("#btnDetailUser").die('click').live('click', function() {
-            Util.showModal('Informações Usuário', 'Editar', '/usuario/formEdit/id_usuario/' + $(this).attr('id_usuario'));
-        });
+    $("#btnDetailUser").die('click').live('click', function() {
+    Util.showModal('Informações Usuário', 'Editar', '/usuario/formEdit/id_usuario/' + $(this).attr('id_usuario'));
+    });
 
-        Index.global.gridUsers = $('#gridUsers').dataTable({
-            bProcessing: true,
-            bServerSide: true,
-            sPaginationType: "full_numbers",
-            bJQueryUI: false,
-            sAjaxSource: "/usuario/loadGridSearch/ajax/true/",
-            oLanguage: {
-                "oPaginate": {
-                    "sFirst": "Primeira",
-                    "sPrevious": "Anterior",
-                    "sNext": "Próxima",
-                    "sLast": "Última"
-                },
-                "sSearch": "Filtrar:",
-                "sLengthMenu": "_MENU_",
-                "sZeroRecords": "Nenhum usuário encontrado",
-                "sInfo": "Visualizando _START_ até _END_ de _TOTAL_ usuários",
-                "sInfoEmpty": "Visualizando 0 até 0 de 0 jogadores",
-                "sInfoFiltered": "(filtrado de _MAX_ jogadores)"
-            },
-            fnRowCallback: function(nRow, aData, iDisplayIndex) {
-                $('td:eq(0)', nRow).html('<a title="Editar" id="btnDetailUser" id_usuario="' + aData[0] + '" href="#"><img class="mini-img-in-grid" src="https://avatar-ssl.xboxlive.com/avatar/' + aData[3] + '/avatarpic-l.png" /></a>');
-                $('td:eq(4)', nRow).html(aData[4] === '1' ? '<strong>Administrador</strong>' : 'Comum');
-            }
-        }).fnSetFilteringDelay(3);
+    $('#bthSearchUsuarioAdmin').click(function() {
+    Index.admin.btnSearchUsuarioAdminHiddenToggle = !Index.admin.btnSearchUsuarioAdminHiddenToggle;
+    if (Index.admin.btnSearchUsuarioAdminHiddenToggle) {
+    $('#rowSearchUsuarioAdmin').addClass('hidden');
+    } else {
+    $('#rowSearchUsuarioAdmin').removeClass('hidden');
+    }
+    });
+
+    Index.global.gridUsers = $('#gridUsers').dataTable({
+    bProcessing: true,
+    bServerSide: true,
+    sPaginationType: "full_numbers",
+    bJQueryUI: false,
+    sAjaxSource: "/usuario/loadGridSearch/ajax/true/",
+    oLanguage: {
+    "oPaginate": {
+    "sFirst": "Primeira",
+    "sPrevious": "Anterior",
+    "sNext": "Próxima",
+    "sLast": "Última"
+    },
+    "sSearch": "Filtrar:",
+    "sLengthMenu": "_MENU_",
+    "sZeroRecords": "Nenhum usuário encontrado",
+    "sInfo": "Visualizando _START_ até _END_ de _TOTAL_ usuários",
+    "sInfoEmpty": "Visualizando 0 até 0 de 0 jogadores",
+    "sInfoFiltered": "(filtrado de _MAX_ jogadores)"
+    },
+    fnRowCallback: function(nRow, aData, iDisplayIndex) {
+    $('td:eq(0)', nRow).html('<a title="Editar" id="btnDetailUser" id_usuario="' + aData[0] + '" href="#"><img class="mini-img-in-grid" src="https://avatar-ssl.xboxlive.com/avatar/' + aData[3] + '/avatarpic-l.png" /></a>');
+    $('td:eq(6)', nRow).html(aData[6] === '1' ? '<strong>Administrador</strong>' : 'Comum');
+    }
+    }).fnSetFilteringDelay(3);
     });
 </script>

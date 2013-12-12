@@ -1,7 +1,7 @@
 <?php
 $css1 = array(
-    array('library/jquery-ui-1.10.3.custom/css/ui-darkness/jquery-ui-1.10.3.custom.min.css', false),
-    array('css/datatable.css', false)
+    array('library/jquery-ui-1.10.3.custom/css/ui-darkness/jquery-ui-1.10.3.custom.min.css', true),
+    array('css/datatable.css', true)
 );
 
 $js1 = array(
@@ -111,7 +111,7 @@ use br\com\cf\library\core\cache\Cache;
                                 <a class="linkcontent" value="/masterLiga/formClose" href="#">
                                     <i class="icon-search"></i> Encerrar
                                 </a>
-                            </li>
+                            </li>p
                             <!--quando iniciada soh pode ter uma aberta, esta vinculada a tabela temporada-->
                             <li class="divider"></li>
                         <?php endif; ?>
@@ -258,17 +258,17 @@ use br\com\cf\library\core\cache\Cache;
 
                 <div class="pull-left">
                     <div class="avatar">
-                        <img src="https://avatar-ssl.xboxlive.com/avatar/<?php print($this->lg_live); ?>/avatarpic-l.png" />
+                        <img src="https://avatar-ssl.xboxlive.com/avatar/<?php print($this->usuario->lg_live); ?>/avatarpic-l.png" />
                     </div>
                 </div>
 
                 <div class="pull-left">
                     <div class="title">
-                        <?php print($this->nm_usuario); ?>
+                        <?php print($this->usuario->nm_usuario); ?>
                     </div>
                     <div class="btn-group">
                         <button class="button mini inset black"><i class="icon-search"></i></button>
-                        <button class="button mini inset black">Online</button>
+                        <button class="button mini inset black"><?php print($this->usuario->nm_equipe); ?></button>
                         <button class="button mini inset black dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i></button>
                         <ul class="dropdown-menu black-box-dropdown">
                             <li><a href="#">Perfil</a></li>

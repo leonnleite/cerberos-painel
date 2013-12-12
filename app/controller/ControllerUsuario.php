@@ -59,14 +59,11 @@ class ControllerUsuario extends ControllerAbstract {
             $usuario = BusinessUsuario::factory()->findUsuarioById($this->getParam('id_usuario'));
 
             $this->setView('usuario', 'formEdit')
-                    ->set('id_usuario', $usuario->id_usuario)
-                    ->set('nm_usuario', $usuario->nm_usuario)
-                    ->set('tx_email', $usuario->tx_email)
-                    ->set('lg_live', $usuario->lg_live)
-                    ->set('fg_perfil', $usuario->fg_perfil == 1 ? 'checked' : '')
+                    ->set('usuario', $usuario)
+                    ->set('series', \br\com\cf\app\model\ModelSerie::factory()->findAll())
                     ->render();
         } catch (\Exception $e) {
-            print('Ocorreu um erro ao tentar carregar as informações solicitadas!');
+            throw new \Exception('Ocorreu um erro ao tentar carregar as informações solicitadas!');
         }
     }
 
@@ -74,9 +71,7 @@ class ControllerUsuario extends ControllerAbstract {
      * @return void
      */
     public function formCreateAction() {
-        $this->setView('usuario', 'formCreate')
-                ->set('series', \br\com\cf\app\model\ModelSerie::factory()->findAll())
-                ->render();
+        $this->setView('usuario', 'formCreate')->render();
     }
 
     /**
@@ -130,7 +125,7 @@ class ControllerUsuario extends ControllerAbstract {
      * @return void
      */
     public function loadGridSearchAction() {
-        $query = 'usuario u';
+        $query = 'usuario u left join serie s on s.id_serie = u.id_serie';
 
         $grid = \br\com\cf\library\core\grid\Grid::factory()
                 ->primary('id_usuario')
@@ -139,7 +134,9 @@ class ControllerUsuario extends ControllerAbstract {
                     1 => array('u.nm_usuario' => 'nm_usuario'),
                     2 => array('u.tx_email' => 'tx_email'),
                     3 => array('u.lg_live' => 'lg_live'),
-                    4 => array('u.fg_perfil' => 'fg_perfil')
+                    4 => array('s.nm_serie' => 'nm_serie'),
+                    5 => array('u.nm_equipe' => 'nm_equipe'),
+                    6 => array('u.fg_perfil' => 'fg_perfil'),
                 ))
                 ->query($query)
                 ->params($this->getParams())

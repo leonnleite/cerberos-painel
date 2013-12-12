@@ -39,6 +39,7 @@ class ModelUsuario extends ModelAbstract {
         'tx_senha' => 'string',
         'tx_email' => 'string',
         'lg_live' => 'string',
+        'id_serie' => 'string',
         'fg_perfil' => 'integer',
     );
 

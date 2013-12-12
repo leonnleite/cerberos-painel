@@ -15,16 +15,28 @@
                 <div class="padded">
                     <div class="note pull-left">Nome Completo</div>
                     <div class="input">
-                        <input class="required" type="hidden" name="id_usuario" value="<?php print($this->id_usuario); ?>">
-                        <input class="required" title="informe o nome completo!" placeholder="Nome Completo" type="text" name="nm_usuario" value="<?php print($this->nm_usuario); ?>">
+                        <input class="required" type="hidden" name="id_usuario" value="<?php print($this->usuario->id_usuario); ?>">
+                        <input class="required" title="informe o nome completo!" placeholder="Nome Completo" type="text" name="nm_usuario" value="<?php print($this->usuario->nm_usuario); ?>">
                     </div>
                     <div class="note pull-left">Email</div>
                     <div class="input">
-                        <input class="required" title="informe um email válido!" placeholder="Email" type="email" name="tx_email" value="<?php print($this->tx_email); ?>">
+                        <input class="required" title="informe um email válido!" placeholder="Email" type="email" name="tx_email" value="<?php print($this->usuario->tx_email); ?>">
                     </div>
                     <div class="note pull-left">Nick Live</div>
                     <div class="input">
-                        <input class="required" title="informe um nick válido da live!" placeholder="Nick Live" type="text" name="lg_live" value="<?php print($this->lg_live); ?>">
+                        <input class="required" title="informe um nick válido da live!" placeholder="Nick Live" type="text" name="lg_live" value="<?php print($this->usuario->lg_live); ?>">
+                    </div>
+                    <div class="note pull-left">Equipe</div>
+                    <div class="input">
+                        <input class="required" title="informe um nick válido da live!" placeholder="Equipe" type="text" name="nm_equipe" value="<?php print($this->usuario->nm_equipe); ?>">
+                    </div>
+                    <div class="note pull-left">Série</div>
+                    <div class="input input-mini">
+                        <select name="id_serie" class="required input-small">
+                            <?php foreach ($this->series as $serie) : ?>
+                                <option value="<?php print ($serie->id_serie); ?>"><?php print ($serie->nm_serie); ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -33,7 +45,7 @@
             <button type="submit" class="button blue">Salvar</button>
             <div class="pull-right">
                 <div class="input">
-                    <input id="fg_perfil" class="normal-check" type="checkbox" <?php print($this->fg_perfil); ?> name="fg_perfil">
+                    <input id="fg_perfil" class="normal-check" type="checkbox" <?php print($this->usuario->fg_perfil == 1 ? 'checked' : ''); ?> name="fg_perfil">
                     <label for="fg_perfil">Este usuário é Administrador?</label>
                 </div>
             </div>
@@ -45,23 +57,23 @@
 
     $(document).ready(function() {
 
-        var formNew = $('#formEditUsuario');
-        var actionNew = formNew.attr('action');
+    var formNew = $('#formEditUsuario');
+    var actionNew = formNew.attr('action');
 
-        $("#formEditUsuario").validate({
-            errorClass: "help-inline",
-            submitHandler: function() {
-                if (confirm('Você tem certeza que deseja salvar as alterações do perfil do usuário?')) {
-                    $.post(actionNew, formNew.serialize(), function(response) {
-                        if (response.status === 'success') {
-                            Util.hideModal();
-                            Index.global.gridUsers.fnDraw(false);
-                        }
-                        Util.showMessageBox(response);
-                    }, 'json');
-                }
-            }
-        });
+    $("#formEditUsuario").validate({
+    errorClass: "help-inline",
+    submitHandler: function() {
+    if (confirm('Você tem certeza que deseja salvar as alterações do perfil do usuário?')) {
+    $.post(actionNew, formNew.serialize(), function(response) {
+    if (response.status === 'success') {
+    Util.hideModal();
+    Index.global.gridUsers.fnDraw(false);
+    }
+    Util.showMessageBox(response);
+    }, 'json');
+    }
+    }
+    });
 
     });
 
