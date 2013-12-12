@@ -6,6 +6,8 @@
     Index.admin.gridJogadorAdmin = null;
 
     Index.admin.btnSearchJogadorAdminHiddenToggle = true;
+    
+    Index.admin.btnSearchUsuarioAdminHiddenToggle = true;
 
     Index.admin.autocompleteClubeJogadorAdmin = null;
 
