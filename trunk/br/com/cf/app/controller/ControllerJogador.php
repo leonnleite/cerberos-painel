@@ -7,30 +7,26 @@ use br\com\cf\library\core\controller\ControllerAbstract;
 /**
  * @autor Michael F. Rodrigues <cerberosnash@gmail.com>
  */
-class ControllerJogador extends ControllerAbstract
-{
+class ControllerJogador extends ControllerAbstract {
 
     /**
      * @return void
      */
-    public function indexAction ()
-    {
+    public function indexAction() {
         $this->setView('jogador', 'index')->render();
     }
 
     /**
      * @return void
      */
-    public function searchAction ()
-    {
+    public function searchAction() {
         $this->setView('jogador', 'search')->render();
     }
 
     /**
      * @return void
      */
-    public function editAction ()
-    {
+    public function editAction() {
         try {
 
             \br\com\cf\app\model\ModelJogador::factory()->update($this->getParams());
@@ -46,8 +42,7 @@ class ControllerJogador extends ControllerAbstract
     /**
      * @return void
      */
-    public function listAction ()
-    {
+    public function listAction() {
         $this->setView('jogador', 'list')
                 ->set('columns', array(
                     array('j.id_jogador' => 'ID'),
@@ -111,11 +106,7 @@ class ControllerJogador extends ControllerAbstract
     /**
      * @return void
      */
-    public function loadGridSearchAction ()
-    {
-
-//        var_dump($_REQUEST);
-//        exit;
+    public function loadGridSearchAction() {
 
         $query = 'jogador j '
                 . 'inner join pais p on p.id_pais = j.id_pais '
@@ -195,8 +186,7 @@ class ControllerJogador extends ControllerAbstract
     /**
      * @return void
      */
-    public function formEditAction ()
-    {
+    public function formEditAction() {
         try {
 
             $jogador = \br\com\cf\app\model\ModelJogador::factory()->find($this->getParam('id_jogador'));
@@ -272,8 +262,7 @@ class ControllerJogador extends ControllerAbstract
     /**
      * @return void
      */
-    public function detailAction ()
-    {
+    public function detailAction() {
         try {
 
             $jogador = \br\com\cf\app\model\ModelJogador::factory()->find($this->getParam('id_jogador'));
@@ -349,16 +338,14 @@ class ControllerJogador extends ControllerAbstract
     /**
      * @return void
      */
-    public function formPhotoAction ()
-    {
+    public function formPhotoAction() {
         $this->setView('jogador', 'formPhoto')->render();
     }
 
     /**
      * @return void
      */
-    public function uploadPhotoAction ()
-    {
+    public function uploadPhotoAction() {
 
         $valid_exts = array('jpeg', 'jpg', 'png', 'gif');
         $max_file_size = 200000000000 * 10240; #200kb
