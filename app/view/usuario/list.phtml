@@ -1,6 +1,12 @@
 <script type="text/javascript" src="library/datatables/plugins/jquery.dataTables.columnFilter.js"></script>
 <script type="text/javascript" src="library/datatables/plugins/jquery.dataTables.filteringDelay.js"></script>
 
+<style type="text/css">
+    .dataTables_filter{
+        display: none;
+    }
+</style>
+
 <section id="main">
     <div class="top-nav">
         <div class="container-fluid">
@@ -30,47 +36,49 @@
                             </span>
                         </span>
                     </div>
-                    <?php
-                    $left = $right = '';
-                    foreach ($this->columns as $key => $attr) {
 
-                        $visible = '';
-
-                        if (current($attr) == 'Clube') {
-                            $visible = 'hide';
-                        }
-
-                        if (current($attr) == 'Seleção') {
-                            $visible = 'hide';
-                        }
-
-                        if ($key % 2 == 0) {
-                            $left .= '<div class="input ' . $visible . '">' . current($attr) . '<span id="filterListJogadorAdmin-' . current($attr) . '"></span></div>';
-                        } else {
-                            $right .= '<div class="input ' . $visible . '">' . current($attr) . '<span id="filterListJogadorAdmin-' . current($attr) . '"></span></div>';
-                        }
-
-                        $visible = '';
-                    }
-                    ?>
                     <form class="fill-up">
                         <div class="row-fluid">
-                            <div class="span4">
+                            <div class="span6">
                                 <div class="padded">
-                                    <?php print ($left); ?>
+                                    <div class="note pull-left">Nome Completo</div>
+                                    <div id="filterListUsuarioAdmin-Nome" class="input"></div>
+                                    <div class="note pull-left">Email</div>
+                                    <div id="filterListUsuarioAdmin-Email" class="input"></div>
                                 </div>
                             </div>
-                            <div class="span4">
+                            <div class="span3">
                                 <div class="padded">
-                                    <?php print ($right); ?>
+                                    <div class="note pull-left">Nick Microsoft Live</div>
+                                    <div id="filterListUsuarioAdmin-Nick" class="input input-medium"></div>
+                                    <div class="note pull-left">Série</div>
+                                    <div id="filterListUsuarioAdmin-Serie" class="hidden"></div>
+                                    <div class="input input-small">
+                                        <select id="filterSerieGridUsuarioAdmin" class="input-medium">
+                                            <option value="" selected="selected">Todas</option>
+                                            <?php foreach ($this->series as $serie) : ?>
+                                                <option value="<?php print($serie->nm_serie); ?>"><?php print($serie->nm_serie); ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="note pull-left">Equipe</div>
+                                    <div id="filterListUsuarioAdmin-Equipe" class="input input-medium"></div>
+
                                 </div>
                             </div>
-                            <div class="span4">
+                            <div class="span3">
                                 <div class="padded">
-                                    Clube <input id="fieldFilterGridClubeJogadorAdmin-target" type="text">
-                                    <img class="mini-img-in-grid" id="fieldFilterGridClubeJogadorAdmin-logo">
-                                    Seleção <input id="fieldFilterGridSelecaoJogadorAdmin-target" type="text">
-                                    <img class="mini-img-in-grid" id="fieldFilterGridSelecaoJogadorAdmin-logo">
+                                    <div class="note pull-left">ID</div>
+                                    <div id="filterListUsuarioAdmin-ID" class="input input-medium"></div>
+                                    <div class="note pull-left">Perfil</div>
+                                    <div id="filterListUsuarioAdmin-Perfil" class="hidden"></div>
+                                    <div class="input">
+                                        <select id="filterPerfilGridUsuarioAdmin" class="input-medium">
+                                            <option value="" selected="selected">Todos</option>
+                                            <option value="0">Comum</option>
+                                            <option value="1">Administrador</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +94,7 @@
         <div class="row-fluid">
             <div class="box" style="position:relative;">
                 <div class="tab-header">
-                    Usuários
+                    <i class="icon-user"></i> Usuários
                 </div>
                 <div>
                     <table id="gridUsers" class="table table-striped table-condensed">
@@ -138,12 +146,29 @@
     }
     });
 
+    $('#filterPerfilGridUsuarioAdmin').change(function(){
+    $('#filterListUsuarioAdmin-Perfil .text_filter').val($(this).val()).keyup();
+    });
+
+    $('#filterSerieGridUsuarioAdmin').change(function(){
+    $('#filterListUsuarioAdmin-Serie .text_filter').val($(this).val()).keyup();
+    });
+
     Index.global.gridUsers = $('#gridUsers').dataTable({
     bProcessing: true,
     bServerSide: true,
     sPaginationType: "full_numbers",
     bJQueryUI: false,
     sAjaxSource: "/usuario/loadGridSearch/ajax/true/",
+    "aoColumnDefs": [
+    {"sName": "equals", "aTargets": [0]},
+    {"sName": "like", "aTargets": [1]},
+    {"sName": "like", "aTargets": [2]},
+    {"sName": "like", "aTargets": [3]},
+    {"sName": "equals", "aTargets": [4]},
+    {"sName": "like", "aTargets": [5]},
+    {"sName": "equals", "aTargets": [6]}
+    ],
     oLanguage: {
     "oPaginate": {
     "sFirst": "Primeira",
@@ -162,6 +187,17 @@
     $('td:eq(0)', nRow).html('<a title="Editar" id="btnDetailUser" id_usuario="' + aData[0] + '" href="#"><img class="mini-img-in-grid" src="https://avatar-ssl.xboxlive.com/avatar/' + aData[3] + '/avatarpic-l.png" /></a>');
     $('td:eq(6)', nRow).html(aData[6] === '1' ? '<strong>Administrador</strong>' : 'Comum');
     }
-    }).fnSetFilteringDelay(3);
+    }).columnFilter({
+    sPlaceHolder: "head:before",
+    aoColumns: [
+    {sSelector: "#filterListUsuarioAdmin-ID",type: "number"},
+    {sSelector: "#filterListUsuarioAdmin-Nome"},
+    {sSelector: "#filterListUsuarioAdmin-Email"},
+    {sSelector: "#filterListUsuarioAdmin-Nick"},
+    {sSelector: "#filterListUsuarioAdmin-Serie"},
+    {sSelector: "#filterListUsuarioAdmin-Equipe"},
+    {sSelector: "#filterListUsuarioAdmin-Perfil"}
+    ]}
+    ).fnSetFilteringDelay(3);
     });
 </script>

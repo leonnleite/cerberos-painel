@@ -118,7 +118,12 @@ class ControllerUsuario extends ControllerAbstract {
      * @return void
      */
     public function listAction() {
-        $this->setView('usuario', 'list')->render();
+
+        $series = \br\com\cf\app\model\ModelSerie::factory()->findAll();
+
+        $this->setView('usuario', 'list')
+                ->set('series', $series)
+                ->render();
     }
 
     /**
@@ -140,7 +145,7 @@ class ControllerUsuario extends ControllerAbstract {
                 ))
                 ->query($query)
                 ->params($this->getParams())
-                ->make()
+                ->make('and')
                 ->output()
         ;
 
