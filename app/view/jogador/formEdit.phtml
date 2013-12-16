@@ -1,118 +1,294 @@
 <script type="text/javascript" src="library/validate/jquery.validate-1.11.1.js"></script>
+<script type="text/javascript" src="library/jquery-upload-file/js/jquery.iframe-transport.js"></script>
+<script type="text/javascript" src="library/jquery-upload-file/js/jquery.fileupload.js"></script>
+<script type="text/javascript" src="library/jquery-upload-file/js/jquery.fileupload-ui.js"></script>
 
-<div class="black-box">
-    <div class="tab-header">
-        Editar
-        <span class="pull-right">
-            <span class="options">
-                <a href="#"><i class="icon-cog"></i></a>
-            </span>
-        </span>
+
+<div class="container">  
+    <!-- Button to select & upload files -->
+    <span class="btn btn-success fileinput-button">
+        <span>Select files...</span>
+        <!-- The file input field used as target for the file upload widget -->
+        <input id="fileupload" type="file" name="files[]" multiple>
+    </span>
+
+
+    <!-- The global progress bar -->
+    <p>Upload progress</p>
+    <div id="progress" class="progress progress-success progress-striped">
+        <div class="bar"></div>
     </div>
-    <form id="formEditJogador" class="fill-up" action="/jogador/edit/ajax/true" method="post">
-        <div class="row-fluid">
-            <div class="span6">
-                <div class="padded">
-                    <?php
-                    foreach ($this->fields as $key => $field) :
-                        $attr = key($field);
-                        $value = "nm_{$attr}";
-                        print '<span class="">' . $field[$attr] . '</span>';
-                        ?>
-                        <div class="input">
-                            <?php if ($attr == 'id_selecao' || $attr == 'id_pais' || $attr == 'id_clube'): ?>
-                                <input id="fieldEditJogadorAdmin-<?php print($attr); ?>-target" class="required" type="text" value="<?php print($this->jogador->{$value}); ?>">
-                                <?php if ($attr == 'id_clube'): ?>
-                                    <img class="avatar" id="fieldEditJogadorAdmin-<?php print($attr); ?>-logo" src="<?php print ("/img/clubes/logos/{$this->jogador->{$attr}}.png"); ?>">
-                                <?php endif; ?>
-                                <?php if ($attr == 'id_selecao'): ?>
-                                    <img class="avatar" id="fieldEditJogadorAdmin-<?php print($attr); ?>-logo" src="<?php print ("/img/selecoes/logos/{$this->jogador->{$attr}}.png"); ?>">
-                                <?php endif; ?>
-                                <input id="fieldEditJogadorAdmin-<?php print($attr); ?>-id" class="required" type="hidden" name="<?php print($attr); ?>" value="<?php print($this->jogador->{$attr}); ?>">                 
-                            <?php else: ?>
-                                <input id="fieldEditJogadorAdmin-<?php print($attr); ?>" class="required" type="text" name="<?php print($attr); ?>" value="<?php print($this->jogador->{$attr}); ?>">
-                            <?php endif; ?>
+
+
+
+    <!-- The list of files uploaded -->
+    <p>Files uploaded:</p>
+    <ul id="files"></ul>
+
+
+
+
+    <!-- JavaScript used to call the fileupload widget to upload files -->
+    <script>
+        // When the server is ready...
+        $(function() {
+            'use strict';
+
+            // Define the url to send the image data to
+            var url = '/jogador/edit/ajax/true';
+
+            // Call the fileupload widget and set some parameters
+            $('#fileupload').fileupload({
+                url: url,
+                dataType: 'json',
+                done: function(e, data) {
+                    // Add each uploaded file name to the #files list
+                    $.each(data.result.files, function(index, file) {
+                        $('<li/>').text(file.name).appendTo('#files');
+                    });
+                },
+                progressall: function(e, data) {
+                    // Update the progress bar while files are being uploaded
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('#progress .bar').css(
+                            'width',
+                            progress + '%'
+                            );
+                }
+            });
+        });
+
+    </script>
+
+    <div class="black-box">
+        <div class="tab-header">
+            Editar
+            <span class="pull-right">
+                <span class="options">
+                    <a href="#"><i class="icon-cog"></i></a>
+                </span>
+            </span>
+        </div>
+        <form id="formEditJogador" class="fill-up" action="/jogador/edit/ajax/true" method="post">
+            <div class="row-fluid">
+                <div class="span4">
+                    <div class="padded">
+                        <div class="input input-mini hidden">
+                            <input type="text" name="id_jogador" value="<?php print($this->jogador->id_jogador); ?>" class="required" id="fieldEditJogadorAdmin-id_jogador">
+                            <input type="text" name="id_sofifa" value="<?php print($this->jogador->id_sofifa); ?>" class="required" id="fieldEditJogadorAdmin-id_sofifa">
                         </div>
-                    <?php endforeach; ?>
+                        <?php
+                        foreach ($this->fields['column1'] as $key => $field) :
+                            $attr = key($field);
+                            $value = "nm_{$attr}";
+                            ?>
+                            <?php print '<div class="note pull-left">' . $field[$attr] . '</div>'; ?>
+                            <div class="input input-medium">
+                                <input id="fieldEditJogadorAdmin-<?php print($attr); ?>" class="required" type="text" name="<?php print($attr); ?>" value="<?php print($this->jogador->{$attr}); ?>">
+                            </div>
+                        <?php endforeach; ?>
+                        <div class="note pull-left">Pais</div>
+                        <div class="input input-medium">
+                            <input id="fieldEditJogadorAdmin-id_pais-target" class="required" type="text" value="Japão">
+                            <input id="fieldEditJogadorAdmin-id_pais-id" class="required" type="hidden" value="<?php print($this->jogador->id_pais); ?>" name="id_pais">
+                        </div>
+                    </div>
+                </div>
+                <div class="span2">
+                    <div class="padded">
+                        <?php
+                        foreach ($this->fields['column2'] as $key => $field) :
+                            $attr = key($field);
+                            $value = "nm_{$attr}";
+                            ?>
+                            <?php print '<div class="note pull-left">' . $field[$attr] . '</div>'; ?>
+                            <div class="input input-mini">
+                                <?php if ($attr == 'id_selecao' || $attr == 'id_pais' || $attr == 'id_clube'): ?>
+                                    <input id="fieldEditJogadorAdmin-<?php print($attr); ?>-target" class="required" type="text" value="<?php print($this->jogador->{$value}); ?>">
+                                    <?php if ($attr == 'id_clube'): ?>
+                                        <img class="avatar" id="fieldEditJogadorAdmin-<?php print($attr); ?>-logo" src="<?php print ("/img/clubes/logos/{$this->jogador->{$attr}}.png"); ?>">
+                                    <?php endif; ?>
+                                    <?php if ($attr == 'id_selecao'): ?>
+                                        <img class="avatar" id="fieldEditJogadorAdmin-<?php print($attr); ?>-logo" src="<?php print ("/img/selecoes/logos/{$this->jogador->{$attr}}.png"); ?>">
+                                    <?php endif; ?>
+                                    <input id="fieldEditJogadorAdmin-<?php print($attr); ?>-id" class="required" type="hidden" name="<?php print($attr); ?>" value="<?php print($this->jogador->{$attr}); ?>">                 
+                                <?php else: ?>
+                                    <input id="fieldEditJogadorAdmin-<?php print($attr); ?>" class="required" type="text" name="<?php print($attr); ?>" value="<?php print($this->jogador->{$attr}); ?>">
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <div class="span2">
+                    <div class="padded">
+                        <?php
+                        foreach ($this->fields['column3'] as $key => $field) :
+                            $attr = key($field);
+                            $value = "nm_{$attr}";
+                            ?>
+                            <?php print '<div class="note pull-left">' . $field[$attr] . '</div>'; ?>
+                            <div class="input input-mini">
+                                <input id="fieldEditJogadorAdmin-<?php print($attr); ?>" class="required" type="text" name="<?php print($attr); ?>" value="<?php print($this->jogador->{$attr}); ?>">
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <div class="span2">
+                    <div class="padded">
+                        <?php
+                        foreach ($this->fields['column4'] as $key => $field) :
+                            $attr = key($field);
+                            $value = "nm_{$attr}";
+                            ?>
+                            <?php print '<div class="note pull-left">' . $field[$attr] . '</div>'; ?>
+                            <div class="input input-mini">
+                                <input id="fieldEditJogadorAdmin-<?php print($attr); ?>" class="required" type="text" name="<?php print($attr); ?>" value="<?php print($this->jogador->{$attr}); ?>">
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <div class="span8">
+                    <div class="padded">
+                        <div class="black-box">
+                            <div class="tab-header">Foto</div>
+                            <div class="padded">
+                                <img src="<?php print ("/img/jogadores/fotos/{$this->jogador->id_jogador}.png"); ?>" id="btnUploadPhotoJogadorAdmin">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="padded">
+                        <div class="note pull-left">Equipe</div>
+                        <div class="input">
+                            <input class="required" type="text" disabled="disabled" value="<?php print($this->jogador->nm_equipe); ?>">
+                        </div>
+                        <div class="black-box">
+                            <div class="tab-header"><?php print($this->jogador->nm_equipe); ?></div>
+                            <div class="padded">
+                                <img class="img-rounded" src="<?php print ("/img/escudos/{$this->jogador->id_proprietario}.png"); ?>">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="padded">
+                        <div class="note pull-left">Clube</div>
+                        <div class="input">
+                            <input id="fieldEditJogadorAdmin-id_clube-target" class="required" type="text" value="<?php print($this->jogador->nm_clube); ?>">
+                            <input id="fieldEditJogadorAdmin-id_clube-id" class="required" type="hidden" name="id_clube" value="<?php print($this->jogador->id_clube); ?>">                 
+                        </div>
+                        <div class="black-box">
+                            <div class="tab-header" id="fieldEditJogadorAdmin-id_clube-target-box"><?php print($this->jogador->nm_clube); ?></div>
+                            <div class="padded">
+                                <img class="" id="fieldEditJogadorAdmin-id_clube-logo" src="<?php print ("/img/clubes/logos/{$this->jogador->id_clube}.png"); ?>">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="padded">
+                        <div class="note pull-left">Selecao</div>
+                        <div class="input">
+                            <input id="fieldEditJogadorAdmin-id_selecao-target" class="required" type="text" value="<?php print($this->jogador->nm_selecao); ?>">
+                            <input id="fieldEditJogadorAdmin-id_selecao-id" class="required" type="hidden" name="id_selecao" value="<?php print($this->jogador->id_selecao); ?>">                 
+                        </div>
+                        <div class="black-box">
+                            <div class="tab-header" id="fieldEditJogadorAdmin-id_selecao-target-box"><?php print($this->jogador->nm_selecao); ?></div>
+                            <div class="padded">
+                                <img class="" id="fieldEditJogadorAdmin-id_selecao-logo" src="<?php print ("/img/selecoes/logos/{$this->jogador->id_selecao}.png"); ?>">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="form-actions">
+                <button type="submit" class="button blue">Salvar</button>
+            </div>
+        </form>
+        <div class="">
+            <form id="formUploadPhotoJogadorAdmin" action="/jogador/uploadPhoto/ajax/true" method="post" enctype="multipart/form-data">
+                <input id="btnUploadPhotoJogadorAdmin-target" type="file" accept="image/png" name="file" />
+            </form>
         </div>
-        <div class="form-actions">
-            <button type="submit" class="button blue">Salvar</button>
-        </div>
-    </form>
-</div>
+    </div>
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    $(document).ready(function() {
+        $(document).ready(function() {
 
-        var formNew = $('#formEditJogador');
-        var actionNew = formNew.attr('action');
+            var formNew = $('#formEditJogador');
+            var actionNew = formNew.attr('action');
 
-        $("#formEditJogador").validate({
-            errorClass: "help-inline",
-            submitHandler: function() {
-                if (confirm('Você tem certeza que deseja salvar as alterações deste jogador?')) {
-                    $.post(actionNew, formNew.serialize(), function(response) {
-                        if (response.status === 'success') {
-                            Util.hideModal();
-                            Index.admin.gridJogadorAdmin.fnDraw(false);
-                        }
-                        Util.showMessageBox(response);
-                    }, 'json');
+            $("#formEditJogador").validate({
+                errorClass: "help-inline",
+                submitHandler: function() {
+                    if (confirm('Você tem certeza que deseja salvar as alterações deste jogador?')) {
+                        $.post(actionNew, formNew.serialize(), function(response) {
+                            if (response.status === 'success') {
+                                Util.hideModal();
+                                Index.admin.gridJogadorAdmin.fnDraw(false);
+                            }
+                            Util.showMessageBox(response);
+                        }, 'json');
+                    }
                 }
-            }
+            });
+
+            $("#btnUploadPhotoJogadorAdmin-target").change(function() {
+                $('#formUploadPhotoJogadorAdmin').submit();
+            });
+
+            $("#btnUploadPhotoJogadorAdmin").click(function() {
+                $('#btnUploadPhotoJogadorAdmin-target').click();
+            });
+
+            Index.admin.autocompletePaisJogadorAdmin = $("#fieldEditJogadorAdmin-id_pais-target").autocomplete({
+                minLength: 0,
+                source: "/pais/autocomplete/ajax/true",
+                focus: function(event, ui) {
+                    $("#fieldEditJogadorAdmin-id_pais-target").val(ui.item.label);
+                    $("#fieldEditJogadorAdmin-id_pais-target-box").html(ui.item.label);
+                    return false;
+                },
+                select: function(event, ui) {
+                    $("#fieldEditJogadorAdmin-id_pais-id").val(ui.item.id);
+                    $("#fieldEditJogadorAdmin-id_pais-logo").attr("src", "/img/selecoes/logos/" + ui.item.id + ".png");
+                    return false;
+                }
+            });
+
+            Index.admin.autocompleteSelecaoJogadorAdmin = $("#fieldEditJogadorAdmin-id_selecao-target").autocomplete({
+                minLength: 0,
+                source: "/selecao/autocomplete/ajax/true",
+                focus: function(event, ui) {
+                    $("#fieldEditJogadorAdmin-id_selecao-target").val(ui.item.label);
+                    $("#fieldEditJogadorAdmin-id_selecao-target-box").html(ui.item.label);
+                    return false;
+                },
+                select: function(event, ui) {
+                    $("#fieldEditJogadorAdmin-id_selecao-id").val(ui.item.id);
+                    $("#fieldEditJogadorAdmin-id_selecao-logo").attr("src", "/img/selecoes/logos/" + ui.item.id + ".png");
+                    return false;
+                }
+            });
+
+            Index.admin.autocompleteClubeJogadorAdmin = $("#fieldEditJogadorAdmin-id_clube-target").autocomplete({
+                minLength: 0,
+                source: "/clube/autocomplete/ajax/true",
+                focus: function(event, ui) {
+                    $("#fieldEditJogadorAdmin-id_clube-target").val(ui.item.label);
+                    $("#fieldEditJogadorAdmin-id_clube-target-box").html(ui.item.label);
+                    return false;
+                },
+                select: function(event, ui) {
+                    $("#fieldEditJogadorAdmin-id_clube-id").val(ui.item.id);
+                    $("#fieldEditJogadorAdmin-id_clube-logo").attr("src", "/img/clubes/logos/" + ui.item.id + ".png");
+                    return false;
+                }
+            });
+
+
         });
 
-
-    });
-
-    $(document).ready(function() {
-
-        Index.admin.autocompletePaisJogadorAdmin = $("#fieldEditJogadorAdmin-id_pais-target").autocomplete({
-            minLength: 0,
-            source: "/pais/autocomplete/ajax/true",
-            focus: function(event, ui) {
-                $("#fieldEditJogadorAdmin-id_pais-target").val(ui.item.label);
-                return false;
-            },
-            select: function(event, ui) {
-                $("#fieldEditJogadorAdmin-id_pais-id").val(ui.item.id);
-                $("#fieldEditJogadorAdmin-id_pais-logo").attr("src", "/img/selecoes/logos/" + ui.item.id + ".png");
-                return false;
-            }
-        });
-
-        Index.admin.autocompleteSelecaoJogadorAdmin = $("#fieldEditJogadorAdmin-id_selecao-target").autocomplete({
-            minLength: 0,
-            source: "/selecao/autocomplete/ajax/true",
-            focus: function(event, ui) {
-                $("#fieldEditJogadorAdmin-id_selecao-target").val(ui.item.label);
-                return false;
-            },
-            select: function(event, ui) {
-                $("#fieldEditJogadorAdmin-id_selecao-id").val(ui.item.id);
-                $("#fieldEditJogadorAdmin-id_selecao-logo").attr("src", "/img/selecoes/logos/" + ui.item.id + ".png");
-                return false;
-            }
-        });
-
-        Index.admin.autocompleteClubeJogadorAdmin = $("#fieldEditJogadorAdmin-id_clube-target").autocomplete({
-            minLength: 0,
-            source: "/clube/autocomplete/ajax/true",
-            focus: function(event, ui) {
-                $("#fieldEditJogadorAdmin-id_clube-target").val(ui.item.label);
-                return false;
-            },
-            select: function(event, ui) {
-                $("#fieldEditJogadorAdmin-id_clube-id").val(ui.item.id);
-                $("#fieldEditJogadorAdmin-id_clube-logo").attr("src", "/img/clubes/logos/" + ui.item.id + ".png");
-                return false;
-            }
-        });
-
-
-    });
-
-</script>
+    </script>

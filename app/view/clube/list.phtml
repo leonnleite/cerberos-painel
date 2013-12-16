@@ -1,4 +1,11 @@
-<script type="text/javascript" src="library/datatables/plugins/jquery.dataTables.filteringDelay.js"></script>
+<?php
+$js1 = array(
+    array("library/datatables/plugins/jquery.dataTables.columnFilter.js", true),
+    array("library/datatables/plugins/jquery.dataTables.filteringDelay.js", true),
+);
+
+br\com\cf\library\core\cache\Cache::factory()->js($js1)->output()->clean();
+?>
 
 <section id="main">
     <div class="top-nav">

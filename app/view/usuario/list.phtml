@@ -1,5 +1,11 @@
-<script type="text/javascript" src="library/datatables/plugins/jquery.dataTables.columnFilter.js"></script>
-<script type="text/javascript" src="library/datatables/plugins/jquery.dataTables.filteringDelay.js"></script>
+<?php
+$js1 = array(
+    array("library/datatables/plugins/jquery.dataTables.columnFilter.js", true),
+    array("library/datatables/plugins/jquery.dataTables.filteringDelay.js", true),
+);
+
+br\com\cf\library\core\cache\Cache::factory()->js($js1)->output()->clean();
+?>
 
 <style type="text/css">
     .dataTables_filter{
@@ -133,71 +139,71 @@
 
     $(document).ready(function() {
 
-    $("#btnDetailUser").die('click').live('click', function() {
-    Util.showModal('Informações Usuário', 'Editar', '/usuario/formEdit/id_usuario/' + $(this).attr('id_usuario'));
-    });
+        $("#btnDetailUser").die('click').live('click', function() {
+            Util.showModal('Informações Usuário', 'Editar', '/usuario/formEdit/id_usuario/' + $(this).attr('id_usuario'));
+        });
 
-    $('#bthSearchUsuarioAdmin').click(function() {
-    Index.admin.btnSearchUsuarioAdminHiddenToggle = !Index.admin.btnSearchUsuarioAdminHiddenToggle;
-    if (Index.admin.btnSearchUsuarioAdminHiddenToggle) {
-    $('#rowSearchUsuarioAdmin').addClass('hidden');
-    } else {
-    $('#rowSearchUsuarioAdmin').removeClass('hidden');
-    }
-    });
+        $('#bthSearchUsuarioAdmin').click(function() {
+            Index.admin.btnSearchUsuarioAdminHiddenToggle = !Index.admin.btnSearchUsuarioAdminHiddenToggle;
+            if (Index.admin.btnSearchUsuarioAdminHiddenToggle) {
+                $('#rowSearchUsuarioAdmin').addClass('hidden');
+            } else {
+                $('#rowSearchUsuarioAdmin').removeClass('hidden');
+            }
+        });
 
-    $('#filterPerfilGridUsuarioAdmin').change(function(){
-    $('#filterListUsuarioAdmin-Perfil .text_filter').val($(this).val()).keyup();
-    });
+        $('#filterPerfilGridUsuarioAdmin').change(function() {
+            $('#filterListUsuarioAdmin-Perfil .text_filter').val($(this).val()).keyup();
+        });
 
-    $('#filterSerieGridUsuarioAdmin').change(function(){
-    $('#filterListUsuarioAdmin-Serie .text_filter').val($(this).val()).keyup();
-    });
+        $('#filterSerieGridUsuarioAdmin').change(function() {
+            $('#filterListUsuarioAdmin-Serie .text_filter').val($(this).val()).keyup();
+        });
 
-    Index.global.gridUsers = $('#gridUsers').dataTable({
-    bProcessing: true,
-    bServerSide: true,
-    sPaginationType: "full_numbers",
-    bJQueryUI: false,
-    sAjaxSource: "/usuario/loadGridSearch/ajax/true/",
-    "aoColumnDefs": [
-    {"sName": "equals", "aTargets": [0]},
-    {"sName": "like", "aTargets": [1]},
-    {"sName": "like", "aTargets": [2]},
-    {"sName": "like", "aTargets": [3]},
-    {"sName": "equals", "aTargets": [4]},
-    {"sName": "like", "aTargets": [5]},
-    {"sName": "equals", "aTargets": [6]}
-    ],
-    oLanguage: {
-    "oPaginate": {
-    "sFirst": "Primeira",
-    "sPrevious": "Anterior",
-    "sNext": "Próxima",
-    "sLast": "Última"
-    },
-    "sSearch": "Filtrar:",
-    "sLengthMenu": "_MENU_",
-    "sZeroRecords": "Nenhum usuário encontrado",
-    "sInfo": "Visualizando _START_ até _END_ de _TOTAL_ usuários",
-    "sInfoEmpty": "Visualizando 0 até 0 de 0 jogadores",
-    "sInfoFiltered": "(filtrado de _MAX_ jogadores)"
-    },
-    fnRowCallback: function(nRow, aData, iDisplayIndex) {
-    $('td:eq(0)', nRow).html('<a title="Editar" id="btnDetailUser" id_usuario="' + aData[0] + '" href="#"><img class="mini-img-in-grid" src="https://avatar-ssl.xboxlive.com/avatar/' + aData[3] + '/avatarpic-l.png" /></a>');
-    $('td:eq(6)', nRow).html(aData[6] === '1' ? '<strong>Administrador</strong>' : 'Comum');
-    }
-    }).columnFilter({
-    sPlaceHolder: "head:before",
-    aoColumns: [
-    {sSelector: "#filterListUsuarioAdmin-ID",type: "number"},
-    {sSelector: "#filterListUsuarioAdmin-Nome"},
-    {sSelector: "#filterListUsuarioAdmin-Email"},
-    {sSelector: "#filterListUsuarioAdmin-Nick"},
-    {sSelector: "#filterListUsuarioAdmin-Serie"},
-    {sSelector: "#filterListUsuarioAdmin-Equipe"},
-    {sSelector: "#filterListUsuarioAdmin-Perfil"}
-    ]}
-    ).fnSetFilteringDelay(3);
+        Index.global.gridUsers = $('#gridUsers').dataTable({
+            bProcessing: true,
+            bServerSide: true,
+            sPaginationType: "full_numbers",
+            bJQueryUI: false,
+            sAjaxSource: "/usuario/loadGridSearch/ajax/true/",
+            "aoColumnDefs": [
+                {"sName": "equals", "aTargets": [0]},
+                {"sName": "like", "aTargets": [1]},
+                {"sName": "like", "aTargets": [2]},
+                {"sName": "like", "aTargets": [3]},
+                {"sName": "equals", "aTargets": [4]},
+                {"sName": "like", "aTargets": [5]},
+                {"sName": "equals", "aTargets": [6]}
+            ],
+            oLanguage: {
+                "oPaginate": {
+                    "sFirst": "Primeira",
+                    "sPrevious": "Anterior",
+                    "sNext": "Próxima",
+                    "sLast": "Última"
+                },
+                "sSearch": "Filtrar:",
+                "sLengthMenu": "_MENU_",
+                "sZeroRecords": "Nenhum usuário encontrado",
+                "sInfo": "Visualizando _START_ até _END_ de _TOTAL_ usuários",
+                "sInfoEmpty": "Visualizando 0 até 0 de 0 jogadores",
+                "sInfoFiltered": "(filtrado de _MAX_ jogadores)"
+            },
+            fnRowCallback: function(nRow, aData, iDisplayIndex) {
+                $('td:eq(0)', nRow).html('<a title="Editar" id="btnDetailUser" id_usuario="' + aData[0] + '" href="#"><img class="mini-img-in-grid" src="https://avatar-ssl.xboxlive.com/avatar/' + aData[3] + '/avatarpic-l.png" /></a>');
+                $('td:eq(6)', nRow).html(aData[6] === '1' ? '<strong>Administrador</strong>' : 'Comum');
+            }
+        }).columnFilter({
+            sPlaceHolder: "head:before",
+            aoColumns: [
+                {sSelector: "#filterListUsuarioAdmin-ID", type: "number"},
+                {sSelector: "#filterListUsuarioAdmin-Nome"},
+                {sSelector: "#filterListUsuarioAdmin-Email"},
+                {sSelector: "#filterListUsuarioAdmin-Nick"},
+                {sSelector: "#filterListUsuarioAdmin-Serie"},
+                {sSelector: "#filterListUsuarioAdmin-Equipe"},
+                {sSelector: "#filterListUsuarioAdmin-Perfil"}
+            ]}
+        ).fnSetFilteringDelay(3);
     });
 </script>

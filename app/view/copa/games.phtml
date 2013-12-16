@@ -1,5 +1,11 @@
-<script type="text/javascript" src="library/datatables/plugins/jquery.dataTables.columnFilter.js"></script>
-<script type="text/javascript" src="library/datatables/plugins/jquery.dataTables.filteringDelay.js"></script>
+<?php
+$js1 = array(
+    array("library/datatables/plugins/jquery.dataTables.columnFilter.js", true),
+    array("library/datatables/plugins/jquery.dataTables.filteringDelay.js", true),
+);
+
+br\com\cf\library\core\cache\Cache::factory()->js($js1)->output()->clean();
+?>
 
 <style type="text/css">
     .dataTables_filter{
@@ -120,116 +126,116 @@
 
     $(document).ready(function() {
 
-    $("#btnDetailJogadorAdmin").die('click').live('click', function() {
-    Util.showModal('Informações Jogador', 'Editar', '/jogador/formEdit/id_jogador/' + $(this).attr('id_jogador'));
-    });
+        $("#btnDetailJogadorAdmin").die('click').live('click', function() {
+            Util.showModal('Informações Jogador', 'Editar', '/jogador/formEdit/id_jogador/' + $(this).attr('id_jogador'));
+        });
 
-    $("#btnDetailJogadorUser").die('click').live('click', function() {
-    Util.showModal('Informações Jogador', 'Editar', '/jogador/detail/id_jogador/' + $(this).attr('id_jogador'));
-    });
+        $("#btnDetailJogadorUser").die('click').live('click', function() {
+            Util.showModal('Informações Jogador', 'Editar', '/jogador/detail/id_jogador/' + $(this).attr('id_jogador'));
+        });
 
-    $("#btnPhotoJogadorAdmin").die('click').live('click', function() {
-    Util.showModal('Foto', 'Alterar fotografia', '/jogador/formPhoto/id_jogador/' + $(this).attr('id_jogador'));
-    });
+        $("#btnPhotoJogadorAdmin").die('click').live('click', function() {
+            Util.showModal('Foto', 'Alterar fotografia', '/jogador/formPhoto/id_jogador/' + $(this).attr('id_jogador'));
+        });
 
-    $('#bthSearchJogadorAdmin').click(function() {
-    Index.admin.btnSearchJogadorAdminHiddenToggle = !Index.admin.btnSearchJogadorAdminHiddenToggle;
-    if (Index.admin.btnSearchJogadorAdminHiddenToggle) {
-    $('#rowSearchJogadorAdmin').addClass('hidden');
-    } else {
-    $('#rowSearchJogadorAdmin').removeClass('hidden');
-    }
-    });
+        $('#bthSearchJogadorAdmin').click(function() {
+            Index.admin.btnSearchJogadorAdminHiddenToggle = !Index.admin.btnSearchJogadorAdminHiddenToggle;
+            if (Index.admin.btnSearchJogadorAdminHiddenToggle) {
+                $('#rowSearchJogadorAdmin').addClass('hidden');
+            } else {
+                $('#rowSearchJogadorAdmin').removeClass('hidden');
+            }
+        });
 
-    $("#fieldFilterGridClubeJogadorAdmin-target").keyup(function() {
-    if ($(this).val() === '') {
-    $("#filterListJogadorAdmin-Clube .text_filter").val('').keyup();
-    $("#fieldFilterGridClubeJogadorAdmin-logo").attr("src", "");
-    }
-    });
+        $("#fieldFilterGridClubeJogadorAdmin-target").keyup(function() {
+            if ($(this).val() === '') {
+                $("#filterListJogadorAdmin-Clube .text_filter").val('').keyup();
+                $("#fieldFilterGridClubeJogadorAdmin-logo").attr("src", "");
+            }
+        });
 
-    $("#fieldFilterGridSelecaoJogadorAdmin-target").keyup(function() {
-    if ($(this).val() === '') {
-    $("#filterListJogadorAdmin-Seleção .text_filter").val('').keyup();
-    $("#fieldFilterGridSelecaoJogadorAdmin-logo").attr("src", "");
-    }
-    });
+        $("#fieldFilterGridSelecaoJogadorAdmin-target").keyup(function() {
+            if ($(this).val() === '') {
+                $("#filterListJogadorAdmin-Seleção .text_filter").val('').keyup();
+                $("#fieldFilterGridSelecaoJogadorAdmin-logo").attr("src", "");
+            }
+        });
 
-    Index.admin.autocompleteFilterGridClubeJogadorAdmin = $("#fieldFilterGridClubeJogadorAdmin-target").autocomplete({
-    minLength: 0,
-    source: "/clube/autocomplete/ajax/true",
-    focus: function(event, ui) {
-    return false;
-    },
-    select: function(event, ui) {
-    $("#fieldFilterGridClubeJogadorAdmin-target").val(ui.item.label);
-    $("#filterListJogadorAdmin-Clube .text_filter").val(ui.item.id).keyup();
-    $("#fieldFilterGridClubeJogadorAdmin-logo").attr("src", "/img/clubes/logos/" + ui.item.id + ".png");
-    return false;
-    }
-    });
+        Index.admin.autocompleteFilterGridClubeJogadorAdmin = $("#fieldFilterGridClubeJogadorAdmin-target").autocomplete({
+            minLength: 0,
+            source: "/clube/autocomplete/ajax/true",
+            focus: function(event, ui) {
+                return false;
+            },
+            select: function(event, ui) {
+                $("#fieldFilterGridClubeJogadorAdmin-target").val(ui.item.label);
+                $("#filterListJogadorAdmin-Clube .text_filter").val(ui.item.id).keyup();
+                $("#fieldFilterGridClubeJogadorAdmin-logo").attr("src", "/img/clubes/logos/" + ui.item.id + ".png");
+                return false;
+            }
+        });
 
-    Index.admin.autocompleteFilterGridSelecaoJogadorAdmin = $("#fieldFilterGridSelecaoJogadorAdmin-target").autocomplete({
-    minLength: 0,
-    source: "/selecao/autocomplete/ajax/true",
-    focus: function(event, ui) {
-    return false;
-    },
-    select: function(event, ui) {
-    $("#fieldFilterGridSelecaoJogadorAdmin-target").val(ui.item.label);
-    $("#filterListJogadorAdmin-Seleção .text_filter").val(ui.item.id).keyup();
-    $("#fieldFilterGridSelecaoJogadorAdmin-logo").attr("src", "/img/selecoes/logos/" + ui.item.id + ".png");
-    return false;
-    }
-    });
+        Index.admin.autocompleteFilterGridSelecaoJogadorAdmin = $("#fieldFilterGridSelecaoJogadorAdmin-target").autocomplete({
+            minLength: 0,
+            source: "/selecao/autocomplete/ajax/true",
+            focus: function(event, ui) {
+                return false;
+            },
+            select: function(event, ui) {
+                $("#fieldFilterGridSelecaoJogadorAdmin-target").val(ui.item.label);
+                $("#filterListJogadorAdmin-Seleção .text_filter").val(ui.item.id).keyup();
+                $("#fieldFilterGridSelecaoJogadorAdmin-logo").attr("src", "/img/selecoes/logos/" + ui.item.id + ".png");
+                return false;
+            }
+        });
 
-    Index.admin.gridJogadorAdmin = $('#gridJogadorAdmin').dataTable({
-    "bFilter": true,
-    "bProcessing": true,
-    "bServerSide": true,
-    "sPaginationType": "full_numbers",
-    "bJQueryUI": false,
-    "sAjaxSource": "/jogador/loadGridSearch/ajax/true/",
-    "aoColumnDefs": [
-    {"sName": "equals", "aTargets": [0]},
-    {"sName": "like", "aTargets": [1]},
-    {"sName": "like", "aTargets": [2]},
-    {"sName": "equals", "aTargets": [3]},
-    {"sName": "equals", "aTargets": [4]},
-    {"sName": "like", "aTargets": [5]},
-    {"sName": "like", "aTargets": [6]},
-    {"sName": "equals", "aTargets": [7]},
-    {"sName": "equals", "aTargets": [8]},
-    {"sName": "equals", "aTargets": [9]}
-    ],
-    "oLanguage": {
-    "oPaginate": {
-    "sFirst": "Primeira",
-    "sPrevious": "Anterior",
-    "sNext": "Próxima",
-    "sLast": "Última"
-    },
-    "sLengthMenu": "_MENU_",
-    "sZeroRecords": "Nenhum jogador encontrado",
-    "sInfo": "Visualizando _START_ até _END_ de _TOTAL_ jogadores",
-    "sInfoEmpty": "Visualizando 0 até 0 de 0 jogadores",
-    "sInfoFiltered": "(filtrado de _MAX_ jogadores)"
-    },
-    "fnRowCallback": function(nRow, aData, iDisplayIndex) {
-    $('td:eq(0)', nRow).html('<img id="btnDetailJogadorUser" id_jogador="' + aData[0] + '" class="mini-img-in-grid" src="/img/jogadores/fotos/' + aData[0] + '.png">');
-    $('td:eq(3)', nRow).html(aData[3] + ' cm');
-    $('td:eq(4)', nRow).html(aData[4] + ' kg');
-    $('td:eq(8)', nRow).html('<img class="mini-img-in-grid" src="/img/clubes/logos/' + aData[8] + '.png">');
-    $('td:eq(9)', nRow).html('<img class="mini-img-in-grid" src="/img/selecoes/logos/' + aData[9] + '.png">');
-    }
-    }).columnFilter({
-    sPlaceHolder: "head:before",
-    aoColumns: [
-    <?php foreach ($this->columns as $key => $attr): ?>
-        {sSelector: "#filterListJogadorAdmin-<?php print current($attr); ?>"},
-    <?php endforeach; ?>
-    ]}
-    ).fnSetFilteringDelay(3);
+        Index.admin.gridJogadorAdmin = $('#gridJogadorAdmin').dataTable({
+            "bFilter": true,
+            "bProcessing": true,
+            "bServerSide": true,
+            "sPaginationType": "full_numbers",
+            "bJQueryUI": false,
+            "sAjaxSource": "/jogador/loadGridSearch/ajax/true/",
+            "aoColumnDefs": [
+                {"sName": "equals", "aTargets": [0]},
+                {"sName": "like", "aTargets": [1]},
+                {"sName": "like", "aTargets": [2]},
+                {"sName": "equals", "aTargets": [3]},
+                {"sName": "equals", "aTargets": [4]},
+                {"sName": "like", "aTargets": [5]},
+                {"sName": "like", "aTargets": [6]},
+                {"sName": "equals", "aTargets": [7]},
+                {"sName": "equals", "aTargets": [8]},
+                {"sName": "equals", "aTargets": [9]}
+            ],
+            "oLanguage": {
+                "oPaginate": {
+                    "sFirst": "Primeira",
+                    "sPrevious": "Anterior",
+                    "sNext": "Próxima",
+                    "sLast": "Última"
+                },
+                "sLengthMenu": "_MENU_",
+                "sZeroRecords": "Nenhum jogador encontrado",
+                "sInfo": "Visualizando _START_ até _END_ de _TOTAL_ jogadores",
+                "sInfoEmpty": "Visualizando 0 até 0 de 0 jogadores",
+                "sInfoFiltered": "(filtrado de _MAX_ jogadores)"
+            },
+            "fnRowCallback": function(nRow, aData, iDisplayIndex) {
+                $('td:eq(0)', nRow).html('<img id="btnDetailJogadorUser" id_jogador="' + aData[0] + '" class="mini-img-in-grid" src="/img/jogadores/fotos/' + aData[0] + '.png">');
+                $('td:eq(3)', nRow).html(aData[3] + ' cm');
+                $('td:eq(4)', nRow).html(aData[4] + ' kg');
+                $('td:eq(8)', nRow).html('<img class="mini-img-in-grid" src="/img/clubes/logos/' + aData[8] + '.png">');
+                $('td:eq(9)', nRow).html('<img class="mini-img-in-grid" src="/img/selecoes/logos/' + aData[9] + '.png">');
+            }
+        }).columnFilter({
+            sPlaceHolder: "head:before",
+            aoColumns: [
+<?php foreach ($this->columns as $key => $attr): ?>
+                    {sSelector: "#filterListJogadorAdmin-<?php print current($attr); ?>"},
+<?php endforeach; ?>
+            ]}
+        ).fnSetFilteringDelay(3);
 
     });
 </script>
