@@ -7,26 +7,30 @@ use br\com\cf\library\core\controller\ControllerAbstract;
 /**
  * @autor Michael F. Rodrigues <cerberosnash@gmail.com>
  */
-class ControllerJogador extends ControllerAbstract {
+class ControllerJogador extends ControllerAbstract
+{
 
     /**
      * @return void
      */
-    public function indexAction() {
+    public function indexAction ()
+    {
         $this->setView('jogador', 'index')->render();
     }
 
     /**
      * @return void
      */
-    public function searchAction() {
+    public function searchAction ()
+    {
         $this->setView('jogador', 'search')->render();
     }
 
     /**
      * @return void
      */
-    public function editAction() {
+    public function editAction ()
+    {
         try {
 
             \br\com\cf\app\model\ModelJogador::factory()->update($this->getParams());
@@ -42,7 +46,8 @@ class ControllerJogador extends ControllerAbstract {
     /**
      * @return void
      */
-    public function listAction() {
+    public function listAction ()
+    {
         $this->setView('jogador', 'list')
                 ->set('columns', array(
                     array('j.id_jogador' => 'ID'),
@@ -106,7 +111,8 @@ class ControllerJogador extends ControllerAbstract {
     /**
      * @return void
      */
-    public function loadGridSearchAction() {
+    public function loadGridSearchAction ()
+    {
 
         $query = 'jogador j '
                 . 'inner join pais p on p.id_pais = j.id_pais '
@@ -186,72 +192,85 @@ class ControllerJogador extends ControllerAbstract {
     /**
      * @return void
      */
-    public function formEditAction() {
+    public function formEditAction ()
+    {
         try {
 
             $jogador = \br\com\cf\app\model\ModelJogador::factory()->find($this->getParam('id_jogador'));
 
-            $jogador->nm_id_selecao = \br\com\cf\app\model\ModelSelecao::factory()->find($jogador->id_selecao)->nm_selecao;
-            $jogador->nm_id_pais = \br\com\cf\app\model\ModelPais::factory()->find($jogador->id_pais)->nm_pais;
-            $jogador->nm_id_clube = \br\com\cf\app\model\ModelClube::factory()->find($jogador->id_clube)->nm_clube;
+            $jogador->nm_selecao = \br\com\cf\app\model\ModelSelecao::factory()->find($jogador->id_selecao)->nm_selecao;
+            $jogador->nm_pais = \br\com\cf\app\model\ModelPais::factory()->find($jogador->id_pais)->nm_pais;
+            $jogador->nm_clube = \br\com\cf\app\model\ModelClube::factory()->find($jogador->id_clube)->nm_clube;
+
+            #@todo alterar pra recuperar relacao com usuario caso exista...
+            $jogador->nm_equipe = 'xXMatadoresXx';
+            $jogador->id_proprietario = 36;
 
             $this->setView('jogador', 'formEdit')
                     ->set('jogador', $jogador)
                     ->set('fields', array(
-                        array('id_jogador' => 'ID'),
-                        array('nm_abreviado' => 'N. Abreviado'),
-                        array('nm_completo' => 'N. Completo'),
-                        array('dt_nascimento' => 'Nascimento'),
-                        array('nu_altura' => 'Altura'),
-                        array('nu_peso' => 'Peso'),
-                        array('tx_pe_preferido' => 'Pé preferido'),
-                        array('id_pais' => 'Pais'),
-                        array('nu_overall' => 'Overall'),
-                        array('cd_po_preferida_1' => 'Posição preferida I'),
-                        array('cd_po_preferida_2' => 'Posição preferida II'),
-                        array('cd_po_preferida_3' => 'Posição preferida III'),
-                        array('nu_aceleracao' => 'Aceleracao'),
-                        array('nu_velocidade_final' => 'Velocidade final'),
-                        array('nu_agilidade' => 'Agilidade'),
-                        array('nu_equilibrio' => 'Equilibrio'),
-                        array('nu_pulo' => 'Pulo'),
-                        array('nu_resistencia' => 'Resistência'),
-                        array('nu_forca' => 'Força'),
-                        array('nu_reacao' => 'Reação'),
-                        array('nu_agressao' => 'Agressão'),
-                        array('nu_intercepcao' => 'Intercepção'),
-                        array('nu_posicionamento' => 'Posicionamento'),
-                        array('nu_visao_jogo' => 'Visão de jogo'),
-                        array('nu_controle_bola' => 'Coontrole de bola'),
-                        array('nu_cruzamento' => 'Cruzamento'),
-                        array('nu_drible' => 'Drible'),
-                        array('nu_finalizacao' => 'Finalização'),
-                        array('nu_cobranca_falta' => 'Cobrança de falta'),
-                        array('nu_cabeceio' => 'Cabeceio'),
-                        array('nu_passe_longo' => 'Passe longo'),
-                        array('nu_passe_curto' => 'Passe curto'),
-                        array('nu_marcacao' => 'Marcação'),
-                        array('nu_forca_chute' => 'Fora do chute'),
-                        array('nu_chute_longe' => 'Chute longe'),
-                        array('nu_roubada_bola' => 'Roubada de bola'),
-                        array('nu_carrinho' => 'Carrinho'),
-                        array('nu_voleios' => 'Voleios'),
-                        array('nu_curva' => 'Curva'),
-                        array('nu_penaltis' => 'Penaltis'),
-                        array('nu_salto' => 'Salto'),
-                        array('nu_habilidade_mao' => 'Habilidade com a mão'),
-                        array('nu_habilidade_pe' => 'Habilidade com o pé'),
-                        array('nu_reflexo' => 'Reflexo'),
-                        array('nu_posicionamento_goleiro' => 'Posicionamento goleiro'),
-                        array('nu_potencial' => 'Potencial'),
-                        array('nu_reputacao_internacional' => 'Reputação internacional'),
-                        array('nu_pe_ruim' => 'Pé ruim'),
-                        array('nu_dribles_habilidade' => 'Dribles'),
-                        array('tx_ataque' => 'Ataque'),
-                        array('tx_defesa' => 'Defesa'),
-                        array('id_clube' => 'Clube'),
-                        array('id_selecao' => 'Seleção'),
-                        array('id_sofifa' => 'ID FIFA')
+                        'column1' => array(
+                            array('nm_abreviado' => 'N. Abreviado'),
+                            array('nm_completo' => 'N. Completo'),
+                            array('dt_nascimento' => 'Nascimento'),
+                            array('nu_altura' => 'Altura'),
+                            array('nu_peso' => 'Peso'),
+                            array('tx_pe_preferido' => 'Pé preferido'),
+                            array('cd_po_preferida_1' => 'Posição preferida I'),
+                            array('cd_po_preferida_2' => 'Posição preferida II'),
+                            array('cd_po_preferida_3' => 'Posição preferida III'),
+                            array('tx_ataque' => 'Ataque'),
+                            array('tx_defesa' => 'Defesa')
+                        ),
+                        'column2' => array(
+                            array('nu_overall' => 'Overall'),
+                            array('nu_aceleracao' => 'Aceleraçao'),
+                            array('nu_agilidade' => 'Agilidade'),
+                            array('nu_equilibrio' => 'Equilibrio'),
+                            array('nu_pulo' => 'Pulo'),
+                            array('nu_resistencia' => 'Resistência'),
+                            array('nu_forca' => 'Força'),
+                            array('nu_reacao' => 'Reação'),
+                            array('nu_visao_jogo' => 'V. de jogo'),
+                            array('nu_passe_longo' => 'Passe longo'),
+                            array('nu_velocidade_final' => 'Velocidade final'),
+                            array('nu_controle_bola' => 'Controle de bola'),
+                            array('nu_chute_longe' => 'Chute longe'),
+                        ),
+                        'column3' => array(
+                            array('nu_cruzamento' => 'Cruzamento'),
+                            array('nu_potencial' => 'Potencial'),
+                            array('nu_dribles_habilidade' => 'Dribles'),
+                            array('nu_drible' => 'Drible'),
+                            array('nu_finalizacao' => 'Finalização'),
+                            array('nu_cabeceio' => 'Cabeceio'),
+                            array('nu_reflexo' => 'Reflexo'),
+                            array('nu_posicionamento' => 'Posicionamento'),
+                            array('nu_passe_curto' => 'Passe curto'),
+                            array('nu_reputacao_internacional' => 'Reputação internacional'),
+                            array('nu_pe_ruim' => 'Pé ruim'),
+                            array('nu_roubada_bola' => 'Roubada de bola'),
+                        ),
+                        'column4' => array(
+                            array('nu_intercepcao' => 'Intercepção'),
+                            array('nu_marcacao' => 'Marcação'),
+                            array('nu_carrinho' => 'Carrinho'),
+                            array('nu_voleios' => 'Voleios'),
+                            array('nu_curva' => 'Curva'),
+                            array('nu_penaltis' => 'Penaltis'),
+                            array('nu_salto' => 'Salto'),
+                            array('nu_agressao' => 'Agressão'),
+                            array('nu_habilidade_mao' => 'Habilidade com a mão'),
+                            array('nu_habilidade_pe' => 'Habilidade com o pé'),
+                            array('nu_posicionamento_goleiro' => 'Posicionamento goleiro'),
+                            array('nu_forca_chute' => 'Forca chute'),
+                            array('nu_cobranca_falta' => 'Cobrança de falta'),
+                        ),
+                        'column5' => array(
+                            array('id_clube' => 'Clube'),
+                            array('id_selecao' => 'Seleção'),
+//                            array('id_pais' => 'Pais'),
+                        ),
                     ))
                     ->render();
         } catch (\Exception $e) {
@@ -262,7 +281,8 @@ class ControllerJogador extends ControllerAbstract {
     /**
      * @return void
      */
-    public function detailAction() {
+    public function detailAction ()
+    {
         try {
 
             $jogador = \br\com\cf\app\model\ModelJogador::factory()->find($this->getParam('id_jogador'));
@@ -338,51 +358,58 @@ class ControllerJogador extends ControllerAbstract {
     /**
      * @return void
      */
-    public function formPhotoAction() {
+    public function formPhotoAction ()
+    {
         $this->setView('jogador', 'formPhoto')->render();
     }
 
     /**
      * @return void
      */
-    public function uploadPhotoAction() {
-
-        $valid_exts = array('jpeg', 'jpg', 'png', 'gif');
+    public function uploadPhotoAction ()
+    {
+        $valid_exts = array('png');
         $max_file_size = 200000000000 * 10240; #200kb
         $nw = $nh = 100; # image with # height
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_FILES['image'])) {
-                if (!$_FILES['image']['error'] && $_FILES['image']['size'] < $max_file_size) {
-                    $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
-                    if (in_array($ext, $valid_exts)) {
-                        $path = CF_APP_PUBLIC_PATH . '/uploads/' . uniqid() . '.' . $ext;
-                        $size = getimagesize($_FILES['image']['tmp_name']);
+        if (isset($_FILES['image'])) {
+            if (!$_FILES['image']['error'] && $_FILES['image']['size'] < $max_file_size) {
+                $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+                if (in_array($ext, $valid_exts)) {
+                    $path = CF_APP_PUBLIC_PATH . '/uploads/' . uniqid() . '.png';
+                    $size = getimagesize($_FILES['image']['tmp_name']);
 
-                        $x = (int) $_POST['x'];
-                        $y = (int) $_POST['y'];
-                        $w = (int) $_POST['w'] ? $_POST['w'] : $size[0];
-                        $h = (int) $_POST['h'] ? $_POST['h'] : $size[1];
+                    $x = (int) $_POST['x'];
+                    $y = (int) $_POST['y'];
+                    $w = (int) $_POST['w'] ? $_POST['w'] : $size[0];
+                    $h = (int) $_POST['h'] ? $_POST['h'] : $size[1];
 
-                        $data = file_get_contents($_FILES['image']['tmp_name']);
-                        $vImg = imagecreatefromstring($data);
-                        $dstImg = imagecreatetruecolor($nw, $nh);
-                        imagecopyresampled($dstImg, $vImg, 0, 0, $x, $y, $nw, $nh, $w, $h);
-                        imagejpeg($dstImg, $path);
-                        imagedestroy($dstImg);
-                        echo "<img src='$path' />";
-                    } else {
-                        echo 'unknown problem!';
-                    }
+                    $data = file_get_contents($_FILES['image']['tmp_name']);
+                    $vImg = imagecreatefromstring($data);
+                    $dstImg = imagecreatetruecolor($nw, $nh);
+                    imagecopyresampled($dstImg, $vImg, 0, 0, $x, $y, $nw, $nh, $w, $h);
+
+
+                    imagealphablending($vImg, false);   // has to be false for imagecolortransparent
+                    imagesavealpha($vImg, true);       // false = single color transparency
+
+                    $mask_color = imagecolorallocatealpha($vImg, 0, 255, 0, 127);
+                    imagecolortransparent($vImg, $mask_color);
+
+                    imagepng($dstImg, $path);
+                    imagedestroy($dstImg);
+
+//                    echo "<img src='$path' />";
                 } else {
-                    echo 'file is too small or large';
+//                    echo 'unknown problem!';
                 }
             } else {
-                echo 'file not set';
+//                echo 'file is too small or large';
             }
         } else {
-            echo 'bad request!';
+//            echo 'file not set';
         }
+        print json_encode(array('status' => 'success'));
     }
 
 }
