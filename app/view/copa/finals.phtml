@@ -1,0 +1,69 @@
+<?php
+$css1 = array(
+    array("library/jquery-jsplumb/demo/demo-all.css", false),
+    array("library/jquery-jsplumb/demo/chart/demo.css", false),
+//    array("library/jquery-jsplumb/css/font-awesome.css", false),
+);
+
+$js1 = array(
+    array("library/jquery-jsplumb/lib/jquery-1.9.0.js", true),
+    array("library/jquery-jsplumb/lib/jsplumb-geom-0.1.js", true),
+    array("library/jquery-jsplumb/src/util.js", true),
+    array("library/jquery-jsplumb/src/dom-adapter.js", true),
+    array("library/jquery-jsplumb/src/jsPlumb.js", true),
+    array("library/jquery-jsplumb/src/endpoint.js", true),
+    array("library/jquery-jsplumb/src/connection.js", true),
+    array("library/jquery-jsplumb/src/anchors.js", true),
+    array("library/jquery-jsplumb/src/defaults.js", true),
+    array("library/jquery-jsplumb/src/connectors-flowchart.js", true),
+    array("library/jquery-jsplumb/src/renderers-svg.js", true),
+    array("library/jquery-jsplumb/src/renderers-canvas.js", true),
+    array("library/jquery-jsplumb/src/renderers-vml.js", true),
+    array("library/jquery-jsplumb/src/jquery.jsPlumb.js", true),
+    array("library/jquery-jsplumb/demo/chart/demo.js", true),
+);
+
+
+br\com\cf\library\core\cache\Cache::factory()->css($css1)->output()->clean();
+?>
+
+<style type="text/css">
+    .dataTables_filter{
+        display: none;
+    }
+</style>
+
+<section id="main">
+    <div class="top-nav">
+        <div class="container-fluid">
+            <div class="row-fluid search-button-bar-container">
+                <div class="span12">
+                    <ul class="breadcrumb">
+                        <li><a href="#"><i class="icon-home"></i> Copas </a></li>
+                        <li><a href="#"><i class="icon-home"></i> Jogos </a></li>
+                    </ul>
+                    <a class="search-button-trigger" href="#"><i title="Pesquisa Avançada" id="bthSearchJogadorAdmin" class="icon-search"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row-fluid"></div>
+        <div class="span12">
+            <div class="chart-demo" id="chart-demo">
+                <div class="window" id="chartWindow1"><div class="label label-important">Matadores</div></div>
+                <div class="window" id="chartWindow2"><div class="label label-success">Matadores</div> <strong>vs.</strong> <div class="label label-important">Perdedores</div></div>
+                <div class="window" id="chartWindow3"><div class="label label-success">Matadores</div> <strong>vs.</strong> <div class="label label-important">Perdedores</div></div>
+                <div class="window" id="chartWindow4"><div class="label label-success">Matadores</div> <strong>vs.</strong> <div class="label label-important">Perdedores</div></div>
+                <div class="window" id="chartWindow5"><div class="label label-success">Matadores</div> <strong>vs.</strong> <div class="label label-important">Perdedores</div></div>
+                <div class="window" id="chartWindow6"><div class="label label-success">Matadores</div> <strong>vs.</strong> <div class="label label-important">Perdedores</div></div>
+                <div class="window" id="chartWindow7"><div class="label label-success">Matadores</div> <strong>vs.</strong> <div class="label label-important">Perdedores</div></div>
+                <div class="window" id="chartWindow8"><div class="label label-success">Matadores</div> <strong>vs.</strong> <div class="label label-important">Perdedores</div></div>
+            </div>
+        </div>
+        <?php print br\com\cf\library\core\view\View::partials('footer'); ?>
+    </div>
+</section>
+
+<?php br\com\cf\library\core\cache\Cache::factory()->js($js1)->output()->clean(); ?>

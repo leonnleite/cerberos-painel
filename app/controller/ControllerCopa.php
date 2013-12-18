@@ -28,7 +28,7 @@ class ControllerCopa extends ControllerAbstract {
     /**
      * @return void
      */
-    public function gamesAction() {
+    public function gamesAdminAction() {
         $this->setView('copa', 'games')->render();
     }
 
@@ -37,6 +37,34 @@ class ControllerCopa extends ControllerAbstract {
      */
     public function listAction() {
         $this->setView('copa', 'list')->render();
+    }
+
+    /**
+     * @return void
+     */
+    public function artilleryAction() {
+        $this->setView('copa', 'artillery')->render();
+    }
+
+    /**
+     * @return void
+     */
+    public function groupsAction() {
+        $this->setView('copa', 'groups')->render();
+    }
+
+    /**
+     * @return void
+     */
+    public function finalsAction() {
+        $this->setView('copa', 'finals')->render();
+    }
+
+    /**
+     * @return void
+     */
+    public function gamesAction() {
+        $this->setView('copa', 'games')->render();
     }
 
 }

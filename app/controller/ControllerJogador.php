@@ -372,44 +372,49 @@ class ControllerJogador extends ControllerAbstract
         $max_file_size = 200000000000 * 10240; #200kb
         $nw = $nh = 100; # image with # height
 
-        if (isset($_FILES['image'])) {
-            if (!$_FILES['image']['error'] && $_FILES['image']['size'] < $max_file_size) {
-                $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
-                if (in_array($ext, $valid_exts)) {
-                    $path = CF_APP_PUBLIC_PATH . '/uploads/' . uniqid() . '.png';
-                    $size = getimagesize($_FILES['image']['tmp_name']);
-
-                    $x = (int) $_POST['x'];
-                    $y = (int) $_POST['y'];
-                    $w = (int) $_POST['w'] ? $_POST['w'] : $size[0];
-                    $h = (int) $_POST['h'] ? $_POST['h'] : $size[1];
-
-                    $data = file_get_contents($_FILES['image']['tmp_name']);
-                    $vImg = imagecreatefromstring($data);
-                    $dstImg = imagecreatetruecolor($nw, $nh);
-                    imagecopyresampled($dstImg, $vImg, 0, 0, $x, $y, $nw, $nh, $w, $h);
-
-
-                    imagealphablending($vImg, false);   // has to be false for imagecolortransparent
-                    imagesavealpha($vImg, true);       // false = single color transparency
-
-                    $mask_color = imagecolorallocatealpha($vImg, 0, 255, 0, 127);
-                    imagecolortransparent($vImg, $mask_color);
-
-                    imagepng($dstImg, $path);
-                    imagedestroy($dstImg);
-
-//                    echo "<img src='$path' />";
-                } else {
-//                    echo 'unknown problem!';
-                }
-            } else {
-//                echo 'file is too small or large';
-            }
-        } else {
-//            echo 'file not set';
-        }
-        print json_encode(array('status' => 'success'));
+        print $path = CF_APP_PUBLIC_PATH . '/uploads/' . uniqid() . '.png';
+        $_FILES['image'] = $_FILES['Filedata'];
+        
+        move_uploaded_file($_FILES['Filedata']['name'], $path);
+        
+//        if (isset($_FILES['image'])) {
+//            if (!$_FILES['image']['error'] && $_FILES['image']['size'] < $max_file_size) {
+//                $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+//                if (in_array($ext, $valid_exts)) {
+//                    $path = CF_APP_PUBLIC_PATH . '/uploads/' . uniqid() . '.png';
+//                    $size = getimagesize($_FILES['image']['tmp_name']);
+//
+//                    $x = (int) $_POST['x'];
+//                    $y = (int) $_POST['y'];
+//                    $w = (int) $_POST['w'] ? $_POST['w'] : $size[0];
+//                    $h = (int) $_POST['h'] ? $_POST['h'] : $size[1];
+//
+//                    $data = file_get_contents($_FILES['image']['tmp_name']);
+//                    $vImg = imagecreatefromstring($data);
+//                    $dstImg = imagecreatetruecolor($nw, $nh);
+//                    imagecopyresampled($dstImg, $vImg, 0, 0, $x, $y, $nw, $nh, $w, $h);
+//
+//
+//                    imagealphablending($vImg, false);   // has to be false for imagecolortransparent
+//                    imagesavealpha($vImg, true);       // false = single color transparency
+//
+//                    $mask_color = imagecolorallocatealpha($vImg, 0, 255, 0, 127);
+//                    imagecolortransparent($vImg, $mask_color);
+//
+//                    imagepng($dstImg, $path);
+//                    imagedestroy($dstImg);
+//
+////                    echo "<img src='$path' />";
+//                } else {
+////                    echo 'unknown problem!';
+//                }
+//            } else {
+////                echo 'file is too small or large';
+//            }
+//        } else {
+////            echo 'file not set';
+//        }
+        print json_encode($_FILES);
     }
 
 }
