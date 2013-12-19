@@ -41,12 +41,37 @@
                 });
             }
 
-            instance.connect({uuids: ["chartWindow3-bottom", "chartWindow8-top"], overlays: overlays, detachable: true, reattach: true});
-            instance.connect({uuids: ["chartWindow3-bottom", "chartWindow6-top"], overlays: overlays});
-            instance.connect({uuids: ["chartWindow1-bottom", "chartWindow2-top"], overlays: overlays});
-            instance.connect({uuids: ["chartWindow1-bottom", "chartWindow3-top"], overlays: overlays});
-            instance.connect({uuids: ["chartWindow2-bottom", "chartWindow4-top"], overlays: overlays});
-            instance.connect({uuids: ["chartWindow2-bottom", "chartWindow5-top"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow1-1-top", "chartWindow2-1-up-bottom"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow2-1-up-top", "chartWindow3-1-up-bottom"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow2-1-up-top", "chartWindow3-2-up-bottom"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow3-1-up-top", "chartWindow4-1-up-bottom"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow3-1-up-top", "chartWindow4-2-up-bottom"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow3-2-up-top", "chartWindow4-3-up-bottom"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow3-2-up-top", "chartWindow4-4-up-bottom"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow4-1-up-top", "chartWindow5-1-up-bottom"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow4-1-up-top", "chartWindow5-2-up-bottom"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow4-2-up-top", "chartWindow5-3-up-bottom"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow4-2-up-top", "chartWindow5-4-up-bottom"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow4-3-up-top", "chartWindow5-5-up-bottom"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow4-3-up-top", "chartWindow5-6-up-bottom"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow4-4-up-top", "chartWindow5-7-up-bottom"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow4-4-up-top", "chartWindow5-8-up-bottom"], overlays: overlays});
+
+            instance.connect({uuids: ["chartWindow1-1-bottom", "chartWindow2-1-top"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow2-1-bottom", "chartWindow3-1-top"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow2-1-bottom", "chartWindow3-2-top"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow3-1-bottom", "chartWindow4-1-top"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow3-1-bottom", "chartWindow4-2-top"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow3-2-bottom", "chartWindow4-3-top"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow3-2-bottom", "chartWindow4-4-top"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow4-1-bottom", "chartWindow5-1-top"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow4-1-bottom", "chartWindow5-2-top"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow4-2-bottom", "chartWindow5-3-top"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow4-2-bottom", "chartWindow5-4-top"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow4-3-bottom", "chartWindow5-5-top"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow4-3-bottom", "chartWindow5-6-top"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow4-4-bottom", "chartWindow5-7-top"], overlays: overlays});
+            instance.connect({uuids: ["chartWindow4-4-bottom", "chartWindow5-8-top"], overlays: overlays});
             instance.draggable(windows);
         });
     });

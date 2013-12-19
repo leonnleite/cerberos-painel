@@ -2,7 +2,6 @@
 $css1 = array(
     array("library/jquery-jsplumb/demo/demo-all.css", false),
     array("library/jquery-jsplumb/demo/chart/demo.css", false),
-//    array("library/jquery-jsplumb/css/font-awesome.css", false),
 );
 
 $js1 = array(
@@ -27,12 +26,6 @@ $js1 = array(
 br\com\cf\library\core\cache\Cache::factory()->css($css1)->output()->clean();
 ?>
 
-<style type="text/css">
-    .dataTables_filter{
-        display: none;
-    }
-</style>
-
 <section id="main">
     <div class="top-nav">
         <div class="container-fluid">
@@ -52,14 +45,117 @@ br\com\cf\library\core\cache\Cache::factory()->css($css1)->output()->clean();
         <div class="row-fluid"></div>
         <div class="span12">
             <div class="chart-demo" id="chart-demo">
-                <div class="window" id="chartWindow1"><div class="label label-important">Matadores</div></div>
-                <div class="window" id="chartWindow2"><div class="label label-success">Matadores</div> <strong>vs.</strong> <div class="label label-important">Perdedores</div></div>
-                <div class="window" id="chartWindow3"><div class="label label-success">Matadores</div> <strong>vs.</strong> <div class="label label-important">Perdedores</div></div>
-                <div class="window" id="chartWindow4"><div class="label label-success">Matadores</div> <strong>vs.</strong> <div class="label label-important">Perdedores</div></div>
-                <div class="window" id="chartWindow5"><div class="label label-success">Matadores</div> <strong>vs.</strong> <div class="label label-important">Perdedores</div></div>
-                <div class="window" id="chartWindow6"><div class="label label-success">Matadores</div> <strong>vs.</strong> <div class="label label-important">Perdedores</div></div>
-                <div class="window" id="chartWindow7"><div class="label label-success">Matadores</div> <strong>vs.</strong> <div class="label label-important">Perdedores</div></div>
-                <div class="window" id="chartWindow8"><div class="label label-success">Matadores</div> <strong>vs.</strong> <div class="label label-important">Perdedores</div></div>
+
+                <!--SUPERIOR - INICIO-->
+
+                <div class="window" id="chartWindow2-1-up">
+                    <img class="avatar" src="img/selecoes/logos/1335.png">
+                </div>
+
+                <div class="window" id="chartWindow3-1-up">
+                    <img class="avatar" src="img/selecoes/logos/1335.png">
+                </div>
+                <div class="window" id="chartWindow3-2-up">
+                    <img class="avatar" src="img/selecoes/logos/1331.png">
+                </div>
+
+                <div class="window" id="chartWindow4-1-up">
+                    <img class="avatar" src="img/selecoes/logos/1335.png">
+                </div>
+                <div class="window" id="chartWindow4-2-up">
+                    <img class="avatar" src="img/selecoes/logos/1359.png">
+                </div>
+                <div class="window" id="chartWindow4-3-up">
+                    <img class="avatar" src="img/selecoes/logos/1331.png">
+                </div>
+                <div class="window" id="chartWindow4-4-up">
+                    <img class="avatar" src="img/selecoes/logos/1364.png">
+                </div>
+
+                <div class="window" id="chartWindow5-1-up">
+                    <img class="avatar" src="img/selecoes/logos/1335.png">
+                </div>
+                <div class="window" id="chartWindow5-2-up">
+                    <img class="avatar" src="img/selecoes/logos/1318.png">
+                </div>
+                <div class="window" id="chartWindow5-3-up">
+                    <img class="avatar" src="img/selecoes/logos/1359.png">
+                </div>
+                <div class="window" id="chartWindow5-4-up">
+                    <img class="avatar" src="img/selecoes/logos/1365.png">
+                </div>
+                <div class="window" id="chartWindow5-5-up">
+                    <img class="avatar" src="img/selecoes/logos/1377.png">
+                </div>
+                <div class="window" id="chartWindow5-6-up">
+                    <img class="avatar" src="img/selecoes/logos/1331.png">
+                </div>
+                <div class="window" id="chartWindow5-7-up">
+                    <img class="avatar" src="img/selecoes/logos/1370.png">
+                </div>
+                <div class="window" id="chartWindow5-8-up">
+                    <img class="avatar" src="img/selecoes/logos/1364.png">
+                </div>
+
+                <!--SUPERIOR - FIM-->
+
+                <div class="window" id="chartWindow1-1">
+                    <img class="avatar" src="img/clubes/logos/1.png">
+                </div>
+
+                <!--INFERIOR - INICIO-->
+
+                <div class="window" id="chartWindow2-1">
+                    <img class="avatar" src="img/clubes/logos/1.png">
+                </div>
+
+                <div class="window" id="chartWindow3-1">
+                    <img class="avatar" src="img/clubes/logos/1.png">
+                </div>
+                <div class="window" id="chartWindow3-2">
+                    <img class="avatar" src="img/clubes/logos/8.png">
+                </div>
+
+                <div class="window" id="chartWindow4-1">
+                    <img class="avatar" src="img/clubes/logos/1.png">
+                </div>
+                <div class="window" id="chartWindow4-2">
+                    <img class="avatar" src="img/clubes/logos/3.png">
+                </div>
+                <div class="window" id="chartWindow4-3">
+                    <img class="avatar" src="img/clubes/logos/8.png">
+                </div>
+                <div class="window" id="chartWindow4-4">
+                    <img class="avatar" src="img/clubes/logos/10.png">
+                </div>
+
+                <div class="window" id="chartWindow5-1">
+                    <img class="avatar" src="img/clubes/logos/1.png">
+                </div>
+                <div class="window" id="chartWindow5-2">
+                    <img class="avatar" src="img/clubes/logos/2.png">
+                </div>
+                <div class="window" id="chartWindow5-3">
+                    <img class="avatar" src="img/clubes/logos/3.png">
+                </div>
+                <div class="window" id="chartWindow5-4">
+                    <img class="avatar" src="img/clubes/logos/4.png">
+                </div>
+                <div class="window" id="chartWindow5-5">
+                    <img class="avatar" src="img/clubes/logos/7.png">
+                </div>
+                <div class="window" id="chartWindow5-6">
+                    <img class="avatar" src="img/clubes/logos/8.png">
+                </div>
+                <div class="window" id="chartWindow5-7">
+                    <img class="avatar" src="img/clubes/logos/9.png">
+                </div>
+                <div class="window" id="chartWindow5-8">
+                    <img class="avatar disabled" src="img/clubes/logos/10.png">
+                </div>
+
+                <!--INFERIOR - FIM-->
+
             </div>
         </div>
         <?php print br\com\cf\library\core\view\View::partials('footer'); ?>
