@@ -9549,3 +9549,13 @@ local.painel.com - - [24/Dec/2013:13:16:54 -0200] "GET /masterLiga/formCreate HT
 local.painel.com - - [24/Dec/2013:13:16:55 -0200] "GET /library/validate/jquery.validate-1.11.1.js?_=1387898215412 HTTP/1.1" 200 38954
 local.painel.com - - [24/Dec/2013:13:19:35 -0200] "GET /masterLiga/formCreate HTTP/1.1" 200 44477
 local.painel.com - - [24/Dec/2013:13:19:35 -0200] "GET /library/validate/jquery.validate-1.11.1.js?_=1387898375784 HTTP/1.1" 200 38954
+local.painel.com - - [24/Dec/2013:13:21:10 -0200] "GET /masterLiga/formCreate HTTP/1.1" 200 96911
+local.painel.com - - [24/Dec/2013:13:21:11 -0200] "GET /library/validate/jquery.validate-1.11.1.js?_=1387898471334 HTTP/1.1" 200 38954
+local.painel.com - - [24/Dec/2013:13:21:58 -0200] "GET /masterLiga/formCreate HTTP/1.1" 200 95633
+local.painel.com - - [24/Dec/2013:13:22:00 -0200] "GET /library/validate/jquery.validate-1.11.1.js?_=1387898520013 HTTP/1.1" 200 38954
+local.painel.com - - [24/Dec/2013:13:22:21 -0200] "GET /masterLiga/formCreate HTTP/1.1" 200 95633
+local.painel.com - - [24/Dec/2013:13:22:22 -0200] "GET /library/validate/jquery.validate-1.11.1.js?_=1387898542686 HTTP/1.1" 200 38954
+local.painel.com - - [24/Dec/2013:13:22:45 -0200] "GET /masterLiga/formCreate HTTP/1.1" 200 95633
+local.painel.com - - [24/Dec/2013:13:22:46 -0200] "GET /library/validate/jquery.validate-1.11.1.js?_=1387898566132 HTTP/1.1" 200 38954
+local.painel.com - - [24/Dec/2013:13:22:57 -0200] "GET /masterLiga/formCreate HTTP/1.1" 200 95633
+local.painel.com - - [24/Dec/2013:13:22:58 -0200] "GET /library/validate/jquery.validate-1.11.1.js?_=1387898578764 HTTP/1.1" 200 38954

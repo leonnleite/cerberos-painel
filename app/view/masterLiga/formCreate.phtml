@@ -68,7 +68,16 @@
                     'D' => 'yellow',
                     'E' => 'blue',
                     'F' => 'black',
-                    'G' => 'red'
+                    'G' => 'red',
+                    'H' => 'blue',
+                    'I' => 'green',
+                    'J' => 'red',
+                    'K' => 'yellow',
+                    'L' => 'blue',
+                    'M' => 'black',
+                    'N' => 'red',
+                    'O' => 'red',
+                    'P' => 'red',
                 );
 
                 //@todo implementar a logica para agrupar corretamente...
@@ -76,7 +85,7 @@
                 $open = true;
                 $close = false;
 
-                foreach (array('A', 'B', 'C', 'D', 'E', 'F', 'G') as $key => $value):
+                foreach (array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P') as $key => $value):
                     ?>
 
                     <?php if ($open % 4 == 0): $close++; ?>
@@ -84,7 +93,7 @@
                         <?php else: $close++; ?>
                         <?php endif; ?>
 
-                        <div class="span3">
+                        <div class="span2">
                             <div class="nav-menu box">
                                 <ul class="nav nav-list">
                                     <li class="active">
