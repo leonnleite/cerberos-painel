@@ -59,6 +59,65 @@
                         </div>
                     </form>
                 </div>
+
+                <?php
+                $colors = array(
+                    'A' => 'blue',
+                    'B' => 'green',
+                    'C' => 'red',
+                    'D' => 'yellow',
+                    'E' => 'blue',
+                    'F' => 'black',
+                    'G' => 'red'
+                );
+
+                //@todo implementar a logica para agrupar corretamente...
+
+                $open = true;
+                $close = false;
+
+                foreach (array('A', 'B', 'C', 'D', 'E', 'F', 'G') as $key => $value):
+                    ?>
+
+                    <?php if ($open % 4 == 0): $close++; ?>
+                        <div class="row-fluid">
+                        <?php else: $close++; ?>
+                        <?php endif; ?>
+
+                        <div class="span3">
+                            <div class="nav-menu box">
+                                <ul class="nav nav-list">
+                                    <li class="active">
+                                        <a href="#">
+                                            <input type="checkbox">
+                                            <span class="pull-right badge <?php print($colors[$value]); ?>"><?php print($value); ?></span>
+                                        </a>
+                                    </li>
+                                    <?php foreach (array(1, 2, 3, 4, 5, 6, 7) as $key => $value): ?>
+                                        <li>
+                                            <a class="" href="#">
+                                                <input type="checkbox">
+                                                <img class="mini-img-in-grid avatar" src="https://avatar-ssl.xboxlive.com/avatar/cerberosnash/avatarpic-l.png" />
+                                                <img class="mini-img-in-grid avatar" src="img/escudos/36.png" />
+                                                <span class=""><strong>Michael</strong> - Matadores</span>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <?php
+                        if ($close == 4): $close = 0;
+                            $open = 4;
+                            ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php
+                    $open++;
+                endforeach;
+                ?>
+
             </div>
         </div>
         <?php print br\com\cf\library\core\view\View::partials('footer'); ?>
