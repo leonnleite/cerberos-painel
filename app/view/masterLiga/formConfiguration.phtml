@@ -66,18 +66,17 @@
                             </div>
                             <div class="span3">
                                 <div class="padded">
-                                    <?php foreach ($this->columns[3] as $key => $label): ?>
-                                        <div class="note pull-left"><?php print ($label); ?></div>
-                                        <div class="input input-medium">
-                                            <input class="required date"  type="<?php print ($label == '') ? 'hidden' : 'text'; ?>" name="<?php print ($key); ?>" value="<?php print ($this->configuracao->{$key}); ?>">
-                                        </div>
-                                    <?php endforeach; ?>
+                                    <div class="note pull-left">Início do Draft</div>
+                                    <div class="input input-medium">
+                                        <input class="required date"  type="date" id="dtInicioDraftFormConfigurationFake" value="<?php print (\br\com\cf\library\core\utils\Utils::formatDate($this->configuracao->dt_inicio_draft, 'd/m/Y')); ?>" readonly>
+                                        <input class="required date"  type="hidden" id="dtInicioDraftFormConfiguration" name="dt_inicio_draft" value="<?php print ($this->configuracao->dt_inicio_draft); ?>">
+                                        <input class="required date"  type="hidden" name="id_configuracao" value="<?php print ($this->configuracao->id_configuracao); ?>">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="button blue">Salvar</button>
-                            <button type="reset" class="button">Cancelar</button>
                         </div>
                     </form>
                 </div>
@@ -107,6 +106,13 @@
                         }, 'json');
                     }
                 }
+            });
+
+            $('#dtInicioDraftFormConfigurationFake').datepicker({
+                minDate: 0,
+                dateFormat: 'dd/mm/yy',
+                altField: "#dtInicioDraftFormConfiguration",
+                altFormat: "yy-mm-dd"
             });
 
         });

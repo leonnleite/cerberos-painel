@@ -16,99 +16,97 @@
 
     <div class="container-fluid">
         <div class="row-fluid">
-            <div class="span12">
+            <!--<div class="span6">-->
 
-                <div class="box">
-                    <div class="tab-header">
-                        Criar Nova Master Liga
-                        <span class="pull-right">
-                            <span class="options">
-                                <a href="#"><i class="icon-trophy"></i></a>
-                            </span>
+            <div class="box">
+                <div class="tab-header">
+                    Criar Nova Master Liga
+                    <span class="pull-right">
+                        <span class="options">
+                            <a href="#"><i class="icon-trophy"></i></a>
                         </span>
-                    </div>
-                    <form id="formCreateMasterLiga" class="fill-up" action="/masterLiga/create/ajax/true" method="post">
-                        <div class="row-fluid">
-                            <div class="span6">
-                                <div class="padded">
-                                    <div class="note pull-left">defina uma senha segura!</div>
-                                    <div class="input">
-                                        <input class="required" title="informe o nome completo!" placeholder="Nome Completo" type="text" name="nm_usuario">
-                                    </div>
-                                    <div class="note pull-left">defina uma senha segura!</div>
-                                    <div class="input">
-                                        <input class="required" title="informe um email válido!" placeholder="Email" type="email" name="tx_email">
-                                    </div>
-                                    <div class="note pull-left">defina uma senha segura!</div>
-                                    <div class="input">
-                                        <input class="required" title="informe um nick válido da live!" placeholder="Nick Live" type="text" name="lg_live">
-                                    </div>
-                                    <div class="note pull-left">defina uma senha segura!</div>
-                                    <div class="input">
-                                        <input class="required" title="informe um senha segura!" placeholder="Senha" class="error" type="password" name="tx_senha">
-                                    </div>
-
-
-
+                    </span>
+                </div>
+                <form id="formCreateMasterLiga" class="fill-up" action="/masterLiga/create/ajax/true" method="post">
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <div class="padded">
+                                <div class="note pull-left">Data de Inicio</div>
+                                <div class="input">
+                                    <input class="required date" title="informe a data de inicio da Master Liga" placeholder="" type="date" id="dtInicioFormCreateMasterLigaFake" readonly>
+                                    <input class="required date" title="informe a data de inicio da Master Liga" placeholder="" type="hidden" name="dt_inicial" id="dtInicioFormCreateMasterLiga">
                                 </div>
                             </div>
                         </div>
-                        <div class="form-actions">
-                            <button type="submit" class="button blue">Salvar</button>
-                            <button type="reset" class="button">Cancelar</button>
+                        <div class="span4">
+                            <div class="padded">
+                                <div class="note pull-left">Nome da Master Liga!</div>
+                                <div class="input">
+                                    <input class="required" title="informe um nome para a nova Master Liga!" placeholder="Ex. Liga de Ferias" type="text" name="nm_campeonato">
+                                </div>
+                            </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="button blue">Salvar</button>
+                        <div class="pull-right">
+                            <div class="input">
+                                <input class="checkbox" type="checkbox" id="btnSelecionarTodosUsuariosFormCreateMasterLiga">
+                                <label>Marcar todos usuarios?</label>
+                            </div>
+                        </div>
+                    </div>
 
-                <?php
-                $colors = array(
-                    'A' => 'blue',
-                    'B' => 'green',
-                    'C' => 'red',
-                    'D' => 'yellow',
-                    'E' => 'blue',
-                    'F' => 'black',
-                    'G' => 'red',
-                    'H' => 'blue',
-                    'I' => 'green',
-                    'J' => 'red',
-                    'K' => 'yellow',
-                    'L' => 'blue',
-                    'M' => 'black',
-                    'N' => 'red',
-                    'O' => 'red',
-                    'P' => 'red',
-                );
 
-                //@todo implementar a logica para agrupar corretamente...
+                    <?php
+                    $colors = array(
+                        'A' => 'blue',
+                        'B' => 'green',
+                        'C' => 'red',
+                        'D' => 'yellow',
+                        'E' => 'blue',
+                        'F' => 'black',
+                        'G' => 'red',
+                        'H' => 'blue',
+                        'I' => 'green',
+                        'J' => 'red',
+                        'K' => 'yellow',
+                        'L' => 'blue',
+                        'M' => 'black',
+                        'N' => 'red',
+                        'O' => 'red',
+                        'P' => 'red',
+                    );
 
-                $open = true;
-                $close = false;
+                    //@todo implementar a logica para agrupar corretamente...
 
-                foreach (array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P') as $key => $value):
-                    ?>
+                    $open = true;
+                    $close = false;
 
-                    <?php if ($open % 4 == 0): $close++; ?>
-                        <div class="row-fluid">
+                    foreach ($this->series as $serie => $usuarios):
+                        ?>
+
+                        <?php if ($open % 4 == 0): $close++; ?>
+                            <!--<div class="row-fluid">-->
                         <?php else: $close++; ?>
                         <?php endif; ?>
 
-                        <div class="span2">
+                        <div class="span8">
                             <div class="nav-menu box">
                                 <ul class="nav nav-list">
                                     <li class="active">
                                         <a href="#">
-                                            <input type="checkbox">
-                                            <span class="pull-right badge <?php print($colors[$value]); ?>"><?php print($value); ?></span>
+                                            <input type="checkbox" class="select-all-user-series" value="<?php print($serie); ?>">
+                                            <span class="pull-right badge <?php print($colors[$serie]); ?>"><?php print($serie); ?></span>
                                         </a>
                                     </li>
-                                    <?php foreach (array(1, 2, 3, 4, 5, 6, 7) as $key => $value): ?>
+                                    <?php foreach ($usuarios as $usuario): ?>
                                         <li>
                                             <a class="" href="#">
-                                                <input type="checkbox">
-                                                <img class="mini-img-in-grid avatar" src="https://avatar-ssl.xboxlive.com/avatar/cerberosnash/avatarpic-l.png" />
-                                                <img class="mini-img-in-grid avatar" src="img/escudos/36.png" />
-                                                <span class=""><strong>Michael</strong> - Matadores</span>
+                                                <input type="checkbox" serie="<?php print($serie); ?>" class="select-user-series select-user-series-<?php print($serie); ?>" name="id_usuario[<?php print($usuario->id_usuario); ?>]">
+                                                <img class="mini-img-in-grid avatar" src="https://avatar-ssl.xboxlive.com/avatar/<?php print($usuario->lg_live); ?>/avatarpic-l.png" />
+                                                <img class="mini-img-in-grid avatar" src="img/escudos/<?php print($usuario->id_usuario); ?>.png" />
+                                                <span class=""><strong><?php print($usuario->nm_usuario); ?></strong> - <?php print($usuario->nm_equipe); ?></span>
                                             </a>
                                         </li>
                                     <?php endforeach; ?>
@@ -120,14 +118,16 @@
                         if ($close == 4): $close = 0;
                             $open = 4;
                             ?>
-                        </div>
-                    <?php endif; ?>
-                    <?php
-                    $open++;
-                endforeach;
-                ?>
+                            <!--</div>-->
+                        <?php endif; ?>
+                        <?php
+                        $open++;
+                    endforeach;
+                    ?>
 
             </div>
+            <!--</div>-->
+            </form>
         </div>
         <?php print br\com\cf\library\core\view\View::partials('footer'); ?>
     </div>
@@ -146,17 +146,65 @@
             $("#formCreateMasterLiga").validate({
                 errorClass: "error",
                 submitHandler: function() {
+
+                    //validar quantidade de equipes por serie...
+
+                    var t = {};
+                    var m = '';
+
+                    $('.select-user-series').each(function() {
+                        eval('t.' + $(this).attr('serie') + '=0');
+                    });
+
+                    $('.select-user-series').each(function() {
+                        if (this.checked === true) {
+                            eval('t.' + $(this).attr('serie') + '++');
+                        }
+                    });
+
+                    $.each(t, function(i, d) {
+                        if (d < 2) {
+                            m += ' ' + i + ' ';
+                        }
+                    });
+
+                    if (m !== '') {
+                        alert('A(s) serie(s) (' + m + ') devem conter pelo menos duas equipes cada!');
+                        return false;
+                    }
+
                     if (confirm('Você tem certeza que deseja criar uma nova Master Liga agora?')) {
                         $.post(actionNew, formNew.serialize(), function(response) {
                             if (response.status === 'success') {
                                 formNew.each(function() {
-                                    this.reset();
+                                    Util.reloadContainer('/masterLiga/formClose');
                                 });
                             }
                             Util.showMessageBox(response);
                         }, 'json');
                     }
                 }
+            });
+
+            $('.select-all-user-series').change(function() {
+                $('.select-user-series-' + $(this).val()).attr('checked', this.checked);
+            });
+
+            $('#btnSelecionarTodosUsuariosFormCreateMasterLiga').change(function() {
+
+                var checked = this.checked;
+
+                $('.select-all-user-series').each(function() {
+                    $(this).attr('checked', checked);
+                }).change();
+
+            });
+
+            $('#dtInicioFormCreateMasterLigaFake').datepicker({
+                minDate: 0,
+                dateFormat: 'dd/mm/yy',
+                altField: "#dtInicioFormCreateMasterLiga",
+                altFormat: "yy-mm-dd"
             });
 
         });

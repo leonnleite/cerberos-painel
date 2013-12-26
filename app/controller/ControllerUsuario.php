@@ -13,12 +13,14 @@ use br\com\cf\library\core\controller\ControllerAbstract,
 /**
  * @author Michael F. Rodrigues <cerberosnash@gmail.com>
  */
-class ControllerUsuario extends ControllerAbstract {
+class ControllerUsuario extends ControllerAbstract
+{
 
     /**
      * @return void
      */
-    public function authAction() {
+    public function authAction ()
+    {
 
         Auth::factory()->autheticate(array(
             'tx_email' => $this->getParam('tx_email'),
@@ -38,7 +40,8 @@ class ControllerUsuario extends ControllerAbstract {
     /**
      * return void
      */
-    public function logoffAction() {
+    public function logoffAction ()
+    {
         Auth::logoff();
         header('Location: ' . Bootstrap::factory()->getConfig()->getParam('config.url'));
     }
@@ -46,14 +49,16 @@ class ControllerUsuario extends ControllerAbstract {
     /**
      * @return void
      */
-    public function formAuthAction() {
+    public function formAuthAction ()
+    {
         $this->setView('usuario', 'formAuth')->render();
     }
 
     /**
      * @return void
      */
-    public function formEditAction() {
+    public function formEditAction ()
+    {
         try {
 
             $usuario = BusinessUsuario::factory()->findUsuarioById($this->getParam('id_usuario'));
@@ -70,14 +75,16 @@ class ControllerUsuario extends ControllerAbstract {
     /**
      * @return void
      */
-    public function formCreateAction() {
+    public function formCreateAction ()
+    {
         $this->setView('usuario', 'formCreate')->render();
     }
 
     /**
      * @return void
      */
-    public function editAction() {
+    public function editAction ()
+    {
         try {
 
             $params = $this->getParams();
@@ -96,13 +103,16 @@ class ControllerUsuario extends ControllerAbstract {
     /**
      * @return void
      */
-    public function createAction() {
+    public function createAction ()
+    {
         try {
 
             $params = $this->getParams();
 
             $params['fg_perfil'] = (isset($params['fg_perfil']) && $params['fg_perfil'] === 'on') ? 1 : 0;
             $params['tx_senha'] = md5($params['tx_senha']);
+
+            $params['id_serie'] = \br\com\cf\app\model\ModelSerie::factory()->retrieveLastActiveSeries()->id_serie;
 
             BusinessUsuario::factory()->save($params);
 
@@ -117,7 +127,8 @@ class ControllerUsuario extends ControllerAbstract {
     /**
      * @return void
      */
-    public function listAction() {
+    public function listAction ()
+    {
 
         $series = \br\com\cf\app\model\ModelSerie::factory()->findAll();
 
@@ -129,7 +140,8 @@ class ControllerUsuario extends ControllerAbstract {
     /**
      * @return void
      */
-    public function loadGridSearchAction() {
+    public function loadGridSearchAction ()
+    {
         $query = 'usuario u left join serie s on s.id_serie = u.id_serie';
 
         $grid = \br\com\cf\library\core\grid\Grid::factory()

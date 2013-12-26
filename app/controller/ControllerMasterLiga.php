@@ -25,7 +25,54 @@ class ControllerMasterLiga extends ControllerAbstract
      */
     public function formCreateAction ()
     {
-        $this->setView('masterLiga', 'formCreate')->render();
+
+        $series = array();
+
+        $activeSeries = \br\com\cf\app\model\ModelSerie::factory()->retrieveActiveSeries();
+
+        foreach ($activeSeries as $serie) {
+
+            $usuarios = \br\com\cf\app\model\ModelUsuario::factory()->findByParam(array('id_serie' => $serie->id_serie));
+
+            foreach ($usuarios as $usuario) {
+                unset($usuario->fg_perfil);
+                unset($usuario->tx_senha);
+                $series[$serie->nm_serie][] = $usuario;
+            }
+        }
+
+        $this->setView('masterLiga', 'formCreate')
+                ->set('series', $series)
+                ->render();
+    }
+
+    /**
+     * @return void
+     */
+    public function createAction ()
+    {
+
+        //@todo persistir os usuarios...
+
+        $params = $this->getParams();
+        $factory = \br\com\cf\app\model\ModelCampeonato::factory();
+        $temporada = \br\com\cf\app\model\ModelTemporada::factory();
+
+        try {
+            $factory->beginTransaction();
+
+            $idTemporada = $temporada->insert(array('id_temporada_status' => 1, 'dt_inicial' => $params['dt_inicial']));
+
+            $factory->insert(array('id_temporada' => $idTemporada, 'nm_campeonato' => $params['nm_campeonato']));
+
+            $factory->commit();
+
+            $response = array('status' => 'success', 'message' => 'Master Liga criada com sucesso!');
+        } catch (\Exception $e) {
+            $response = array('status' => 'success', 'message' => $e->getMessage());
+        }
+
+        $this->json($response);
     }
 
     /**
@@ -34,6 +81,28 @@ class ControllerMasterLiga extends ControllerAbstract
     public function formCloseAction ()
     {
         $this->setView('masterLiga', 'formClose')->render();
+    }
+
+    /**
+     * @return void
+     */
+    public function closeAction ()
+    {
+
+        $temporada = \br\com\cf\app\model\ModelTemporada::factory();
+
+        try {
+
+            $idTemporada = $temporada->active()->id_temporada;
+
+            $temporada->update(array('id_temporada' => $idTemporada, 'dt_final' => date('Y-m-d')));
+
+            $response = array('status' => 'success', 'message' => 'Master Liga encerrada com sucesso!');
+        } catch (\Exception $e) {
+            $response = array('status' => 'success', 'message' => $e->getMessage());
+        }
+
+        $this->json($response);
     }
 
     /**
@@ -95,15 +164,10 @@ class ControllerMasterLiga extends ControllerAbstract
                 'nu_multa_vermelho' => 'Multa Cartão Vermelho',
                 'nu_multa_amarelo' => 'Multa Cartão Amarelo',
                 'nu_multa_wo' => 'Multa WO'
-            ),
-            3 => array(
-                'id_temporada' => '',
-                'id_configuracao' => '',
-                'dt_inicio_draft' => 'Início do Draft' #forma automática de abrir o painel para negociação.
-            ),
+            )
         );
 
-        $configuracao = current(\br\com\cf\app\model\ModelConfiguracao::factory()->findByParam(array('id_temporada' => 2)));
+        $configuracao = current(\br\com\cf\app\model\ModelConfiguracao::factory()->findByParam(array('id_configuracao' => 1)));
 
         $this->setView('masterLiga', 'formConfiguration')
                 ->set('columns', $columns)

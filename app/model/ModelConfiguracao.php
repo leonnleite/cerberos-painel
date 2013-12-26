@@ -7,7 +7,8 @@ use br\com\cf\library\core\model\ModelAbstract;
 /**
  * @author Michael F. Rodrigues <cerberosnash@gmail.com>
  */
-class ModelConfiguracao extends ModelAbstract {
+class ModelConfiguracao extends ModelAbstract
+{
 
     /**
      * @var string
@@ -33,7 +34,6 @@ class ModelConfiguracao extends ModelAbstract {
      * @var array
      */
     protected $_fields = array(
-        'id_temporada' => 'integer',
         'st_painel_ativo' => 'boolean',
         'st_negociacao' => 'boolean',
         'st_compra_multa' => 'boolean',
