@@ -72,9 +72,9 @@ class ControllerMasterLiga extends ControllerAbstract
 
             $campeonato->beginTransaction();
 
-            print $idTemporada = $temporada->insert(array('id_temporada_status' => 1, 'dt_inicial' => $params['dt_inicial']));
+            $idTemporada = $temporada->insert(array('id_temporada_status' => 1, 'dt_inicial' => $params['dt_inicial']));
 
-            print $idCampeonato = $campeonato->insert(array('id_temporada' => $idTemporada, 'nm_campeonato' => $params['nm_campeonato']));
+            $idCampeonato = $campeonato->insert(array('id_temporada' => $idTemporada, 'nm_campeonato' => $params['nm_campeonato']));
 
             //Associar usuarios ao campeonato...
             foreach ($params['id_usuario'] as $key => $value) {
@@ -146,6 +146,14 @@ class ControllerMasterLiga extends ControllerAbstract
     /**
      * @return void
      */
+    public function formGamesUserAction ()
+    {
+        $this->setView('masterLiga', 'formGamesUser')->render();
+    }
+
+    /**
+     * @return void
+     */
     public function loadGridGamesAction ()
     {
 
@@ -156,6 +164,47 @@ class ControllerMasterLiga extends ControllerAbstract
                 . 'inner join temporada t on t.id_temporada = j.id_temporada '
                 . 'inner join serie e on e.id_serie = c.id_serie '
                 . 'where t.id_temporada = ' . \br\com\cf\app\model\ModelTemporada::factory()->active()->id_temporada
+        ;
+
+        $grid = \br\com\cf\library\core\grid\Grid::factory()
+                ->primary('id_jogo')
+                ->columns(array(
+                    array('j.id_jogo' => 'id_jogo'),
+                    array('e.nm_serie' => 'nm_serie'),
+                    array('c.nm_usuario' => 'casa'),
+                    array('s.nm_status' => 'nm_status'),
+                    array('v.nm_usuario' => 'visitante'),
+                    array('s.nm_status' => 'nm_status'),
+                    array('s.nm_status' => 'nm_status'),
+                    //
+                    array('c.nm_equipe' => 'eq_casa'),
+                    array('v.nm_equipe' => 'eq_visitante'),
+                    array('s.id_status' => 'id_status'),
+                ))
+                ->query($query)
+                ->params($this->getParams())
+                ->make('and')
+                ->output()
+        ;
+
+        $this->json($grid);
+    }
+
+    /**
+     * @return void
+     */
+    public function loadGridGamesUserAction ()
+    {
+
+        $query = 'jogo j '
+                . 'inner join jogo_status s on s.id_status = j.id_status '
+                . 'inner join usuario c on c.id_usuario = j.id_usuario_casa '
+                . 'inner join usuario v on v.id_usuario = j.id_usuario_visitante '
+                . 'inner join temporada t on t.id_temporada = j.id_temporada '
+                . 'inner join serie e on e.id_serie = c.id_serie '
+                . 'where t.id_temporada = ' . \br\com\cf\app\model\ModelTemporada::factory()->active()->id_temporada . ' and '
+                . '(c.id_usuario = ' . \br\com\cf\library\core\session\Session::get('user')->id_usuario . ' or '
+                . ' v.id_usuario = ' . \br\com\cf\library\core\session\Session::get('user')->id_usuario . ')'
         ;
 
         $grid = \br\com\cf\library\core\grid\Grid::factory()

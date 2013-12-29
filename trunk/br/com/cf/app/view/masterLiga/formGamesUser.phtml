@@ -1,0 +1,125 @@
+<style type="text/css">
+    .pointer{
+        cursor: pointer;
+    }
+</style>
+
+<section id="main">
+    <div class="top-nav">
+        <div class="container-fluid">
+            <div class="row-fluid search-button-bar-container">
+                <div class="span12">
+                    <ul class="breadcrumb">
+                        <li><a href="#"><i class="icon-home"></i> Master Liga</a></li>
+                        <li class="active"><a href="#"><i class="icon-home"></i> Jogos</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="row-fluid">
+            <div class="box" style="position:relative;">
+                <div class="tab-header">
+                    Jogos
+                </div>
+                <div>
+                    <table id="gridJogosMasterLigaAdmin" class="table table-striped table-condensed">
+                        <thead>
+                        <th style="width: 10px;">
+                        <div>#</div>
+                        </th>
+                        <th style="width: 50px;">
+                        <div>Serie</div>
+                        </th>
+                        <th style="text-align: right;">
+                        <div>Casa</div>
+                        </th>
+                        <th style="width: 10px;">
+                        <div>X</div>
+                        </th>
+                        <th>
+                        <div>Visitante</div>
+                        </th>
+                        <th style="width: 150px;">
+                        <div>Status do Jogo</div>
+                        </th>
+                        <th style="width: 100px;">
+                        <div>Opcoes</div>
+                        </th>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        try {
+            Index.admin.gridJogosMasterLigaAdmin = $('#gridJogosMasterLigaAdmin').dataTable({
+                "bProcessing": true,
+                "bServerSide": true,
+                "sPaginationType": "full_numbers",
+                "bJQueryUI": false,
+                "sAjaxSource": "/masterLiga/loadGridGamesUser/ajax/true/",
+                "oLanguage": {
+                    "oPaginate": {
+                        "sFirst": "Primeira",
+                        "sPrevious": "Anterior",
+                        "sNext": "Próxima",
+                        "sLast": "Última"
+                    },
+                    "sSearch": "Filtrar:",
+                    "sLengthMenu": "_MENU_",
+                    "sZeroRecords": "Nenhuma jogo encontrada",
+                    "sInfo": "Visualizando _START_ até _END_ de _TOTAL_ jogos",
+                    "sInfoEmpty": "Visualizando 0 até 0 de 0 jogos",
+                    "sInfoFiltered": "(filtrado de _MAX_ jogos)"
+                },
+                "fnRowCallback": function(nRow, aData, iDisplayIndex) {
+
+                    if (aData[9] === '1') {
+                        $('td:eq(0)', nRow).html('<img class="pointer btnLiberarPartidaMasterLigaAdmin" title="Partida nao liberada" src="/img/icons/lock.png" value="' + aData[0] + '">');
+                    }
+
+                    if (aData[9] === '2') {
+                        $('td:eq(0)', nRow).html('<img title="Partida liberada" src="/img/icons/lock_open.png" value="' + aData[0] + '">');
+                    }
+
+                    $('td:eq(2)', nRow).css('text-align', 'right');
+                    $('td:eq(2)', nRow).html(aData[2] + '<strong> (' + aData[8] + ') </strong>');
+                    $('td:eq(4)', nRow).html('<strong> (' + aData[7] + ') </strong>' + aData[4]);
+                    $('td:eq(3)', nRow).html('<strong> X </strong>');
+                    $('td:eq(6)', nRow).html(
+                            '<img class="pointer" title="Liberar partida" src="/img/icons/report_go.png">' +
+                            '<img class="" title="Comentarios da partida" src="/img/icons/note_edit.png">' +
+                            '<img class="" title="Alterar resultados" src="/img/icons/application_form_add.png">' +
+                            '<img class="" title="Detalhar partida" src="/img/icons/application_form_edit.png">'
+                            );
+                    $(nRow).css('background', '');
+                }
+            }).fnSetFilteringDelay(3);
+        } catch (e) {
+            alert(e.toSource());
+        } finally {
+
+        }
+
+        $('.btnLiberarPartidaMasterLigaAdmin').die('click').live('click', function() {
+            $.post('/masterLiga/activateGame/ajax/true/', {
+                id_jogo: $(this).attr('value')
+            }, function(response) {
+                Index.admin.gridJogosMasterLigaAdmin.fnDraw(false);
+                Util.showMessageBox(response);
+            }, 'json');
+        });
+
+
+
+    });
+</script>

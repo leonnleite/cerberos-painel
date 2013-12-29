@@ -7,7 +7,8 @@ use br\com\cf\library\core\model\ModelAbstract;
 /**
  * @author Michael F. Rodrigues <cerberosnash@gmail.com>
  */
-class ModelTemporada extends ModelAbstract {
+class ModelTemporada extends ModelAbstract
+{
 
     /**
      * @var string
@@ -42,12 +43,21 @@ class ModelTemporada extends ModelAbstract {
      * @return array
      * @param string $arguments
      */
-    public function active() {
+    public function active ()
+    {
 
         $stmt = $this->_conn->prepare('select * from temporada where id_temporada_status != 2 and dt_final is null limit 1');
         $stmt->execute();
 
-        return $stmt->fetch(\PDO::FETCH_OBJ);
+        $temporada = $stmt->fetch(\PDO::FETCH_OBJ);
+
+        if ($temporada === false) {
+            $temporada = new \stdClass();
+            $temporada->id_temporada = 0;
+            return $temporada;
+        }
+
+        return $temporada;
     }
 
 }
