@@ -1,3 +1,4 @@
+;
 jQuery.fn.dataTableExt.oApi.fnSetFilteringDelay = function(oSettings, iDelay) {
     var _that = this;
 

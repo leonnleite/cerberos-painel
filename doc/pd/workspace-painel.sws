@@ -6,6 +6,7 @@
 	<Local Expanded="Yes">
 		<Model Expanded="Yes" ID="{D5629EC3-6B61-4DFC-BD8C-4F1AEA6E40FB}" Loaded="No" Name="painel" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="fisico.pdm"/>
 		<Model Expanded="Yes" ID="{D5629EC3-6B61-4DFC-BD8C-4F1AEA6E40FB}" Loaded="No" Name="painel" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="fisico.pdm"/>
+		<Model Expanded="Yes" ID="{D5629EC3-6B61-4DFC-BD8C-4F1AEA6E40FB}" Loaded="No" Name="painel" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="fisico.pdm"/>
 		<Model Expanded="Yes" ID="{D5629EC3-6B61-4DFC-BD8C-4F1AEA6E40FB}" Name="painel" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="fisico.pdm"/>
 	</Local>
 	<BrowserModule Name="Repository"/>

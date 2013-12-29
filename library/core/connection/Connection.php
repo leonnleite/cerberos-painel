@@ -11,7 +11,13 @@ use br\com\cf\library\core\config\Config,
  * @author Michael F. Rodrigues <cerberosnash@gmail.com>
  * @version 0.0.0
  */
-class Connection {
+class Connection
+{
+
+    /**
+     * @var Connection
+     */
+    public static $instance = NULL;
 
     /**
      * @var \PDO
@@ -26,19 +32,19 @@ class Connection {
     /**
      * @return void
      */
-    private function __construct($entry = 'default') {
+    private function __construct ($entry = 'default')
+    {
         try {
 
             $cfg = Config::factory();
-        
+
             $database = $cfg->getParam("database.{$entry}.database");
             $host = $cfg->getParam("database.{$entry}.host");
             $user = $cfg->getParam("database.{$entry}.user");
             $password = $cfg->getParam("database.{$entry}.password");
             $driver = $cfg->getParam("database.{$entry}.driver");
 
-            $this->_connection[$entry] = new \PDO(sprintf("%s:host=%s;dbname=%s", $driver, $host, $database), $user, $password, Bootstrap::factory()->getPDOExtraParams()
-            );
+            $this->_connection[$entry] = new \PDO(sprintf("%s:host=%s;dbname=%s", $driver, $host, $database), $user, $password, Bootstrap::factory()->getPDOExtraParams());
 
             $this->_connection[$entry]->setAttribute(
                     \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION
@@ -62,21 +68,29 @@ class Connection {
      * @return \PDO
      * @param string $entry
      */
-    public static function factory($entry) {
-        return new self($entry);
+    public static function factory ($entry)
+    {
+
+        if (self::$instance instanceof Connection) {
+            return self::$instance;
+        }
+
+        return self::$instance = new self($entry);
     }
 
     /**
      * @return \PDO
      */
-    public function getConnection() {
+    public function getConnection ()
+    {
         return $this->_connection[$this->_entry];
     }
 
     /**
      * @return void
      */
-    public function __destruct() {
+    public function __destruct ()
+    {
         $this->_connection[$this->_entry] = NULL;
     }
 

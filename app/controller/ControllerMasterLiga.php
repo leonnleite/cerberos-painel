@@ -55,21 +55,51 @@ class ControllerMasterLiga extends ControllerAbstract
         //@todo persistir os usuarios...
 
         $params = $this->getParams();
-        $factory = \br\com\cf\app\model\ModelCampeonato::factory();
+
+        $series = array();
+
+        foreach ($params['id_usuario'] as $key => $on) {
+            $tmp = explode(':', $key);
+            $series[$tmp[0]][] = $tmp[1];
+        }
+
+        $campeonato = \br\com\cf\app\model\ModelCampeonato::factory();
         $temporada = \br\com\cf\app\model\ModelTemporada::factory();
+        $campeonatoXusuario = \br\com\cf\app\model\ModelCampeonatoXUsuario::factory();
+        $jogo = \br\com\cf\app\model\ModelJogo::factory();
 
         try {
-            $factory->beginTransaction();
 
-            $idTemporada = $temporada->insert(array('id_temporada_status' => 1, 'dt_inicial' => $params['dt_inicial']));
+            $campeonato->beginTransaction();
 
-            $factory->insert(array('id_temporada' => $idTemporada, 'nm_campeonato' => $params['nm_campeonato']));
+            print $idTemporada = $temporada->insert(array('id_temporada_status' => 1, 'dt_inicial' => $params['dt_inicial']));
 
-            $factory->commit();
+            print $idCampeonato = $campeonato->insert(array('id_temporada' => $idTemporada, 'nm_campeonato' => $params['nm_campeonato']));
+
+            //Associar usuarios ao campeonato...
+            foreach ($params['id_usuario'] as $key => $value) {
+                $tmp = explode(':', $key);
+                $campeonatoXusuario->insert(array('id_usuario' => $tmp[1], 'id_campeonato' => $idCampeonato));
+            }
+
+            //Persistir jogos...
+            foreach ($series as $serie => $usuarios) {
+                foreach ($usuarios as $i => $current) {
+                    foreach ($usuarios as $j => $invite) {
+                        if ($current != $invite) {
+                            $idJogo = $jogo->insert(array('id_usuario_casa' => $current, 'id_usuario_visitante' => $invite, 'id_temporada' => $idTemporada, 'id_status' => 1));
+                            \br\com\cf\app\model\ModelJogoXCampeonato::factory()->insert(array('id_jogo' => $idJogo, 'id_campeonato' => $idCampeonato));
+                        }
+                    }
+                }
+            }
+
+            $campeonato->commit();
 
             $response = array('status' => 'success', 'message' => 'Master Liga criada com sucesso!');
         } catch (\Exception $e) {
-            $response = array('status' => 'success', 'message' => $e->getMessage());
+            $campeonato->rollback();
+            $response = array('status' => 'error', 'message' => $e->getMessage());
         }
 
         $this->json($response);
@@ -99,7 +129,7 @@ class ControllerMasterLiga extends ControllerAbstract
 
             $response = array('status' => 'success', 'message' => 'Master Liga encerrada com sucesso!');
         } catch (\Exception $e) {
-            $response = array('status' => 'success', 'message' => $e->getMessage());
+            $response = array('status' => 'error', 'message' => $e->getMessage());
         }
 
         $this->json($response);
@@ -111,6 +141,62 @@ class ControllerMasterLiga extends ControllerAbstract
     public function formGamesAction ()
     {
         $this->setView('masterLiga', 'formGames')->render();
+    }
+
+    /**
+     * @return void
+     */
+    public function loadGridGamesAction ()
+    {
+
+        $query = 'jogo j '
+                . 'inner join jogo_status s on s.id_status = j.id_status '
+                . 'inner join usuario c on c.id_usuario = j.id_usuario_casa '
+                . 'inner join usuario v on v.id_usuario = j.id_usuario_visitante '
+                . 'inner join temporada t on t.id_temporada = j.id_temporada '
+                . 'inner join serie e on e.id_serie = c.id_serie '
+                . 'where t.id_temporada = ' . \br\com\cf\app\model\ModelTemporada::factory()->active()->id_temporada
+        ;
+
+        $grid = \br\com\cf\library\core\grid\Grid::factory()
+                ->primary('id_jogo')
+                ->columns(array(
+                    array('j.id_jogo' => 'id_jogo'),
+                    array('e.nm_serie' => 'nm_serie'),
+                    array('c.nm_usuario' => 'casa'),
+                    array('s.nm_status' => 'nm_status'),
+                    array('v.nm_usuario' => 'visitante'),
+                    array('s.nm_status' => 'nm_status'),
+                    array('s.nm_status' => 'nm_status'),
+                    //
+                    array('c.nm_equipe' => 'eq_casa'),
+                    array('v.nm_equipe' => 'eq_visitante'),
+                    array('s.id_status' => 'id_status'),
+                ))
+                ->query($query)
+                ->params($this->getParams())
+                ->make('and')
+                ->output()
+        ;
+
+        $this->json($grid);
+    }
+
+    /**
+     * @return void
+     */
+    public function activateGameAction ()
+    {
+        $params = array('id_status' => 2, 'id_jogo' => $this->getParam('id_jogo'));
+
+        try {
+            \br\com\cf\app\model\ModelJogo::factory()->update($params);
+            $response = array('status' => 'success', 'message' => 'Partida liberada com sucesso!');
+        } catch (\Exception $e) {
+            $response = array('status' => 'error', 'message' => $e->getMessage());
+        }
+
+        $this->json($response);
     }
 
     /**
@@ -132,7 +218,7 @@ class ControllerMasterLiga extends ControllerAbstract
     /**
      * @return void
      */
-    public function FormPunishAction ()
+    public function formPunishAction ()
     {
         $this->setView('masterLiga', 'FormPunish')->render();
     }
@@ -185,7 +271,7 @@ class ControllerMasterLiga extends ControllerAbstract
             \br\com\cf\app\model\ModelConfiguracao::factory()->update($this->getParams());
             $response = array('status' => 'success', 'message' => 'Configurações da Master Liga alteração com sucesso!');
         } catch (\Exception $e) {
-            $response = array('status' => 'success', 'message' => $e->getMessage());
+            $response = array('status' => 'error', 'message' => $e->getMessage());
         }
 
         $this->json($response);
