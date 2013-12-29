@@ -103,7 +103,7 @@
                                     <?php foreach ($usuarios as $usuario): ?>
                                         <li>
                                             <a class="" href="#">
-                                                <input type="checkbox" serie="<?php print($serie); ?>" class="select-user-series select-user-series-<?php print($serie); ?>" name="id_usuario[<?php print($usuario->id_usuario); ?>]">
+                                                <input type="checkbox" serie="<?php print($serie); ?>" class="select-user-series select-user-series-<?php print($serie); ?>" name="id_usuario[<?php print("{$serie}:{$usuario->id_usuario}"); ?>]">
                                                 <img class="mini-img-in-grid avatar" src="https://avatar-ssl.xboxlive.com/avatar/<?php print($usuario->lg_live); ?>/avatarpic-l.png" />
                                                 <img class="mini-img-in-grid avatar" src="img/escudos/<?php print($usuario->id_usuario); ?>.png" />
                                                 <span class=""><strong><?php print($usuario->nm_usuario); ?></strong> - <?php print($usuario->nm_equipe); ?></span>

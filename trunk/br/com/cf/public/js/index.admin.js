@@ -15,6 +15,8 @@
 
     Index.admin.autocompleteSelecaoJogadorAdmin = null;
 
+    Index.admin.gridJogosMasterLigaAdmin = null;
+
 }
 ;
 
