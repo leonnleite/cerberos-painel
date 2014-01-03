@@ -1,5 +1,3 @@
-<script type="text/javascript" src="library/validate/jquery.validate-1.11.1.js"></script>
-
 <div class="black-box">
     <div class="tab-header">
         Editar
@@ -12,9 +10,6 @@
     <form id="formEditJogador" class="fill-up" action="/jogador/edit/ajax/true" method="post">
         <div class="row-fluid">
             <div class="span5">
-                <!--<div class="span4">-->
-                <!--                            <div class="padded">
-                                        </div>-->
                 <div class="padded">
                     <div class="black-box span10">
                         <div class="tab-header">Foto</div>
@@ -22,7 +17,6 @@
                             <img title="clique para alterar foto do jogador (100x100px)" src="<?php print ("/img/jogadores/fotos/{$this->jogador->id_jogador}.png"); ?>" id="btnUploadPhotoJogadorAdmin">
                         </div>
                     </div>
-                    <!--</div>-->
                     <div class="input input-mini hidden">
                         <input type="text" name="id_jogador" value="<?php print($this->jogador->id_jogador); ?>" class="required" id="fieldEditJogadorAdmin-id_jogador">
                         <input type="text" name="id_sofifa" value="<?php print($this->jogador->id_sofifa); ?>" class="required" id="fieldEditJogadorAdmin-id_sofifa">

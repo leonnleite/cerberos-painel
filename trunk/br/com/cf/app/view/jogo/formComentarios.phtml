@@ -1,0 +1,69 @@
+<div class="black-box">
+    <div class="tab-header">
+        Comentar
+        <span class="pull-right">
+            <span class="options">
+                <a href="#"><i class="icon-cog"></i></a>
+            </span>
+        </span>
+    </div>
+    <form id="formCreateComentarioJogo" class="fill-up" action="/jogo/createComentario/ajax/true" method="post">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="padded">
+                    <div class="input input-mini hidden">
+                        <input type="text" name="id_usuario" value="<?php print($this->usuario->id_usuario); ?>" class="required">
+                        <input type="text" name="id_jogo" value="<?php print($this->jogo->id_jogo); ?>" class="required">
+                    </div>
+                    <div class="input">
+                        <textarea class="required" name="tx_comentario" placeholder="Comentário"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="button blue">Comentar</button>
+        </div>
+    </form>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <table class="table table-bordered table-condensed table-striped">
+                <?php foreach ($this->comentarios as $comentario) : ?>
+                    <tr>
+                        <td><img class="mini-img-in-grid" src="https://avatar-ssl.xboxlive.com/avatar/<?php print($comentario->id_usuario); ?>/avatarpic-l.png" /><?php print($comentario->dt_comentario); ?></td>
+                        <td><?php print($comentario->dt_comentario); ?></td>
+                        <td><?php print($comentario->tx_comentario); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+
+        var formNew = $('#formCreateComentarioJogo');
+        var actionNew = formNew.attr('action');
+
+        $("#formCreateComentarioJogo").validate({
+            errorClass: "help-inline",
+            submitHandler: function() {
+                if (confirm('Você tem certeza que deseja registrar este comentário?')) {
+                    $.post(actionNew, formNew.serialize(), function(response) {
+                        if (response.status === 'success') {
+                            Util.hideModal();
+//                            Index.admin.gridJogadorAdmin.fnDraw(false);
+                        }
+                        Util.showMessageBox(response);
+                    }, 'json');
+                }
+            }
+        });
+
+    });
+
+</script>
