@@ -20,6 +20,7 @@ $js2 = array(
 $js3 = array(
     array("library/datatables/plugins/jquery.dataTables.columnFilter.js", true),
     array("library/datatables/plugins/jquery.dataTables.filteringDelay.js", true),
+    array("library/validate/jquery.validate-1.11.1.js", true),
 );
 
 use br\com\cf\library\core\cache\Cache;
@@ -53,6 +54,8 @@ use br\com\cf\library\core\cache\Cache;
 
     </head>
     <body>
+
+        <?php print br\com\cf\library\core\view\View::partials('modal'); ?>
 
         <nav id="primary" class="main-nav">
             <ul>

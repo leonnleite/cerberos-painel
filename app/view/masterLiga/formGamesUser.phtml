@@ -84,7 +84,7 @@
                 "fnRowCallback": function(nRow, aData, iDisplayIndex) {
 
                     if (aData[9] === '1') {
-                        $('td:eq(0)', nRow).html('<img class="pointer btnLiberarPartidaMasterLigaAdmin" title="Partida nao liberada" src="/img/icons/lock.png" value="' + aData[0] + '">');
+                        $('td:eq(0)', nRow).html('<img class="pointer btnComentarPartidaMasterLigaUser" title="Partida nao liberada" src="/img/icons/lock.png" value="' + aData[0] + '">');
                     }
 
                     if (aData[9] === '2') {
@@ -96,8 +96,8 @@
                     $('td:eq(4)', nRow).html('<strong> (' + aData[7] + ') </strong>' + aData[4]);
                     $('td:eq(3)', nRow).html('<strong> X </strong>');
                     $('td:eq(6)', nRow).html(
+                            '<img class="pointer btnComentariosPartidaMasterLigaUser" title="Comentários da partida" src="/img/icons/note_edit.png" value="' + aData[0] + '">' +
                             '<img class="pointer" title="Liberar partida" src="/img/icons/report_go.png">' +
-                            '<img class="" title="Comentarios da partida" src="/img/icons/note_edit.png">' +
                             '<img class="" title="Alterar resultados" src="/img/icons/application_form_add.png">' +
                             '<img class="" title="Detalhar partida" src="/img/icons/application_form_edit.png">'
                             );
@@ -110,7 +110,11 @@
 
         }
 
-        $('.btnLiberarPartidaMasterLigaAdmin').die('click').live('click', function() {
+        $('.btnComentariosPartidaMasterLigaUser').die('click').live('click', function() {
+            Util.showModal('Comentários do Jogo', 'Comentar', '/jogo/formComentarios/id_jogo/' + $(this).attr('value'));
+        });
+
+        $('.btnRegistrarResultadoPartidaMasterLigaUser').die('click').live('click', function() {
             $.post('/masterLiga/activateGame/ajax/true/', {
                 id_jogo: $(this).attr('value')
             }, function(response) {
