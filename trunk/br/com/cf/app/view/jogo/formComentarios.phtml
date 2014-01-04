@@ -31,7 +31,7 @@
             <table class="table table-bordered table-condensed table-striped">
                 <?php foreach ($this->comentarios as $comentario) : ?>
                     <tr>
-                        <td><img class="mini-img-in-grid" src="https://avatar-ssl.xboxlive.com/avatar/<?php print($comentario->id_usuario); ?>/avatarpic-l.png" /><?php print($comentario->dt_comentario); ?></td>
+                        <td><img class="mini-img-in-grid" src="https://avatar-ssl.xboxlive.com/avatar/<?php print($comentario->lg_live); ?>/avatarpic-l.png" /><?php print($comentario->dt_comentario); ?></td>
                         <td><?php print($comentario->dt_comentario); ?></td>
                         <td><?php print($comentario->tx_comentario); ?></td>
                     </tr>

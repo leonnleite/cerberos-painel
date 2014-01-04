@@ -148,7 +148,9 @@ class ControllerMasterLiga extends ControllerAbstract
      */
     public function formGamesUserAction ()
     {
-        $this->setView('masterLiga', 'formGamesUser')->render();
+        $this->setView('masterLiga', 'formGamesUser')
+                ->set('usuario', \br\com\cf\library\core\session\Session::get('user'))
+                ->render();
     }
 
     /**
@@ -221,6 +223,8 @@ class ControllerMasterLiga extends ControllerAbstract
                     array('c.nm_equipe' => 'eq_casa'),
                     array('v.nm_equipe' => 'eq_visitante'),
                     array('s.id_status' => 'id_status'),
+                    array('c.id_usuario' => 'id_casa'),
+                    array('v.id_usuario' => 'id_visitante'),
                 ))
                 ->query($query)
                 ->params($this->getParams())

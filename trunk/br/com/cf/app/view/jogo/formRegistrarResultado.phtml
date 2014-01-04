@@ -1,0 +1,76 @@
+<div class="black-box">
+    <div class="tab-header">
+        Registrar Resultado da Partida
+        <span class="pull-right">
+            <span class="options">
+                <a href="#"><i class="icon-cog"></i></a>
+            </span>
+        </span>
+    </div>
+    <form id="formCreateRegistrarResultadoPartidaJogo" class="fill-up" action="/jogo/createRegistrarResultadoPartida/ajax/true" method="post">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="padded">
+                    <div class="input input-mini hidden">
+                        <input type="text" name="id_usuario" value="<?php print($this->usuario->id_usuario); ?>" class="required">
+                        <input type="text" name="id_jogo" value="<?php print($this->jogo->id_jogo); ?>" class="required">
+                    </div>
+                    <table class="table table-bordered table-condensed table-striped">
+                        <thead>
+                        <th>#</th>
+                        <th>Jogador</th>
+                        <th>Gols</th>
+                        <th>C. Vermelho(s)</th>
+                        <th>C. Amarelo(s)</th>
+                        </thead>
+                        <?php foreach ($this->jogadores as $jogador) : ?>
+                            <tr>
+                                <td><img class="mini-img-in-grid" src="/img/jogadores/fotos/<?php print($jogador->id_jogador); ?>.png" /></td>
+                                <td><?php print($jogador->nm_abreviado); ?></td>
+                                <td><input type="text" class="input input-mini required number" name="resultado[nu_gols][<?php print($jogador->id_jogador); ?>]" value="0"></td>
+                                <td><input type="text" class="input input-mini required number" name="resultado[nu_vermelhos][<?php print($jogador->id_jogador); ?>]" value="0"></td>
+                                <td><input type="text" class="input input-mini required number" name="resultado[nu_amarelos][<?php print($jogador->id_jogador); ?>]" value="0"></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td><input readonly="" type="text" class="input input-mini required number" value="0"></td>
+                            <td><input readonly="" type="text" class="input input-mini required number" value="0"></td>
+                            <td><input readonly="" type="text" class="input input-mini required number" value="0"></td>
+                        </tr>
+                    </table>                    
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="button blue">Registrar seu SCORE</button>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+
+        var formNew = $('#formCreateRegistrarResultadoPartidaJogo');
+        var actionNew = formNew.attr('action');
+
+        $("#formCreateRegistrarResultadoPartidaJogo").validate({
+            errorClass: "help-inline",
+            submitHandler: function() {
+                if (confirm('Você tem certeza que deseja registrar seu score da partida agora?\n Se o seu resultado estiver errado o seu rival ira exclui-lo e voce tera que registra-lo novamente!\nOBS: Todos os resultados registrados serao auditados pelos administradores do sistema, caso falta com a verdade voce sera punido!')) {
+                    $.post(actionNew, formNew.serialize(), function(response) {
+                        if (response.status === 'success') {
+                            Util.hideModal();
+//                            Index.admin.gridJogadorAdmin.fnDraw(false);
+                        }
+                        Util.showMessageBox(response);
+                    }, 'json');
+                }
+            }
+        });
+
+    });
+
+</script>
