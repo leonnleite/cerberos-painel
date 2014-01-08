@@ -67,7 +67,7 @@ use br\com\cf\library\core\cache\Cache;
 
                     <ul class="dropdown-menu">
                         <!--quando iniciada soh pode ter uma aberta, esta vinculada a tabela temporada-->
-                        <?php if (!$this->temporada): ?>
+                        <?php if ($this->temporada->id_temporada == 0): ?>
                             <li>
                                 <a class="linkcontent" value="/masterLiga/formCreate" href="#">
                                     <i class="icon-search"></i> Nova

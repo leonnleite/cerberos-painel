@@ -7,8 +7,7 @@ use br\com\cf\library\core\model\ModelAbstract;
 /**
  * @author Michael F. Rodrigues <cerberosnash@gmail.com>
  */
-class ModelConfiguracao extends ModelAbstract
-{
+class ModelConfiguracao extends ModelAbstract {
 
     /**
      * @var string
@@ -47,7 +46,6 @@ class ModelConfiguracao extends ModelAbstract
         'nu_per_compra_multa' => 'integer',
         'nu_multa_recisao_contrato' => 'integer',
         'nu_dias_confirmar_resultado' => 'integer',
-        'nu_perc_negociacao' => 'integer',
         'nu_relacao_passe_salario' => 'integer',
         'nu_premio_vitoria' => 'integer',
         'dt_inicio_draft' => 'date'
